@@ -7,7 +7,7 @@ export default function Home() {
       <Head>
         <title>First Post</title>
       </Head>
-      <h1>First Post</h1>
+      <Link href="/event/000">Eventページ</Link>
     </>
   )
 }

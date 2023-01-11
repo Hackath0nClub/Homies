@@ -4,7 +4,7 @@ services:
     image: node:18-slim
     volumes:
       - ./app:/usr/src/app
-      - node_modules_volume:/usr/src/app/node_modules # Avoid synchronization from local
+      - node_modules_volume:/usr/src/app/node_modules # node_modules/ は別ボリュームに退避
     stdin_open: true
     tty: true
     ports:
@@ -12,8 +12,8 @@ services:
     working_dir: /usr/src/app
     command: sh -c "yarn install && yarn dev"
     environment:
-      - CHOKIDAR_USEPOLLING=true # Enable hot reloading for a Next.js app
-      - WATCHPACK_POLLING=true # Enable hot reloading for a Next.js app
+      - CHOKIDAR_USEPOLLING=true # Next.js アプリのホットリロード有効化
+      - WATCHPACK_POLLING=true # Next.js アプリのホットリロード有効化
 
 volumes:
   node_modules_volume:

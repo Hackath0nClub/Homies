@@ -79,7 +79,7 @@ docker-compose down -v # ボリュームも同時に削除
 ### node_modules/ をローカルへコピー
 
 > **Note**  
-> 処理軽量化のため node_modules/ はマウントしていない。
+> 処理軽量化のため node_modules/ はマウントしていない。  
 > そのため Docker 内のパッケージとローカルパッケージの同期は手動で行う。
 
 > **Warning**  

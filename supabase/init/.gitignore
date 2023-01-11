@@ -1,0 +1,5 @@
+# supabase init script
+node_modules
+.eslintrc.json
+.prettierrc.json
+yarn.lock

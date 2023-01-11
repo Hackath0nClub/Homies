@@ -4,7 +4,7 @@ export default function Layout({ children }: { children: any }) {
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <main style={{ paddingTop: '48px' }}>{children}</main>
     </>
   )
 }

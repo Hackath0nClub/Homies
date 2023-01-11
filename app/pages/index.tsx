@@ -5,9 +5,17 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>First Post</title>
+        <title>Homies</title>
       </Head>
-      <h1>First Post</h1>
+      <p>
+        <Link href="/event/1">Eventページ1</Link>
+      </p>
+      <p>
+        <Link href="/event/2">Eventページ2</Link>
+      </p>
+      <p>
+        <Link href="/event/3">Eventページ3</Link>
+      </p>
     </>
   )
 }

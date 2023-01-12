@@ -25,7 +25,7 @@ supabase start
 
 ```sh
 cd ./supabase/init # .env 利用のためディレクトリ移動
-node install
+npm install
 node init.mjs # 検証データ投入
 cd ../../
 ```

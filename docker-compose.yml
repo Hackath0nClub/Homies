@@ -10,7 +10,7 @@ services:
     ports:
       - "3000:3000"
     working_dir: /usr/src/app
-    command: sh -c "yarn install && yarn dev"
+    command: sh -c "npm install && npm run dev"
     environment:
       - CHOKIDAR_USEPOLLING=true # Next.js アプリのホットリロード有効化
       - WATCHPACK_POLLING=true # Next.js アプリのホットリロード有効化

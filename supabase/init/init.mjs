@@ -10,39 +10,31 @@ const supabase = createClient(
 
 const CreateUsers = async () => {
   const authjson = await fs.promises.readFile('./data/auth.json', 'utf8')
-  const userjson = await fs.promises.readFile('./data/users.json', 'utf8')
+  const profilejson = await fs.promises.readFile('./data/profile.json', 'utf8')
   let authdata = JSON.parse(authjson)
-  let userdata = JSON.parse(userjson)
+  let profiledata = JSON.parse(profilejson)
 
   for (let i = 0; i < 5; i++) {
     const { data, autherr } = await supabase.auth.signUp(authdata[i])
     if (autherr) throw autherr
-    if (data) userdata[i]['uuid'] = data.user.id
-    const { dberr } = await supabase.from('users').insert(userdata[i])
+    if (data) profiledata[i]['uuid'] = data.user.id
+    const { dberr } = await supabase.from('profile').insert(profiledata[i])
     if (dberr) throw dberr
   }
 
-  console.log('Successfully created users!')
-}
-
-const InsertProfile = async () => {
-  const profilejson = await fs.promises.readFile('./data/profile.json', 'utf8')
-  const profiledata = JSON.parse(profilejson)
-  const { error } = await supabase.from('profile').insert(profiledata)
-  if (error) throw error
-  console.log('Successfully inserted profile data!')
+  console.log('Successfully created profile!')
 }
 
 const UploadIcon = async () => {
-  const userjson = await fs.promises.readFile('./data/users.json', 'utf8')
-  let userdata = JSON.parse(userjson)
+  const profilejson = await fs.promises.readFile('./data/profile.json', 'utf8')
+  let profiledata = JSON.parse(profilejson)
 
   for (let i = 0; i < 5; i++) {
     const path = './data/icon' + i + '.png'
     const icon = await fs.readFileSync(path)
     const { data, error } = await supabase.storage
-      .from('user')
-      .upload(userdata[i].id + '.png', icon, {
+      .from('profile')
+      .upload(profiledata[i].id + '.png', icon, {
         contentType: 'image/png',
       })
     if (error) throw error
@@ -108,26 +100,16 @@ const InsertEventVJ = async () => {
   console.log('Successfully inserted event_vj data!')
 }
 
-const InsertEventLisner = async () => {
-  const json = await fs.promises.readFile('./data/event_lisner.json', 'utf8')
-  const input = JSON.parse(json)
-  const { error } = await supabase.from('event_lisner').insert(input)
-  if (error) throw error
-  console.log('Successfully inserted event_lisner data!')
-}
-
 const init = async () => {
   try {
     await CreateUsers()
-    await InsertProfile()
     await UploadIcon()
     await InsertEvent()
     await UploadEventImage()
-    await InsertTicket()
     await InsertEventOrganizer()
     await InsertEventDJ()
     await InsertEventVJ()
-    await InsertEventLisner()
+    await InsertTicket()
   } catch (error) {
     console.error(error)
   }

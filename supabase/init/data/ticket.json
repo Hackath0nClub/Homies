@@ -3,9 +3,6 @@
     "id": "ticketid1e",
     "user_id": "user-e",
     "event_id": 1,
-    "title": "title 1",
-    "date": "2023-01-06T17:41:33.621Z",
-    "location_name": "新宿駅",
     "status": false,
     "create_at": "2023-01-06T17:41:33.621Z",
     "updated_at": "2023-01-06T17:41:33.621Z"
@@ -14,9 +11,6 @@
     "id": "ticketid2e",
     "user_id": "user-e",
     "event_id": 2,
-    "title": "title 2",
-    "date": "2023-01-06T17:41:33.621Z",
-    "location_name": "新宿駅",
     "status": false,
     "create_at": "2023-01-06T17:41:33.621Z",
     "updated_at": "2023-01-06T17:41:33.621Z"
@@ -25,9 +19,6 @@
     "id": "ticketid3e",
     "user_id": "user-e",
     "event_id": 3,
-    "title": "title 3",
-    "date": "2023-01-06T17:41:33.621Z",
-    "location_name": "新宿駅",
     "status": false,
     "create_at": "2023-01-06T17:41:33.621Z",
     "updated_at": "2023-01-06T17:41:33.621Z"

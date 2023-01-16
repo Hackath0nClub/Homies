@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { splitDateTime } from '../../../lib/splitDateTime'
 import { selectEventDjByEventId } from '../infrastructure/eventDjRepository'
 
-type TimeTable =
+export type TimeTable =
   | {
       row_number: number
       name: string | null

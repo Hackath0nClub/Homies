@@ -1,6 +1,9 @@
 [
   {
-    "user_id": "user-a",
+    "uuid": "",
+    "id": "user-a",
+    "name": "userA",
+    "icon_url": "http://localhost:54321/storage/v1/object/public/profile/user-a.png",
     "text": "userA sample text",
     "twitter_url": "https://twitter.com",
     "soundcloud_url": "https://soundcloud.com/",
@@ -9,7 +12,10 @@
     "updated_at": "2023-01-06T17:41:33.621Z"
   },
   {
-    "user_id": "user-b",
+    "uuid": "",
+    "id": "user-b",
+    "name": "userB",
+    "icon_url": "http://localhost:54321/storage/v1/object/public/profile/user-b.png",
     "text": "userB sample text",
     "twitter_url": "https://twitter.com",
     "soundcloud_url": "https://soundcloud.com/",
@@ -18,7 +24,10 @@
     "updated_at": "2023-01-06T17:41:33.621Z"
   },
   {
-    "user_id": "user-c",
+    "uuid": "",
+    "id": "user-c",
+    "name": "userC",
+    "icon_url": "http://localhost:54321/storage/v1/object/public/profile/user-c.png",
     "text": "userC sample text",
     "twitter_url": "https://twitter.com",
     "soundcloud_url": "https://soundcloud.com/",
@@ -27,7 +36,10 @@
     "updated_at": "2023-01-06T17:41:33.621Z"
   },
   {
-    "user_id": "user-d",
+    "uuid": "",
+    "id": "user-d",
+    "name": "userD",
+    "icon_url": "http://localhost:54321/storage/v1/object/public/profile/user-d.png",
     "text": "userD sample text",
     "twitter_url": "https://twitter.com",
     "soundcloud_url": "https://soundcloud.com/",
@@ -36,7 +48,10 @@
     "updated_at": "2023-01-06T17:41:33.621Z"
   },
   {
-    "user_id": "user-e",
+    "uuid": "",
+    "id": "user-e",
+    "name": "userE",
+    "icon_url": "http://localhost:54321/storage/v1/object/public/profile/user-e.png",
     "text": "userE sample text",
     "twitter_url": "https://twitter.com",
     "soundcloud_url": "https://soundcloud.com/",

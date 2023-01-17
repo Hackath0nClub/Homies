@@ -18,7 +18,7 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import useEvent from '../../feature/event/hooks/useEvent'
 import useTimeTable from '../../feature/event/hooks/useDjTimeTable'
-// import useVjTable from '../../feature/event/hooks/useVjTimeTable'
+import useVjTable from '../../feature/event/hooks/useVjTimeTable'
 
 // function
 import { splitDateTime, splitDate } from '../../lib/splitDateTime'
@@ -28,8 +28,7 @@ const EventDetails = () => {
   const id = Number(query.id)
   const [event, getEvent, updateTitle] = useEvent()
   const [time_table, getTimeTable] = useTimeTable()
-  // // VJテーブルを表示しようとするとエラーになる。ローカルスペックが貧弱？
-  // const [vj_table, getVjTable] = useVjTable()
+  const [vj_table, getVjTable] = useVjTable()
   const [start_date, setStartDateTime] = useState<splitDate>()
   const [end_date, setEndDateTime] = useState<splitDate>()
 
@@ -43,14 +42,14 @@ const EventDetails = () => {
       const splited_end = splitDateTime(new Date(data.end_at))
       setEndDateTime(splited_end)
       getTimeTable(id)
-      // getVjTable(id)
+      getVjTable(id)
     }
     init()
   }, [isReady])
 
   return (
     <>
-      {event && start_date && end_date && time_table && (
+      {event && start_date && end_date && time_table && vj_table && (
         <div className="event-details-container">
           <Head>
             <title>EventDetails - DJEvent</title>
@@ -79,15 +78,15 @@ const EventDetails = () => {
                 rootClassName="d-j-timetable-row-root-class-name"
                 timetable={time_table}
               ></DjTimeTableRow>
-              {/* <VjTimeTableRow
+              <VjTimeTableRow
                 rootClassName="v-j-timetable-row-root-class-name"
                 timetable={vj_table}
-              ></VjTimeTableRow> */}
+              ></VjTimeTableRow>
               <DjButton rootClassName="d-j-button-root-class-name"></DjButton>
               <Bar rootClassName="bar-root-class-name2"></Bar>
               <GuestRow
                 rootClassName="guest-row-root-class-name"
-                timetable={time_table}
+                timetable={[...time_table, ...vj_table]}
               ></GuestRow>
             </div>
             <div className="event-details-side">

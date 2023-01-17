@@ -1,16 +1,15 @@
 import { useState } from 'react'
-import { splitDateTime } from '../../../lib/splitDateTime'
 import { selectEventVjByEventId } from '../infrastructure/eventVjRepository'
 
 export type VjTable =
   | {
       row_number: number
-      name: string | null
       user_id: string | null
+      name: string
       text: string | null
       icon_url: string | null
-      start_time: string
-      end_time: string
+      start_time: Date
+      end_time: Date
     }[]
   | undefined
 
@@ -19,20 +18,7 @@ const useVjTable = () => {
 
   const getVjTable = async (id: number) => {
     const list: VjTable = await selectEventVjByEventId(id)
-    if (!list) return
-
-    // タイムテーブル順に並び替える
-    if (list.length > 1) list.sort((a, b) => a.row_number - b.row_number)
-
-    // 時間をDate表記をから hh:mm 表記へ変更
-    list.map((row) => {
-      const start = splitDateTime(new Date(row.start_time))
-      row.start_time = start.time
-      const end = splitDateTime(new Date(row.end_time))
-      row.end_time = end.time
-    })
-    setVjTable(list)
-    return list
+    if (list) setVjTable(list)
   }
 
   return [vj_table, getVjTable] as const

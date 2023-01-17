@@ -1,28 +1,32 @@
 import { useState } from 'react'
-import { Database } from '../utils/database.types'
+import { selectEventById } from '../infrastructure/eventRepository'
 
-type Event = Database['public']['Tables']['event']['Row']
+export type Event =
+  | {
+      id: number
+      title: string | null
+      text: string | null
+      start_at: Date | null
+      end_at: Date | null
+      capacity: number | null
+      image_url: string | null
+      location_name: string | null
+      location_url: string | null
+      note: string | null
+      price: number | null
+      publicly: boolean | null
+      create_at: Date | null
+      updated_at: Date | null
+    }
+  | undefined
 
-import { selectEventById, UpdateEvent } from '../infrastructure/eventRepository'
-
-const useEvent = () => {
+export const useEvent = () => {
   const [event, setEvent] = useState<Event>()
 
-  async function getEvent(id: Event['id']): Promise<Event | undefined> {
+  async function getEvent(id: number) {
     const data = await selectEventById(id)
     if (data) setEvent(data)
-    return data
   }
 
-  async function updateTitle(new_title: Event['title']) {
-    let update = Object.assign({}, event)
-    if (update == undefined) throw new Error('event is undefaind')
-    update.title = new_title
-    setEvent(update)
-    UpdateEvent(update)
-  }
-
-  return [event, getEvent, updateTitle] as const
+  return [event, getEvent] as const
 }
-
-export default useEvent

@@ -34,13 +34,3 @@ export const selectEventDjByEventId = async (id: number) => {
     console.log(error)
   }
 }
-
-export async function UpdateEvent(update: Event) {
-  try {
-    let { error } = await supabase.from('events').upsert(update)
-    if (error) throw error
-  } catch (error) {
-    alert('Error Update Title!')
-    console.log(error)
-  }
-}

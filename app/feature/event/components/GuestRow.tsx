@@ -18,7 +18,7 @@ const GuestRow = (props: propsType) => {
       <div className={`guest-row-container ${props.rootClassName} `}>
         <div className="guest-row-guest-row">
           <span className="guest-row-guest-title">
-            <span>ゲストDJ</span>
+            <span>ゲストDJ/VJ</span>
           </span>
           <div className="guest-row-guest-details">
             {props.timetable.map((row) => {

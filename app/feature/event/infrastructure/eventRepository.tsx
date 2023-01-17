@@ -1,14 +1,12 @@
 import { createClient } from '@supabase/supabase-js'
-import { Database } from '../utils/database.types'
+import { Event } from '../hooks/useEvent'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 )
 
-type Event = Database['public']['Tables']['event']['Row']
-
-export const selectEventById = async (id: Event['id']) => {
+export const selectEventById = async (id: number) => {
   try {
     const { data, error } = await supabase
       .from('event')
@@ -16,19 +14,17 @@ export const selectEventById = async (id: Event['id']) => {
       .eq('id', id)
       .single()
     if (error) throw error
-    return data as Event
+
+    const { start_at, end_at, ...others } = data
+    const event: Event = {
+      ...others,
+      start_at: start_at ? new Date(start_at) : null,
+      end_at: end_at ? new Date(end_at) : null,
+    }
+
+    return event
   } catch (error) {
     alert('Error loading Getdata!')
-    console.log(error)
-  }
-}
-
-export async function UpdateEvent(update: Event) {
-  try {
-    let { error } = await supabase.from('events').upsert(update)
-    if (error) throw error
-  } catch (error) {
-    alert('Error Update Title!')
     console.log(error)
   }
 }

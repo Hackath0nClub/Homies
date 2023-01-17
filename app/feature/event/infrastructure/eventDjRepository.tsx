@@ -22,10 +22,18 @@ export const selectEventDjByEventId = async (id: number) => {
       .eq('event_id', id)
     if (error) throw error
 
+    // タイムテーブル順に並び替える
+    if (data.length > 1) data.sort((a, b) => a.row_number - b.row_number)
+
     // 取得データを成形
     const timetable = data.map((row) => {
-      const { dj, ...rest } = row
-      return { ...rest, ...dj }
+      let { dj, start_time, end_time, ...others } = row
+      return {
+        ...others,
+        ...dj,
+        start_time: start_time ? new Date(start_time) : null,
+        end_time: end_time ? new Date(end_time) : null,
+      }
     })
 
     return timetable as TimeTable

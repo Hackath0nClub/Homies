@@ -1,8 +1,8 @@
 type propsType = {
   rootClassName: string
-  title: string
-  year: string
-  date: string
+  title: string | null
+  year: string | null
+  date: string | null
 }
 
 const TitleRow = (props: propsType) => {

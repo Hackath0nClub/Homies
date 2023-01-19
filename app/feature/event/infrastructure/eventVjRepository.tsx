@@ -1,25 +1,44 @@
-export const selectEventVjByEventId = async (id: number) => {
-  const sql = `
-SELECT row_number,name,ev.user_id,text,icon_url,start_time,end_time FROM event_vj AS ev
-INNER JOIN users AS u ON ev.user_id = u.id
-INNER JOIN profile AS p ON u.id = p.user_id
-WHERE ev.event_id = ${id}`
+import { createClient } from '@supabase/supabase-js'
+import { VjTable } from '../hooks/useVjTimeTable'
 
-  // APIを利用するためデプロイ先IP or URLを入力
-  const apihost = process.env.NEXT_PUBLIC_APP_HOST
-  console.log(sql)
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
+
+export const selectEventVjByEventId = async (id: number) => {
   try {
-    const path = apihost + '/api/postgresql'
-    const res = await fetch(path, {
-      method: 'POST',
-      body: JSON.stringify(sql),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    const { data, error } = await supabase
+      .from('event_vj')
+      .select(
+        `
+        row_number,
+        start_time,
+        end_time,
+        user_id,
+        vj:user_id(name,icon_url,text)
+        `
+      )
+      .eq('event_id', id)
+    if (error) throw error
+
+    // タイムテーブル順に並び替える
+    if (data.length > 1) data.sort((a, b) => a.row_number - b.row_number)
+
+    // 取得データを成形
+    const vjtable = data.map((row) => {
+      const { vj, start_time, end_time, ...others } = row
+      return {
+        ...others,
+        ...vj,
+        start_time: start_time ? new Date(start_time) : null,
+        end_time: end_time ? new Date(end_time) : null,
+      }
     })
-    console.log(res)
-    return res.json()
+
+    return vjtable as VjTable
   } catch (error) {
-    console.error(error)
+    alert('Error loading Getdata!')
+    console.log(error)
   }
 }

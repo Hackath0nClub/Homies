@@ -16,41 +16,38 @@ import OrganizerRow from '../../feature/event/components/OrganizerRow'
 // hooks
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-import useEvent from '../../feature/event/hooks/useEvent'
-import useTimeTable from '../../feature/event/hooks/useDjTimeTable'
-// import useVjTable from '../../feature/event/hooks/useVjTimeTable'
+import { useEvent } from '../../feature/event/hooks/useEvent'
+import { useTimeTable } from '../../feature/event/hooks/useDjTimeTable'
+import useVjTable from '../../feature/event/hooks/useVjTimeTable'
 
 // function
-import { splitDateTime, splitDate } from '../../lib/splitDateTime'
+import {
+  getMonthDay,
+  getYear,
+  getFullDate,
+  getTime,
+} from '../../lib/splitDateTime'
 
 const EventDetails = () => {
   const { query, isReady } = useRouter()
   const id = Number(query.id)
-  const [event, getEvent, updateTitle] = useEvent()
+  const [event, getEvent] = useEvent()
   const [time_table, getTimeTable] = useTimeTable()
-  // // VJテーブルを表示しようとするとエラーになる。ローカルスペックが貧弱？
-  // const [vj_table, getVjTable] = useVjTable()
-  const [start_date, setStartDateTime] = useState<splitDate>()
-  const [end_date, setEndDateTime] = useState<splitDate>()
+  const [vj_table, getVjTable] = useVjTable()
 
   useEffect(() => {
     const init = async () => {
       if (!isReady) return
-      const data = await getEvent(id)
-      if (!data || !data.start_at || !data.end_at) return
-      const splited_start = splitDateTime(new Date(data.start_at))
-      setStartDateTime(splited_start)
-      const splited_end = splitDateTime(new Date(data.end_at))
-      setEndDateTime(splited_end)
+      getEvent(id)
       getTimeTable(id)
-      // getVjTable(id)
+      getVjTable(id)
     }
     init()
   }, [isReady])
 
   return (
     <>
-      {event && start_date && end_date && time_table && (
+      {event && time_table && vj_table && (
         <div className="event-details-container">
           <Head>
             <title>EventDetails - DJEvent</title>
@@ -60,9 +57,9 @@ const EventDetails = () => {
             <div className="event-details-main">
               <TitleRow
                 rootClassName="title-row-root-class-name"
-                title={event.title!}
-                year={start_date.year}
-                date={start_date.monthday}
+                title={event.title}
+                year={event.start_at ? getYear(event.start_at) : null}
+                date={event.start_at ? getMonthDay(event.start_at) : null}
               ></TitleRow>
               <ImageRow
                 rootClassName="image-row-root-class-name"
@@ -77,17 +74,41 @@ const EventDetails = () => {
               <Bar rootClassName="bar-root-class-name1"></Bar>
               <DjTimeTableRow
                 rootClassName="d-j-timetable-row-root-class-name"
-                timetable={time_table}
+                timetable={time_table.map(
+                  ({ start_time, end_time, ...others }) => {
+                    return {
+                      ...others,
+                      start_time: getTime(start_time),
+                      end_time: getTime(end_time),
+                    }
+                  }
+                )}
               ></DjTimeTableRow>
-              {/* <VjTimeTableRow
+              <VjTimeTableRow
                 rootClassName="v-j-timetable-row-root-class-name"
-                timetable={vj_table}
-              ></VjTimeTableRow> */}
+                timetable={vj_table.map(
+                  ({ start_time, end_time, ...others }) => {
+                    return {
+                      ...others,
+                      start_time: getTime(start_time),
+                      end_time: getTime(end_time),
+                    }
+                  }
+                )}
+              ></VjTimeTableRow>
               <DjButton rootClassName="d-j-button-root-class-name"></DjButton>
               <Bar rootClassName="bar-root-class-name2"></Bar>
               <GuestRow
                 rootClassName="guest-row-root-class-name"
-                timetable={time_table}
+                timetable={[...time_table, ...vj_table].map(
+                  ({ start_time, end_time, ...others }) => {
+                    return {
+                      ...others,
+                      start_time: getTime(start_time),
+                      end_time: getTime(end_time),
+                    }
+                  }
+                )}
               ></GuestRow>
             </div>
             <div className="event-details-side">
@@ -95,15 +116,9 @@ const EventDetails = () => {
                 rootClassName="event-items-row-root-class-name"
                 price={event.price}
                 capacity={event.capacity}
-                date={
-                  start_date.year +
-                  '/' +
-                  start_date.monthday +
-                  ' ' +
-                  start_date.weekday
-                }
-                start_time={start_date.time}
-                end_time={end_date.time}
+                date={event.start_at ? getFullDate(event.start_at) : null}
+                start_time={event.start_at ? getTime(event.start_at) : null}
+                end_time={event.end_at ? getTime(event.end_at) : null}
                 location_name={event.location_name}
                 location_url={event.location_url}
                 note={event.note}

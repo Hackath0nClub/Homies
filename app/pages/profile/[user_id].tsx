@@ -15,7 +15,7 @@ const Profile = () => {
       <p>{count}</p>
       <button onClick={() => countUP()}>カウントアップ</button>
       <p>{profile}</p>
-      <button onClick={() => getProfile(1)}>カウントアップ</button>
+      <button onClick={() => getProfile("user-a")}>カウントアップ</button>
     </>
   )
 }

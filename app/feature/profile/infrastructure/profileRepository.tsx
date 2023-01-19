@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
-import { Event } from '../../event/hooks/useEvent'
+import { Profile } from '../../profile/hooks/useProfile'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -14,16 +14,15 @@ export const selectProfileById = async (id: string) => {
       .eq('id', id)
       .single()
     if (error) throw error
-    console.log(data)
 
-    const { start_at, end_at, ...others } = data
-    const event: Event = {
+    const { create_at, updated_at, ...others } = data
+    const profile: Profile = {
       ...others,
-      start_at: start_at ? new Date(start_at) : null,
-      end_at: end_at ? new Date(end_at) : null,
+      create_at: create_at ? new Date(create_at) : null,
+      updated_at: updated_at ? new Date(updated_at) : null,
     }
 
-    return event
+    return profile
   } catch (error) {
     alert('Error loading Getdata!')
     console.log(error)

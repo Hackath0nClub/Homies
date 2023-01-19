@@ -14,7 +14,7 @@ const Profile = () => {
       <p>{user_id}</p>
       <p>{count}</p>
       <button onClick={() => countUP()}>カウントアップ</button>
-      <p>{profile}</p>
+      <p>{profile?.name}</p>
       <button onClick={() => getProfile("user-a")}>カウントアップ</button>
     </>
   )

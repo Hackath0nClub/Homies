@@ -18,7 +18,7 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { useEvent } from '../../feature/event/hooks/useEvent'
 import { useTimeTable } from '../../feature/event/hooks/useDjTimeTable'
-import useVjTable from '../../feature/event/hooks/useVjTimeTable'
+import { useVjTable } from '../../feature/event/hooks/useVjTimeTable'
 
 // function
 import {

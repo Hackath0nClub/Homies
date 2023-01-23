@@ -21,5 +21,5 @@ export const useTimeTable = () => {
     if (list) setTimeTable(list)
   }
 
-  return [time_table, getTimeTable] as const
+  return { time_table, getTimeTable } as const
 }

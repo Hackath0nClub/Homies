@@ -31,9 +31,9 @@ import {
 const EventDetails = () => {
   const { query, isReady } = useRouter()
   const id = Number(query.id)
-  const [event, getEvent] = useEvent()
-  const [time_table, getTimeTable] = useTimeTable()
-  const [vj_table, getVjTable] = useVjTable()
+  const { event, getEvent } = useEvent()
+  const { time_table, getTimeTable } = useTimeTable()
+  const { vj_table, getVjTable } = useVjTable()
 
   useEffect(() => {
     const init = async () => {

@@ -13,7 +13,7 @@ export type VjTable =
     }[]
   | undefined
 
-const useVjTable = () => {
+export const useVjTable = () => {
   const [vj_table, setVjTable] = useState<VjTable>()
 
   const getVjTable = async (id: number) => {
@@ -21,7 +21,5 @@ const useVjTable = () => {
     if (list) setVjTable(list)
   }
 
-  return [vj_table, getVjTable] as const
+  return { vj_table, getVjTable } as const
 }
-
-export default useVjTable

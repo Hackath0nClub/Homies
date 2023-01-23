@@ -28,5 +28,5 @@ export const useEvent = () => {
     if (data) setEvent(data)
   }
 
-  return [event, getEvent] as const
+  return { event, getEvent } as const
 }

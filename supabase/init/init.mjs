@@ -8,6 +8,21 @@ const supabase = createClient(
   process.env.SUPABASE_ANON_KEY
 )
 
+const init = async () => {
+  try {
+    await CreateUsers()
+    await UploadIcon()
+    await InsertEvent()
+    await UploadEventImage()
+    await InsertEventOrganizer()
+    await InsertEventDJ()
+    await InsertEventVJ()
+    await InsertTicket()
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 const CreateUsers = async () => {
   const authjson = await fs.promises.readFile('./data/auth.json', 'utf8')
   const profilejson = await fs.promises.readFile('./data/profile.json', 'utf8')
@@ -98,21 +113,6 @@ const InsertEventVJ = async () => {
   const { error } = await supabase.from('event_vj').insert(input)
   if (error) throw error
   console.log('Successfully inserted event_vj data!')
-}
-
-const init = async () => {
-  try {
-    await CreateUsers()
-    await UploadIcon()
-    await InsertEvent()
-    await UploadEventImage()
-    await InsertEventOrganizer()
-    await InsertEventDJ()
-    await InsertEventVJ()
-    await InsertTicket()
-  } catch (error) {
-    console.error(error)
-  }
 }
 
 init()

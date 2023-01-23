@@ -1,10 +1,5 @@
-import { createClient } from '@supabase/supabase-js'
+import { supabase } from '../../../utils/supabaseClient'
 import { TimeTable } from '../hooks/useDjTimeTable'
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
 
 export const selectEventDjByEventId = async (id: number) => {
   try {
@@ -22,23 +17,29 @@ export const selectEventDjByEventId = async (id: number) => {
       .eq('event_id', id)
     if (error) throw error
 
-    // タイムテーブル順に並び替える
-    if (data.length > 1) data.sort((a, b) => a.row_number - b.row_number)
+    if (data.length > 1) sortByTimetable(data)
+    const timetable: TimeTable = convertDateStringToDateObject(data)
 
-    // 取得データを成形
-    const timetable = data.map((row) => {
-      let { dj, start_time, end_time, ...others } = row
-      return {
-        ...others,
-        ...dj,
-        start_time: start_time ? new Date(start_time) : null,
-        end_time: end_time ? new Date(end_time) : null,
-      }
-    })
-
-    return timetable as TimeTable
+    return timetable
   } catch (error) {
     alert('Error loading Getdata!')
     console.log(error)
   }
+}
+
+const sortByTimetable = (data: any[]) => {
+  return data.sort((a, b) => a.row_number - b.row_number)
+}
+
+const convertDateStringToDateObject = (data: any[]) => {
+  const timetable: TimeTable = data.map((row) => {
+    let { dj, start_time, end_time, ...others } = row
+    return {
+      ...others,
+      ...dj,
+      start_time: start_time ? new Date(start_time) : null,
+      end_time: end_time ? new Date(end_time) : null,
+    }
+  })
+  return timetable
 }

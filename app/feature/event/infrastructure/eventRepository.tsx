@@ -1,30 +1,48 @@
-import { createClient } from '@supabase/supabase-js'
+import { supabase } from '../../../utils/supabaseClient'
 import { Event } from '../hooks/useEvent'
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
 
 export const selectEventById = async (id: number) => {
   try {
     const { data, error } = await supabase
       .from('event')
-      .select('*')
+      .select(
+        `
+        id,
+        title,image_url,
+        text,
+        start_at,
+        end_at,
+        location_name,
+        location_url,
+        price,
+        capacity,
+        note,
+        publicly,
+        create_at,
+        updated_at
+        `
+      )
       .eq('id', id)
       .single()
+
     if (error) throw error
 
-    const { start_at, end_at, ...others } = data
-    const event: Event = {
-      ...others,
-      start_at: start_at ? new Date(start_at) : null,
-      end_at: end_at ? new Date(end_at) : null,
-    }
-
+    const event: Event = convertDateStringToDateObject(data)
     return event
   } catch (error) {
     alert('Error loading Getdata!')
-    console.log(error)
+    console.error(error)
   }
+}
+
+const convertDateStringToDateObject = (data: any) => {
+  const { start_at, end_at, create_at, updated_at, ...others } = data
+  const event: Event = {
+    ...others,
+    start_at: new Date(start_at),
+    end_at: new Date(end_at),
+    create_at: new Date(create_at),
+    updated_at: new Date(updated_at),
+  }
+  return event
 }

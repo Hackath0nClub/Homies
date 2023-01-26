@@ -1,6 +1,6 @@
 type PropsTupe = {
   id: string
-  name: string
+  name: string | null
 }
 
 export const UserName = (props: PropsTupe) => {

@@ -28,3 +28,13 @@ export const selectProfileById = async (id: string) => {
     console.log(error)
   }
 }
+
+export const upsertProfileById = async (text: string) => {
+  try {
+    // TODO
+    const { data, error } = await supabase.upsert() // DBを更新する
+  } catch (error) {
+    alert('Error!')
+    console.log(error)
+  }
+}

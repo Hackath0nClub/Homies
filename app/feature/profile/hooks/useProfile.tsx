@@ -16,14 +16,6 @@ export type Profile =
     }
   | undefined
 
-export const useCounter = () => {
-  const [count, setCount] = useState(1)
-  const countUP = () => {
-    setCount(count + 1)
-  }
-  return [count, countUP] as const
-}
-
 export const useProfile = () => {
   const [profile, setProfile] = useState<Profile>()
 

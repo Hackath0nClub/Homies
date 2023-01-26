@@ -24,7 +24,7 @@ export const useCounter = () => {
 export const useProfile = () => {
   const [profile, setProfile] = useState<Profile>()
 
-  async function getProfile(id: number) {
+  async function getProfile(id: string) {
     const data = await selectProfileById(id)
     if (data) setProfile(data)
   }

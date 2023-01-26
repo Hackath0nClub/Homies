@@ -28,6 +28,7 @@ const Profile = () => {
 
   return (
     <>
+<<<<<<< HEAD
       {/* <p>{count}</p>
       <button onClick={() => countUP()}>カウントアップ</button> */}
       {/* <p>{profile}</p> */}
@@ -38,6 +39,13 @@ const Profile = () => {
       <UserName id={_profile!.id} name={_profile!.name}></UserName>
       <UserIcon icon_url={_profile!.icon_url}></UserIcon>
       <ProfileText text={_profile!.text}></ProfileText>
+=======
+      <p>{user_id}</p>
+      <p>{count}</p>
+      <button onClick={() => countUP()}>カウントアップ</button>
+      <p>{profile}</p>
+      <button onClick={() => getProfile("user-a")}>カウントアップ</button>
+>>>>>>> d44748a (user-aの情報を取るための下準備)
     </>
   )
 }

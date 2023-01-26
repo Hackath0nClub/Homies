@@ -6,14 +6,15 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 )
 
-export const selectProfileById = async (id: number) => {
+export const selectProfileById = async (id: string) => {
   try {
     const { data, error } = await supabase
-      .from('event')
+      .from('profile')
       .select('*')
       .eq('id', id)
       .single()
     if (error) throw error
+    console.log(data)
 
     const { start_at, end_at, ...others } = data
     const event: Event = {

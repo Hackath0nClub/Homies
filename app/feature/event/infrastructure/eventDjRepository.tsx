@@ -17,8 +17,8 @@ export const selectEventDjByEventId = async (id: number) => {
       .eq('event_id', id)
     if (error) throw error
 
-    if (data.length > 1) sortByTimetable(data)
-    const timetable: TimeTable = convertDateStringToDateObject(data)
+    let timetable: TimeTable = flattenTimetable(data)
+    if (data.length > 1) timetable = sortByTimetable(timetable)
 
     return timetable
   } catch (error) {
@@ -31,7 +31,7 @@ const sortByTimetable = (data: any[]) => {
   return data.sort((a, b) => a.row_number - b.row_number)
 }
 
-const convertDateStringToDateObject = (data: any[]) => {
+const flattenTimetable = (data: any[]) => {
   const timetable: TimeTable = data.map((row) => {
     let { dj, start_time, end_time, ...others } = row
     return {

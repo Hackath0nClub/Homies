@@ -17,8 +17,8 @@ export const selectEventVjByEventId = async (id: number) => {
       .eq('event_id', id)
     if (error) throw error
 
-    if (data.length > 1) sortByTimetable(data)
-    const vjtable: VjTable = convertDateStringToDateObject(data)
+    let vjtable: VjTable = flattenVjtable(data)
+    if (data.length > 1) vjtable = sortByTimetable(vjtable)
 
     return vjtable
   } catch (error) {
@@ -31,7 +31,7 @@ const sortByTimetable = (data: any[]) => {
   return data.sort((a, b) => a.row_number - b.row_number)
 }
 
-const convertDateStringToDateObject = (data: any[]) => {
+const flattenVjtable = (data: any[]) => {
   const vjtable: VjTable = data.map((row) => {
     let { vj, start_time, end_time, ...others } = row
     return {

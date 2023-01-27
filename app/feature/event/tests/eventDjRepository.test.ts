@@ -1,3 +1,4 @@
+import { convertDateStringToDateObjectInList } from '../../../lib/convertDateStringToDateObject'
 import { selectEventDjByEventId } from '../infrastructure/eventDjRepository'
 import { TimeTable } from '../hooks/useDjTimeTable'
 import eventdj_json from './data/event_dj.json'
@@ -8,22 +9,9 @@ const main = () => {
   selectEventDjByEventIdTest({ id: 3, expected_result: eventdj_data3 })
 }
 
-const convertDateStringToDateObject = (data: any[]) => {
-  const timetable = data.map((row) => {
-    let { dj, start_time, end_time, ...others } = row
-    return {
-      ...others,
-      ...dj,
-      start_time: start_time ? new Date(start_time) : null,
-      end_time: end_time ? new Date(end_time) : null,
-    }
-  })
-  return timetable
-}
-
-const eventdj_data1 = convertDateStringToDateObject(eventdj_json[0])
-const eventdj_data2 = convertDateStringToDateObject(eventdj_json[1])
-const eventdj_data3 = convertDateStringToDateObject(eventdj_json[2])
+const eventdj_data1 = convertDateStringToDateObjectInList(eventdj_json[0])
+const eventdj_data2 = convertDateStringToDateObjectInList(eventdj_json[1])
+const eventdj_data3 = convertDateStringToDateObjectInList(eventdj_json[2])
 
 type testCaseType = {
   id: number

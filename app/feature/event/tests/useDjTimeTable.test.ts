@@ -1,3 +1,4 @@
+import { convertDateStringToDateObjectInList } from '../../../lib/convertDateStringToDateObject'
 import { renderHook } from '@testing-library/react'
 import eventdj_json from './data/event_dj.json'
 import { act } from 'react-dom/test-utils'
@@ -25,25 +26,12 @@ const main = () => {
   })
 }
 
-const convertDateStringToDateObject = (data: any[]) => {
-  const timetable: TimeTable = data.map((row) => {
-    let { dj, start_time, end_time, ...others } = row
-    return {
-      ...others,
-      ...dj,
-      start_time: start_time ? new Date(start_time) : null,
-      end_time: end_time ? new Date(end_time) : null,
-    }
-  })
-  return timetable
-}
-
-const mock1 = convertDateStringToDateObject(eventdj_json[0])
-const mock2 = convertDateStringToDateObject(eventdj_json[1])
-const mock3 = convertDateStringToDateObject(eventdj_json[2])
-const data1 = convertDateStringToDateObject(eventdj_json[0])
-const data2 = convertDateStringToDateObject(eventdj_json[1])
-const data3 = convertDateStringToDateObject(eventdj_json[2])
+const mock1 = convertDateStringToDateObjectInList(eventdj_json[0])
+const mock2 = convertDateStringToDateObjectInList(eventdj_json[1])
+const mock3 = convertDateStringToDateObjectInList(eventdj_json[2])
+const data1 = convertDateStringToDateObjectInList(eventdj_json[0])
+const data2 = convertDateStringToDateObjectInList(eventdj_json[1])
+const data3 = convertDateStringToDateObjectInList(eventdj_json[2])
 
 type testCaseType = {
   id: number

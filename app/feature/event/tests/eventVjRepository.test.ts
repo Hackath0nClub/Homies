@@ -1,7 +1,7 @@
 import { convertDateStringToDateObjectInList } from '../../../lib/convertDateStringToDateObject'
 import { selectEventVjByEventId } from '../infrastructure/eventVjRepository'
-import { VjTable } from '../hooks/useVjTimeTable'
-import eventvj_json from './data/event_vj.json'
+import { VjTable } from '../hooks/useEvent'
+import eventvj_json from './data/vjtable.json'
 
 const main = () => {
   selectEventVjByEventIdTest({ id: 1, expected_result: eventvj_data1 })

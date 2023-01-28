@@ -1,6 +1,6 @@
 import { convertDateStringToDateObjectInList } from '../../../lib/convertDateStringToDateObject'
 import { selectOrganizersByEventId } from '../infrastructure/eventOrganizerRepository'
-// import { Lisners } from '../hooks/useLisner'
+import { Organizers } from '../hooks/useEvent'
 import organizer_json from './data/event_organizer.json'
 
 const main = () => {
@@ -15,7 +15,7 @@ const organizer_data3 = convertDateStringToDateObjectInList(organizer_json[2])
 
 type testCaseType = {
   id: number
-  expected_result: any
+  expected_result: Organizers
 }
 
 const selectOrganizersByEventIdTest = ({

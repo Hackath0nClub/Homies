@@ -1,7 +1,7 @@
 import { convertDateStringToDateObjectInList } from '../../../lib/convertDateStringToDateObject'
 import { selectEventDjByEventId } from '../infrastructure/eventDjRepository'
-import { TimeTable } from '../hooks/useDjTimeTable'
-import eventdj_json from './data/event_dj.json'
+import { TimeTable } from '../hooks/useEvent'
+import eventdj_json from './data/timetable.json'
 
 const main = () => {
   selectEventDjByEventIdTest({ id: 1, expected_result: eventdj_data1 })

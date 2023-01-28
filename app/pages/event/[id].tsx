@@ -32,7 +32,7 @@ import {
 const EventDetails = () => {
   const { query, isReady } = useRouter()
   const id = Number(query.id)
-  const { event, loadEvent } = useEvent()
+  const { event, organizers, loadEvent } = useEvent()
   const { time_table, getTimeTable } = useTimeTable()
   const { vj_table, getVjTable } = useVjTable()
   const { lisners, getLisners } = useLisner()
@@ -50,7 +50,7 @@ const EventDetails = () => {
 
   return (
     <>
-      {event && time_table && vj_table && lisners && (
+      {event && time_table && vj_table && lisners && organizers && (
         <div className="event-details-container">
           <Head>
             <title>EventDetails - DJEvent</title>
@@ -127,7 +127,10 @@ const EventDetails = () => {
                 note={event.note}
                 lisners={lisners.length}
               ></EventItemsRow>
-              <OrganizerRow rootClassName="organizer-row-root-class-name"></OrganizerRow>
+              <OrganizerRow
+                rootClassName="organizer-row-root-class-name"
+                organizers={organizers}
+              ></OrganizerRow>
               <span className="event-details-terms-text">
                 <span>
                   <span>利用規約　プライバシーポリシー</span>

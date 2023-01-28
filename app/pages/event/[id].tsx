@@ -32,7 +32,7 @@ import {
 const EventDetails = () => {
   const { query, isReady } = useRouter()
   const id = Number(query.id)
-  const { event, getEvent } = useEvent()
+  const { event, loadEvent } = useEvent()
   const { time_table, getTimeTable } = useTimeTable()
   const { vj_table, getVjTable } = useVjTable()
   const { lisners, getLisners } = useLisner()
@@ -40,7 +40,7 @@ const EventDetails = () => {
   useEffect(() => {
     const init = async () => {
       if (!isReady) return
-      getEvent(id)
+      loadEvent(id)
       getTimeTable(id)
       getVjTable(id)
       getLisners(id)

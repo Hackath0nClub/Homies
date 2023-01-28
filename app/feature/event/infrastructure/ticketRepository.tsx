@@ -1,5 +1,5 @@
 import { supabase } from '../../../utils/supabaseClient'
-import { Lisners } from '../hooks/useLisner'
+import { Lisners } from '../hooks/useEvent'
 
 export const selectLisnersByEventId = async (id: number) => {
   try {
@@ -8,28 +8,28 @@ export const selectLisnersByEventId = async (id: number) => {
       .select(
         `
         user_id,
-        lisner:user_id(name,icon_url)
+        user:user_id(name,icon_url)
         `
       )
       .eq('event_id', id)
     if (error) throw error
 
-    const lisners: Lisners = flattenLisners(data)
+    const lisners = flattenObjectList(data)
 
-    return lisners
+    return lisners as Lisners
   } catch (error) {
     alert('Error loading Getdata!')
     console.log(error)
   }
 }
 
-const flattenLisners = (data: any[]) => {
-  const lisners: Lisners = data.map((item) => {
-    const { lisner, ...others } = item
+const flattenObjectList = (data: any[]) => {
+  const obj_list = data.map((obj) => {
+    const { user, ...others } = obj
     return {
       ...others,
-      ...lisner,
+      ...user,
     }
   })
-  return lisners
+  return obj_list
 }

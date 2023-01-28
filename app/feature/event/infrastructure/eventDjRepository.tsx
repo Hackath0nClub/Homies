@@ -1,5 +1,6 @@
+import { convertDateStringToDateObjectInList } from '../../../lib/convertDateStringToDateObject'
 import { supabase } from '../../../utils/supabaseClient'
-import { TimeTable } from '../hooks/useDjTimeTable'
+import { TimeTable } from '../hooks/useEvent'
 
 export const selectEventDjByEventId = async (id: number) => {
   try {
@@ -11,16 +12,17 @@ export const selectEventDjByEventId = async (id: number) => {
         start_time,
         end_time,
         user_id,
-        dj:user_id(name,icon_url,text)
+        user:user_id(name,icon_url,text)
         `
       )
       .eq('event_id', id)
     if (error) throw error
 
-    let timetable: TimeTable = flattenTimetable(data)
+    let timetable = flattenObjectList(data)
+    timetable = convertDateStringToDateObjectInList(timetable)
     if (data.length > 1) timetable = sortByTimetable(timetable)
 
-    return timetable
+    return timetable as TimeTable
   } catch (error) {
     alert('Error loading Getdata!')
     console.log(error)
@@ -31,15 +33,13 @@ const sortByTimetable = (data: any[]) => {
   return data.sort((a, b) => a.row_number - b.row_number)
 }
 
-const flattenTimetable = (data: any[]) => {
-  const timetable: TimeTable = data.map((row) => {
-    let { dj, start_time, end_time, ...others } = row
+const flattenObjectList = (data: any[]) => {
+  const obj_list = data.map((obj) => {
+    const { user, ...others } = obj
     return {
       ...others,
-      ...dj,
-      start_time: start_time ? new Date(start_time) : null,
-      end_time: end_time ? new Date(end_time) : null,
+      ...user,
     }
   })
-  return timetable
+  return obj_list
 }

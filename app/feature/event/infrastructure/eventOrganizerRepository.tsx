@@ -1,19 +1,19 @@
 import { supabase } from '../../../utils/supabaseClient'
-// import { Lisners } from '../hooks/useLisner'
+import { Organizers } from '../hooks/useEvent'
 
-export const selectOrganizerByEventId = async (id: number) => {
+export const selectOrganizersByEventId = async (id: number) => {
   try {
     const { data, error } = await supabase
       .from('event_organizer')
       .select(
         `
         user_id,
-        organizer:user_id(name,icon_url,text)
+        user:user_id(name,icon_url,text)
         `
       )
       .eq('event_id', id)
     if (error) throw error
-    const organizers: any = flattenorganizer(data)
+    const organizers: Organizers = flattenObjectList(data)
     return organizers
   } catch (error) {
     alert('Error loading Getdata!')
@@ -21,13 +21,13 @@ export const selectOrganizerByEventId = async (id: number) => {
   }
 }
 
-const flattenorganizer = (data: any[]) => {
-  const organizers: any = data.map((item) => {
-    const { organizer, ...others } = item
+const flattenObjectList = (data: any[]) => {
+  const obj_list = data.map((obj) => {
+    const { user, ...others } = obj
     return {
       ...others,
-      ...organizer,
+      ...user,
     }
   })
-  return organizers
+  return obj_list
 }

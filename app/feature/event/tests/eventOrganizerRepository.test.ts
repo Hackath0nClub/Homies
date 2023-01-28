@@ -1,12 +1,12 @@
 import { convertDateStringToDateObjectInList } from '../../../lib/convertDateStringToDateObject'
-import { selectOrganizerByEventId } from '../infrastructure/eventOrganizerRepository'
+import { selectOrganizersByEventId } from '../infrastructure/eventOrganizerRepository'
 // import { Lisners } from '../hooks/useLisner'
 import organizer_json from './data/event_organizer.json'
 
 const main = () => {
-  selectOrganizerByEventIdTest({ id: 1, expected_result: organizer_data1 })
-  selectOrganizerByEventIdTest({ id: 2, expected_result: organizer_data2 })
-  selectOrganizerByEventIdTest({ id: 3, expected_result: organizer_data3 })
+  selectOrganizersByEventIdTest({ id: 1, expected_result: organizer_data1 })
+  selectOrganizersByEventIdTest({ id: 2, expected_result: organizer_data2 })
+  selectOrganizersByEventIdTest({ id: 3, expected_result: organizer_data3 })
 }
 
 const organizer_data1 = convertDateStringToDateObjectInList(organizer_json[0])
@@ -18,12 +18,12 @@ type testCaseType = {
   expected_result: any
 }
 
-const selectOrganizerByEventIdTest = ({
+const selectOrganizersByEventIdTest = ({
   id,
   expected_result,
 }: testCaseType) => {
-  test('selectOrganizerByEventId id=' + id, async () => {
-    const result = await selectOrganizerByEventId(id)
+  test('selectOrganizersByEventId id=' + id, async () => {
+    const result = await selectOrganizersByEventId(id)
     expect(result).toStrictEqual(expected_result)
   })
 }

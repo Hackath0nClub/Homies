@@ -1,5 +1,6 @@
+import { convertDateStringToDateObjectInList } from '../../../lib/convertDateStringToDateObject'
 import { supabase } from '../../../utils/supabaseClient'
-import { VjTable } from '../hooks/useVjTimeTable'
+import { VjTable } from '../hooks/useEvent'
 
 export const selectEventVjByEventId = async (id: number) => {
   try {
@@ -11,16 +12,17 @@ export const selectEventVjByEventId = async (id: number) => {
         start_time,
         end_time,
         user_id,
-        vj:user_id(name,icon_url,text)
+        user:user_id(name,icon_url,text)
         `
       )
       .eq('event_id', id)
     if (error) throw error
 
-    let vjtable: VjTable = flattenVjtable(data)
+    let vjtable = flattenObjectList(data)
+    vjtable = convertDateStringToDateObjectInList(vjtable)
     if (data.length > 1) vjtable = sortByTimetable(vjtable)
 
-    return vjtable
+    return vjtable as VjTable
   } catch (error) {
     alert('Error loading Getdata!')
     console.log(error)
@@ -31,15 +33,13 @@ const sortByTimetable = (data: any[]) => {
   return data.sort((a, b) => a.row_number - b.row_number)
 }
 
-const flattenVjtable = (data: any[]) => {
-  const vjtable: VjTable = data.map((row) => {
-    let { vj, start_time, end_time, ...others } = row
+const flattenObjectList = (data: any[]) => {
+  const obj_list = data.map((obj) => {
+    const { user, ...others } = obj
     return {
       ...others,
-      ...vj,
-      start_time: start_time ? new Date(start_time) : null,
-      end_time: end_time ? new Date(end_time) : null,
+      ...user,
     }
   })
-  return vjtable
+  return obj_list
 }

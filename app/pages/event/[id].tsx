@@ -17,9 +17,6 @@ import OrganizerRow from '../../feature/event/components/OrganizerRow'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useEvent } from '../../feature/event/hooks/useEvent'
-import { useTimeTable } from '../../feature/event/hooks/useDjTimeTable'
-import { useVjTable } from '../../feature/event/hooks/useVjTimeTable'
-import { useLisner } from '../../feature/event/hooks/useLisner'
 
 // function
 import {
@@ -32,25 +29,20 @@ import {
 const EventDetails = () => {
   const { query, isReady } = useRouter()
   const id = Number(query.id)
-  const { event, organizers, loadEvent } = useEvent()
-  const { time_table, getTimeTable } = useTimeTable()
-  const { vj_table, getVjTable } = useVjTable()
-  const { lisners, getLisners } = useLisner()
+  const { event, organizers, timetable, vjtable, lisners, loadEvent } =
+    useEvent()
 
   useEffect(() => {
     const init = async () => {
       if (!isReady) return
       loadEvent(id)
-      getTimeTable(id)
-      getVjTable(id)
-      getLisners(id)
     }
     init()
   }, [isReady])
 
   return (
     <>
-      {event && time_table && vj_table && lisners && organizers && (
+      {event && timetable && vjtable && lisners && organizers && (
         <div className="event-details-container">
           <Head>
             <title>EventDetails - DJEvent</title>
@@ -77,7 +69,7 @@ const EventDetails = () => {
               <Bar rootClassName="bar-root-class-name1"></Bar>
               <DjTimeTableRow
                 rootClassName="d-j-timetable-row-root-class-name"
-                timetable={time_table.map(
+                timetable={timetable.map(
                   ({ start_time, end_time, ...others }) => {
                     return {
                       ...others,
@@ -89,7 +81,7 @@ const EventDetails = () => {
               ></DjTimeTableRow>
               <VjTimeTableRow
                 rootClassName="v-j-timetable-row-root-class-name"
-                timetable={vj_table.map(
+                timetable={vjtable.map(
                   ({ start_time, end_time, ...others }) => {
                     return {
                       ...others,
@@ -103,7 +95,7 @@ const EventDetails = () => {
               <Bar rootClassName="bar-root-class-name2"></Bar>
               <GuestRow
                 rootClassName="guest-row-root-class-name"
-                timetable={[...time_table, ...vj_table].map(
+                timetable={[...timetable, ...vjtable].map(
                   ({ start_time, end_time, ...others }) => {
                     return {
                       ...others,

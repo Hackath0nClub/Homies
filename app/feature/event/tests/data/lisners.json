@@ -1,0 +1,23 @@
+[
+  [
+    {
+      "user_id": "user-e",
+      "name": "userE",
+      "icon_url": "http://localhost:54321/storage/v1/object/public/profile/user-e.png"
+    }
+  ],
+  [
+    {
+      "user_id": "user-e",
+      "name": "userE",
+      "icon_url": "http://localhost:54321/storage/v1/object/public/profile/user-e.png"
+    }
+  ],
+  [
+    {
+      "user_id": "user-e",
+      "name": "userE",
+      "icon_url": "http://localhost:54321/storage/v1/object/public/profile/user-e.png"
+    }
+  ]
+]

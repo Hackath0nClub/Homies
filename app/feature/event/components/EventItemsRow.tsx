@@ -11,6 +11,7 @@ type propsType = {
   location_name: string | null
   location_url: string | null
   note: string | null
+  lisners: number
 }
 
 const EventItemsRow = (props: propsType) => {
@@ -52,7 +53,7 @@ const EventItemsRow = (props: propsType) => {
               <span className="event-items-row-limit-title1">制限人数</span>
             </div>
             <span className="event-items-row-limit-text">
-              10人 / {props.capacity}人
+              {props.lisners}人 / {props.capacity}人
             </span>
           </div>
           <HorizontalRule rootClassName="bar-root-class-name3"></HorizontalRule>

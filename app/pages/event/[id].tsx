@@ -15,10 +15,11 @@ import OrganizerRow from '../../feature/event/components/OrganizerRow'
 
 // hooks
 import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useEvent } from '../../feature/event/hooks/useEvent'
 import { useTimeTable } from '../../feature/event/hooks/useDjTimeTable'
 import { useVjTable } from '../../feature/event/hooks/useVjTimeTable'
+import { useTicket } from '../../feature/event/hooks/useTicket'
 
 // function
 import {
@@ -34,6 +35,7 @@ const EventDetails = () => {
   const { event, getEvent } = useEvent()
   const { time_table, getTimeTable } = useTimeTable()
   const { vj_table, getVjTable } = useVjTable()
+  const { lisners, getLisners } = useTicket()
 
   useEffect(() => {
     const init = async () => {
@@ -41,13 +43,14 @@ const EventDetails = () => {
       getEvent(id)
       getTimeTable(id)
       getVjTable(id)
+      getLisners(id)
     }
     init()
   }, [isReady])
 
   return (
     <>
-      {event && time_table && vj_table && (
+      {event && time_table && vj_table && lisners && (
         <div className="event-details-container">
           <Head>
             <title>EventDetails - DJEvent</title>
@@ -122,6 +125,7 @@ const EventDetails = () => {
                 location_name={event.location_name}
                 location_url={event.location_url}
                 note={event.note}
+                lisners={lisners.length}
               ></EventItemsRow>
               <OrganizerRow rootClassName="organizer-row-root-class-name"></OrganizerRow>
               <span className="event-details-terms-text">

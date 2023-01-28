@@ -7,12 +7,12 @@ import * as ticketRepository from '../infrastructure/ticketRepository'
 jest.mock('../infrastructure/ticketRepository')
 const selectLisnersByEventIdMock =
   ticketRepository.selectLisnersByEventId as jest.Mock
-import { useTicket, Lisners } from '../hooks/useTicket'
+import { useLisner, Lisners } from '../hooks/useLisner'
 
 let result: any
 const main = () => {
   beforeEach(() => {
-    result = renderHook(() => useTicket()).result
+    result = renderHook(() => useLisner()).result
     selectLisnersByEventIdMock.mockClear()
   })
 

@@ -1,6 +1,6 @@
 import { convertDateStringToDateObjectInList } from '../../../lib/convertDateStringToDateObject'
 import { selectLisnersByEventId } from '../infrastructure/ticketRepository'
-import { Lisners } from '../hooks/useTicket'
+import { Lisners } from '../hooks/useLisner'
 import lisners_json from './data/lisners.json'
 
 const main = () => {

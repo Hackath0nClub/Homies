@@ -9,7 +9,7 @@ export type Lisners =
     }[]
   | undefined
 
-export const useTicket = () => {
+export const useLisner = () => {
   const [lisners, setLisners] = useState<Lisners>()
 
   async function getLisners(id: number) {

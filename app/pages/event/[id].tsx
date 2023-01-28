@@ -19,7 +19,7 @@ import { useEffect } from 'react'
 import { useEvent } from '../../feature/event/hooks/useEvent'
 import { useTimeTable } from '../../feature/event/hooks/useDjTimeTable'
 import { useVjTable } from '../../feature/event/hooks/useVjTimeTable'
-import { useTicket } from '../../feature/event/hooks/useTicket'
+import { useLisner } from '../../feature/event/hooks/useLisner'
 
 // function
 import {
@@ -35,7 +35,7 @@ const EventDetails = () => {
   const { event, getEvent } = useEvent()
   const { time_table, getTimeTable } = useTimeTable()
   const { vj_table, getVjTable } = useVjTable()
-  const { lisners, getLisners } = useTicket()
+  const { lisners, getLisners } = useLisner()
 
   useEffect(() => {
     const init = async () => {

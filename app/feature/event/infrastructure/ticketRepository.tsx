@@ -1,5 +1,5 @@
 import { supabase } from '../../../utils/supabaseClient'
-import { Lisners } from '../hooks/useTicket'
+import { Lisners } from '../hooks/useLisner'
 
 export const selectLisnersByEventId = async (id: number) => {
   try {

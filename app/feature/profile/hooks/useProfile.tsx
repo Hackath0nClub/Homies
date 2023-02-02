@@ -25,7 +25,6 @@ export const useProfile = () => {
   }
 
   async function setProfileText(text: string | null, id: string) {
-    // TODO
     const data = await upsertProfileById(text, id) // Supabaseを更新する
     if (data) setProfile(data)
   }

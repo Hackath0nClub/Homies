@@ -1,7 +1,3 @@
 export default function EventEdit() {
-  return (
-    <>
-      <p>edit</p>
-    </>
-  )
+  return <h1 className="text-3xl font-bold underline">Hello world!</h1>
 }

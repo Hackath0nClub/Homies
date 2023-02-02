@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { selectProfileById } from '../infrastructure/profileRepository'
+import { selectProfileById, upsertProfileById } from '../infrastructure/profileRepository'
 
 export type Profile =
   | {
@@ -24,14 +24,11 @@ export const useProfile = () => {
     if (data) setProfile(data)
   }
 
-  async function setProfileText(text: string) {
+  async function setProfileText(text: string | null, id: string) {
     // TODO
-    const { error } = await upsertProfileById(text) // Supabaseを更新する
-    if (error) return
-    // TODO
-    const data = {} // textを更新する
-    setProfile(data)
+    const data = await upsertProfileById(text, id) // Supabaseを更新する
+    if (data) setProfile(data)
   }
 
-  return [profile, getProfile] as const
+  return [profile, getProfile, setProfileText] as const
 }

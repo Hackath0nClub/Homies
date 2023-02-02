@@ -29,10 +29,25 @@ export const selectProfileById = async (id: string) => {
   }
 }
 
-export const upsertProfileById = async (text: string) => {
+export const upsertProfileById = async (text: string | null, id: string) => {
   try {
-    // TODO
-    const { data, error } = await supabase.upsert() // DBを更新する
+    const { data, error } = await supabase
+    .from('profile')
+    .update({ 'text': text })
+    .eq('id', id)
+    .select()
+    .single()// DBを更新する
+
+    if (error) throw error
+    
+    const { create_at, updated_at, ...others } = data
+    const profile: Profile = {
+      ...others,
+      create_at: create_at ? new Date(create_at) : null,
+      updated_at: updated_at ? new Date(updated_at) : null,
+    }
+
+    return profile
   } catch (error) {
     alert('Error!')
     console.log(error)

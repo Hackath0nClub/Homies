@@ -10,7 +10,7 @@ import { useProfile } from '../../feature/profile/hooks/useProfile'
 const ProfilePage = () => {
   const { query, isReady } = useRouter()
   const user_id = query.user_id
-  const [profile, getProfile] = useProfile()
+  const [profile, getProfile, setProfileText] = useProfile()
 
   useEffect(() => {
     if (typeof user_id != 'string') return
@@ -23,6 +23,8 @@ const ProfilePage = () => {
         <>
           <UserName id={profile.id} name={profile.name}></UserName>
           <UserIcon icon_url={profile.icon_url}></UserIcon>
+          <input type="text" defaultValue={profile.text ?? ''}></input>
+          <button onClick={() => setProfileText(profile.text, profile.id)}>押す</button>
         </>
       )}
 

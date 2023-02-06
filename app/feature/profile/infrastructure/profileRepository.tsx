@@ -33,7 +33,7 @@ export const upsertProfileById = async (text: string | null, id: string) => {
   try {
     const { data, error } = await supabase
     .from('profile')
-    .update({ 'text': text })
+    .update({ 'text': text, 'updated_at' : new Date()})
     .eq('id', id)
     .select()
     .single()// DBを更新する

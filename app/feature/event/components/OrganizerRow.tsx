@@ -1,7 +1,4 @@
-import React from 'react'
-
 type propsType = {
-  rootClassName: string
   organizers: {
     name: string
     user_id: string
@@ -13,211 +10,31 @@ type propsType = {
 const OrganizerRow = (props: propsType) => {
   return (
     <>
-      <div className={`organizer-row-container ${props.rootClassName} `}>
-        <div className="organizer-row-organizer-row">
-          <span className="organizer-row-organizer-title">
-            <span>主催</span>
-          </span>
-          {props.organizers.map((organizer) => {
-            return (
-              <>
-                <div className="organizer-row-s-n-s">
-                  <div className="organizer-row-organaizer">
-                    {organizer.icon_url && (
-                      <img
-                        alt={organizer.icon_url}
-                        src={organizer.icon_url}
-                        className="organizer-row-organaizer-icon"
-                      />
-                    )}
-                    <div className="organizer-row-s-n-s-name">
-                      <span className="organizer-row-s-n-s-name-text">
-                        <span>{organizer.name}</span>
-                      </span>
-                      <span className="organizer-row-s-n-s-i-d-text">
-                        <span>{organizer.user_id}</span>
-                      </span>
-                    </div>
-                  </div>
-                  <button className="organizer-row-s-n-s-button button">
-                    <img
-                      alt="/playground_assets/mditwitter1032-blgd.svg"
-                      src="/playground_assets/mditwitter1032-blgd.svg"
-                      className="organizer-row-mditwitter"
-                    />
-                    <span>フォロー</span>
-                  </button>
-                </div>
-                <div className="organizer-row-frame10">
-                  <div className="organizer-row-frame7">
-                    <span className="organizer-row-text2">
-                      <span>
-                        <span>{organizer.text}</span>
-                        <br></br>
-                      </span>
-                    </span>
-                  </div>
-                </div>
-              </>
-            )
-          })}
-        </div>
+      <div className="border border-gray-500 rounded-xl w-full bg-[rgba(47,51,56,1)] my-4">
+        <p className="p-4 w-full flex items-start self-stretch text-xl text-white text-left">
+          主催
+        </p>
+        <div className="border-t-2 border-gray-500"></div>
+
+        {props.organizers.map((organizer) => {
+          return (
+            <div
+              className="w-full grid grid-cols-3 gap-8 m-8"
+              key={organizer.user_id}
+            >
+              <img
+                alt={organizer.name!}
+                src={organizer.icon_url!}
+                className="rounded-full col-span-1"
+              />
+              <div className="col-span-2">
+                <p className="text-white text-xl">{organizer.name}</p>
+                <p className="text-white text-base">{organizer.text}</p>
+              </div>
+            </div>
+          )
+        })}
       </div>
-      <style jsx>
-        {`
-          .organizer-row-container {
-            width: 100%;
-            height: auto;
-            display: flex;
-            position: relative;
-            align-items: flex-start;
-            flex-direction: column;
-          }
-          .organizer-row-organizer-row {
-            width: 100%;
-            display: flex;
-            position: relative;
-            align-self: stretch;
-            align-items: flex-start;
-            padding-top: 4%;
-            border-color: rgba(190, 190, 190, 1);
-            border-style: solid;
-            border-width: 0.5px;
-            border-radius: 12px;
-            margin-bottom: 4%;
-            flex-direction: column;
-            padding-bottom: 4%;
-            background-color: rgba(46, 51, 56, 1);
-          }
-          .organizer-row-organizer-title {
-            color: rgb(255, 255, 255);
-            width: auto;
-            height: auto;
-            font-size: 26px;
-            align-self: auto;
-            font-style: normal;
-            text-align: left;
-            font-family: Noto Sans JP;
-            font-weight: 500;
-            line-height: normal;
-            margin-left: 4%;
-            font-stretch: normal;
-            margin-right: 4%;
-            margin-bottom: 4%;
-            text-decoration: none;
-          }
-          .organizer-row-s-n-s {
-            display: flex;
-            padding: 12px 16px;
-            position: relative;
-            align-self: stretch;
-            align-items: center;
-            flex-shrink: 0;
-            border-color: transparent;
-            margin-bottom: 0px;
-          }
-          .organizer-row-organaizer {
-            display: flex;
-            position: relative;
-            align-items: center;
-            border-color: transparent;
-            margin-right: 16px;
-          }
-          .organizer-row-organaizer-icon {
-            width: 48px;
-            height: 48px;
-            position: relative;
-            border-color: transparent;
-            margin-right: 12px;
-            border-radius: 24px;
-          }
-          .organizer-row-s-n-s-name {
-            display: flex;
-            position: relative;
-            align-items: flex-start;
-            border-color: transparent;
-            flex-direction: column;
-          }
-          .organizer-row-s-n-s-name-text {
-            color: rgba(255, 255, 255, 1);
-            height: auto;
-            font-size: 20px;
-            align-self: auto;
-            font-style: Bold;
-            text-align: left;
-            font-family: Noto Sans JP;
-            font-weight: 700;
-            line-height: normal;
-            font-stretch: normal;
-            margin-right: 0;
-            margin-bottom: 0px;
-            text-decoration: none;
-          }
-          .organizer-row-s-n-s-i-d-text {
-            color: rgba(166, 166, 166, 1);
-            height: auto;
-            font-size: 20px;
-            align-self: auto;
-            font-style: Regular;
-            text-align: left;
-            font-family: Noto Sans JP;
-            font-weight: 400;
-            line-height: normal;
-            font-stretch: normal;
-            margin-right: 0;
-            margin-bottom: 0;
-            text-decoration: none;
-          }
-          .organizer-row-s-n-s-button {
-            width: 100%;
-            display: flex;
-            align-self: center;
-            border-radius: 16px;
-            flex-direction: row;
-            justify-content: center;
-          }
-          .organizer-row-mditwitter {
-            width: 20px;
-            height: 20px;
-            position: relative;
-            margin-right: 4px;
-          }
-          .organizer-row-frame10 {
-            display: flex;
-            padding: 0 16px 16px 16px;
-            position: relative;
-            align-self: stretch;
-            align-items: flex-start;
-            border-color: transparent;
-            flex-direction: column;
-            justify-content: center;
-          }
-          .organizer-row-frame7 {
-            display: flex;
-            position: relative;
-            align-self: stretch;
-            align-items: center;
-            flex-shrink: 0;
-            border-color: transparent;
-          }
-          .organizer-row-text2 {
-            color: rgba(166, 166, 166, 1);
-            height: auto;
-            flex-grow: 1;
-            font-size: 16px;
-            align-self: auto;
-            font-style: Regular;
-            text-align: left;
-            font-family: Noto Sans JP;
-            font-weight: 400;
-            line-height: normal;
-            font-stretch: normal;
-            margin-right: 0;
-            margin-bottom: 0;
-            text-decoration: none;
-          }
-        `}
-      </style>
     </>
   )
 }

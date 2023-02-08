@@ -50,6 +50,11 @@ const EventDetails = () => {
       {event && timetable && vjtable && lisners && organizers && (
         <div className="flex justify-center min-h-screen bg-[rgba(28,32,37,1)]">
           <div className="w-5/6 grid md:grid-cols-10 sm:grid-cols-1 gap-8 m-8">
+            <div className="col-span-10">
+              <button className="px-4 py-2 mt-4 text-white transition-colors duration-300 border border-gray-200 bg-[rgba(28,32,37,1)] rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+                イベントページを更新
+              </button>
+            </div>
             <div className="md:col-span-6">
               <div className="mt-4">
                 <label className="block text-gray-500 dark:text-gray-300">

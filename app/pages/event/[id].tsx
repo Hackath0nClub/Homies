@@ -32,11 +32,12 @@ const EventDetails = () => {
   const { event, organizers, timetable, vjtable, lisners, loadEvent } =
     useEvent()
 
+  const init = async () => {
+    if (!isReady) return
+    loadEvent(id)
+  }
+
   useEffect(() => {
-    const init = async () => {
-      if (!isReady) return
-      loadEvent(id)
-    }
     init()
   }, [isReady])
 

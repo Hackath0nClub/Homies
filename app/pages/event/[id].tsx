@@ -1,5 +1,4 @@
 import React from 'react'
-import Head from 'next/head'
 
 // components
 import { TitleRow } from '../../feature/event/components/TitleRow'
@@ -29,12 +28,11 @@ import {
 const EventDetails = () => {
   const { query, isReady } = useRouter()
   const id = Number(query.id)
-  const { event, organizers, timetable, vjtable, lisners, loadEvent } =
-    useEvent()
+  const { event, handleEvent } = useEvent()
 
   const init = async () => {
     if (!isReady) return
-    loadEvent(id)
+    handleEvent.loadEvent(id)
   }
 
   useEffect(() => {
@@ -42,78 +40,88 @@ const EventDetails = () => {
   }, [isReady])
 
   return (
-    <>
-      <Head>
-        <title>EventDetails - DJEvent</title>
-        <meta property="og:title" content="EventDetails - DJEvent" />
-      </Head>
-      {event && timetable && vjtable && lisners && organizers && (
-        <div className="flex justify-center min-h-screen bg-[rgba(28,32,37,1)]">
-          <div className="w-5/6 grid md:grid-cols-10 sm:grid-cols-1 gap-8 m-8">
-            <div className="md:col-span-6">
-              <TitleRow
-                title={event.title}
-                year={event.start_at ? getYear(event.start_at) : null}
-                date={event.start_at ? getMonthDay(event.start_at) : null}
-              ></TitleRow>
-              <ImageRow alt={event.title!} src={event.image_url!}></ImageRow>
-              <Bar />
-              <DescriptionRow text={event.text!}></DescriptionRow>
-              <Bar />
-              <DjTimeTableRow
-                timetable={timetable.map(
-                  ({ start_time, end_time, ...others }) => {
-                    return {
-                      ...others,
-                      start_time: getTime(start_time),
-                      end_time: getTime(end_time),
-                    }
+    <div className="flex justify-center min-h-screen bg-[rgba(28,32,37,1)]">
+      <div className="w-5/6 grid md:grid-cols-10 sm:grid-cols-1 gap-8 m-8">
+        <div className="md:col-span-6">
+          {event.base && (
+            <TitleRow
+              title={event.base.title}
+              year={event.base.start_at ? getYear(event.base.start_at) : null}
+              date={
+                event.base.start_at ? getMonthDay(event.base.start_at) : null
+              }
+            />
+          )}
+          {event.base && (
+            <ImageRow alt={event.base.title!} src={event.base.image_url!} />
+          )}
+          <Bar />
+          {event.base && <DescriptionRow text={event.base.text!} />}
+          <Bar />
+          {event.timetable && (
+            <DjTimeTableRow
+              timetable={event.timetable.map(
+                ({ start_time, end_time, ...others }) => {
+                  return {
+                    ...others,
+                    start_time: getTime(start_time),
+                    end_time: getTime(end_time),
                   }
-                )}
-              ></DjTimeTableRow>
-              <VjTimeTableRow
-                timetable={vjtable.map(
-                  ({ start_time, end_time, ...others }) => {
-                    return {
-                      ...others,
-                      start_time: getTime(start_time),
-                      end_time: getTime(end_time),
-                    }
+                }
+              )}
+            />
+          )}
+          {event.vjtable && (
+            <VjTimeTableRow
+              timetable={event.vjtable.map(
+                ({ start_time, end_time, ...others }) => {
+                  return {
+                    ...others,
+                    start_time: getTime(start_time),
+                    end_time: getTime(end_time),
                   }
-                )}
-              ></VjTimeTableRow>
-              <DjButton />
-              <Bar />
-              <GuestRow
-                timetable={[...timetable, ...vjtable].map(
-                  ({ start_time, end_time, ...others }) => {
-                    return {
-                      ...others,
-                      start_time: getTime(start_time),
-                      end_time: getTime(end_time),
-                    }
+                }
+              )}
+            />
+          )}
+          <DjButton />
+          <Bar />
+          {event.timetable && event.vjtable && (
+            <GuestRow
+              timetable={[...event.timetable, ...event.vjtable].map(
+                ({ start_time, end_time, ...others }) => {
+                  return {
+                    ...others,
+                    start_time: getTime(start_time),
+                    end_time: getTime(end_time),
                   }
-                )}
-              ></GuestRow>
-            </div>
-            <div className="md:col-span-4">
-              <EventItemsRow
-                price={event.price}
-                capacity={event.capacity}
-                date={event.start_at ? getFullDate(event.start_at) : null}
-                start_time={event.start_at ? getTime(event.start_at) : null}
-                end_time={event.end_at ? getTime(event.end_at) : null}
-                location_name={event.location_name}
-                location_url={event.location_url}
-                note={event.note}
-                lisners={lisners.length}
-              ></EventItemsRow>
-              <OrganizerRow organizers={organizers}></OrganizerRow>
-            </div>
-          </div>
+                }
+              )}
+            />
+          )}
         </div>
-      )}
-    </>
+        <div className="md:col-span-4">
+          {event.base && event.lisners && (
+            <EventItemsRow
+              price={event.base.price}
+              capacity={event.base.capacity}
+              date={
+                event.base.start_at ? getFullDate(event.base.start_at) : null
+              }
+              start_time={
+                event.base.start_at ? getTime(event.base.start_at) : null
+              }
+              end_time={event.base.end_at ? getTime(event.base.end_at) : null}
+              location_name={event.base.location_name}
+              location_url={event.base.location_url}
+              note={event.base.note}
+              lisners={event.lisners.length}
+            />
+          )}
+          {event.organizers && <OrganizerRow organizers={event.organizers} />}
+        </div>
+      </div>
+    </div>
   )
 }
 

@@ -34,3 +34,16 @@ export const selectEventById = async (id: number) => {
     console.error(error)
   }
 }
+
+export const updateEventData = async (event: Event) => {
+  try {
+    const { error } = await supabase
+      .from('event')
+      .update(event)
+      .eq('id', event.id)
+    if (error) throw error
+  } catch (error) {
+    alert('Error')
+    console.error(error)
+  }
+}

@@ -4,13 +4,6 @@ import {
   convertDateStringToDateObject,
   convertDateStringToDateObjectInList,
 } from '../../../lib/convertDateStringToDateObject'
-import {
-  Event,
-  Organizers,
-  TimeTable,
-  VjTable,
-  Lisners,
-} from '../hooks/useEvent'
 import event_json from './data/event.json'
 import organizer_json from './data/event_organizer.json'
 import timetable_json from './data/timetable.json'
@@ -25,6 +18,7 @@ import * as ticketRepository from '../infrastructure/ticketRepository'
 // 依存する関数をテスト対象のimportより先にモック化する
 jest.mock('../infrastructure/eventRepository')
 const selectEventByIdMock = eventRepository.selectEventById as jest.Mock
+const updateEventDataMock = eventRepository.updateEventData as jest.Mock
 
 jest.mock('../infrastructure/eventOrganizerRepository')
 const selectOrganizersByEventIdMock =
@@ -44,87 +38,55 @@ const selectLisnersByEventIdMock =
 
 import { useEvent } from '../hooks/useEvent'
 
-let result: any
-const main = () => {
-  beforeEach(() => {
-    result = renderHook(() => useEvent()).result
-    jest.clearAllMocks()
-  })
-
-  getEventInit()
-  loadEventTest({ id: 1, load_data: data1 })
-  loadEventTest({ id: 2, load_data: data2 })
-  loadEventTest({ id: 3, load_data: data3 })
-
-  afterEach(() => {
-    jest.restoreAllMocks()
-  })
-}
-
-const data1 = {
-  event: convertDateStringToDateObject(event_json[0]),
+const data = {
+  base: convertDateStringToDateObject(event_json.event),
   organizers: convertDateStringToDateObjectInList(organizer_json[0]),
   timetable: convertDateStringToDateObjectInList(timetable_json[0]),
   vjtable: convertDateStringToDateObjectInList(vjtable_json[0]),
   lisners: convertDateStringToDateObjectInList(lisner_json[0]),
 }
 
-const data2 = {
-  event: convertDateStringToDateObject(event_json[1]),
-  organizers: convertDateStringToDateObjectInList(organizer_json[1]),
-  timetable: convertDateStringToDateObjectInList(timetable_json[1]),
-  vjtable: convertDateStringToDateObjectInList(vjtable_json[1]),
-  lisners: convertDateStringToDateObjectInList(lisner_json[1]),
+const update = {
+  base: convertDateStringToDateObject(event_json.update),
 }
 
-const data3 = {
-  event: convertDateStringToDateObject(event_json[2]),
-  organizers: convertDateStringToDateObjectInList(organizer_json[2]),
-  timetable: convertDateStringToDateObjectInList(timetable_json[2]),
-  vjtable: convertDateStringToDateObjectInList(vjtable_json[2]),
-  lisners: convertDateStringToDateObjectInList(lisner_json[2]),
-}
+let hook: any
+beforeEach(() => {
+  hook = renderHook(() => useEvent()).result
+  jest.clearAllMocks()
+})
 
-type testCaseType = {
-  id: number
-  load_data: {
-    event: Event
-    organizers: Organizers
-    timetable: TimeTable
-    vjtable: VjTable
-    lisners: Lisners
-  }
-}
+test('loadEvent', async () => {
+  // Arrange
+  selectEventByIdMock.mockImplementation(() => data.base)
+  selectOrganizersByEventIdMock.mockImplementation(() => data.organizers)
+  selectEventDjByEventIdMock.mockImplementation(() => data.timetable)
+  selectEventVjByEventIdMock.mockImplementation(() => data.vjtable)
+  selectLisnersByEventIdMock.mockImplementation(() => data.lisners)
 
-const loadEventTest = ({ id, load_data }: testCaseType) => {
-  test('loadEvent id=' + id, async () => {
-    // Arrange
-    selectEventByIdMock.mockImplementation(() => load_data.event)
-    selectOrganizersByEventIdMock.mockImplementation(() => load_data.organizers)
-    selectEventDjByEventIdMock.mockImplementation(() => load_data.timetable)
-    selectEventVjByEventIdMock.mockImplementation(() => load_data.vjtable)
-    selectLisnersByEventIdMock.mockImplementation(() => load_data.lisners)
+  // Act
+  await act(() => hook.current.handleEvent.loadEvent(1))
 
-    // Act
-    await act(() => result.current.loadEvent(id))
+  // Assert
+  expect(hook.current.event.base).toStrictEqual(data.base)
+  expect(hook.current.event.organizers).toStrictEqual(data.organizers)
+  expect(hook.current.event.timetable).toStrictEqual(data.timetable)
+  expect(hook.current.event.vjtable).toStrictEqual(data.vjtable)
+  expect(hook.current.event.lisners).toStrictEqual(data.lisners)
+})
 
-    // Assert
-    expect(result.current.event).toStrictEqual(load_data.event)
-    expect(result.current.organizers).toStrictEqual(load_data.organizers)
-    expect(result.current.timetable).toStrictEqual(load_data.timetable)
-    expect(result.current.vjtable).toStrictEqual(load_data.vjtable)
-    expect(result.current.lisners).toStrictEqual(load_data.lisners)
-  })
-}
+test('updateEvent', async () => {
+  // Arrange
+  await act(() => hook.current.handleEvent.setBase(update.base))
 
-const getEventInit = () => {
-  test('loadEvent init value', async () => {
-    expect(result.current.event).toStrictEqual(undefined)
-    expect(result.current.organizers).toStrictEqual(undefined)
-    expect(result.current.timetable).toStrictEqual(undefined)
-    expect(result.current.vjtable).toStrictEqual(undefined)
-    expect(result.current.lisners).toStrictEqual(undefined)
-  })
-}
+  // Act
+  await act(() => hook.current.handleEvent.updateEvent())
 
-main()
+  // Assert
+  expect(updateEventDataMock).toHaveBeenCalledTimes(1)
+  expect(updateEventDataMock).toBeCalledWith(update.base)
+})
+
+afterEach(() => {
+  jest.restoreAllMocks()
+})

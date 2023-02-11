@@ -1,20 +1,23 @@
 import { useState } from 'react'
-import { selectEventById } from '../infrastructure/eventRepository'
+import {
+  selectEventById,
+  updateEventData,
+} from '../infrastructure/eventRepository'
 import { selectOrganizersByEventId } from '../infrastructure/eventOrganizerRepository'
 import { selectEventDjByEventId } from '../infrastructure/eventDjRepository'
 import { selectEventVjByEventId } from '../infrastructure/eventVjRepository'
 import { selectLisnersByEventId } from '../infrastructure/ticketRepository'
 
 export const useEvent = () => {
-  const [event, setEvent] = useState<Event>()
+  const [base, setBase] = useState<Event>()
   const [organizers, setOrganizers] = useState<Organizers>()
   const [timetable, setTimeTable] = useState<TimeTable>()
   const [vjtable, setVjTable] = useState<TimeTable>()
   const [lisners, setLisners] = useState<Lisners>()
 
-  async function loadEvent(id: number) {
-    const event_data = await selectEventById(id)
-    if (event_data) setEvent(event_data)
+  const loadEvent = async (id: number) => {
+    const base_data = await selectEventById(id)
+    if (base_data) setBase(base_data)
 
     const organizers_data = await selectOrganizersByEventId(id)
     if (organizers_data) setOrganizers(organizers_data)
@@ -29,75 +32,72 @@ export const useEvent = () => {
     if (lisners_data) setLisners(lisners_data)
   }
 
-  type updateEventType = {
-    id: number
-    input_title: string
-    input_description: string
+  async function updateEvent() {
+    if (base) await updateEventData(base)
   }
 
-  async function updateEvent(input_event: updateEventType) {
-    await upsertEventById(input_event)
-  }
-
-  return { event, organizers, timetable, vjtable, lisners, loadEvent } as const
+  return {
+    event: {
+      base,
+      organizers,
+      timetable,
+      vjtable,
+      lisners,
+    },
+    handleEvent: {
+      loadEvent,
+      updateEvent,
+      setBase,
+    },
+  } as const
 }
 
-export type Event =
-  | {
-      id: number
-      title: string | null
-      text: string | null
-      start_at: Date | null
-      end_at: Date | null
-      capacity: number | null
-      image_url: string | null
-      location_name: string | null
-      location_url: string | null
-      note: string | null
-      price: number | null
-      publicly: boolean | null
-      create_at: Date | null
-      updated_at: Date | null
-    }
-  | undefined
+export type Event = {
+  id: number
+  title: string | null
+  text: string | null
+  start_at: Date | null
+  end_at: Date | null
+  capacity: number | null
+  image_url: string | null
+  location_name: string | null
+  location_url: string | null
+  note: string | null
+  price: number | null
+  publicly: boolean | null
+  create_at: Date | null
+  updated_at: Date | null
+}
 
-export type Organizers =
-  | {
-      user_id: string
-      name: string
-      icon_url: string | null
-      text: string | null
-    }[]
-  | undefined
+export type Organizers = {
+  user_id: string
+  name: string
+  icon_url: string | null
+  text: string | null
+}[]
 
-export type TimeTable =
-  | {
-      row_number: number
-      user_id: string | null
-      name: string
-      text: string | null
-      icon_url: string | null
-      start_time: Date
-      end_time: Date
-    }[]
-  | undefined
+export type TimeTable = {
+  row_number: number
+  user_id: string | null
+  name: string
+  text: string | null
+  icon_url: string | null
+  start_time: Date
+  end_time: Date
+}[]
 
-export type VjTable =
-  | {
-      row_number: number
-      user_id: string | null
-      name: string
-      text: string | null
-      icon_url: string | null
-      start_time: Date
-      end_time: Date
-    }[]
-  | undefined
+export type VjTable = {
+  row_number: number
+  user_id: string | null
+  name: string
+  text: string | null
+  icon_url: string | null
+  start_time: Date
+  end_time: Date
+}[]
 
-export type Lisners =
-  | {
-      user_id: string
-      name: string
-      icon_url: string | null
-    }[]
-  | undefined
+export type Lisners = {
+  user_id: string
+  name: string
+  icon_url: string | null
+}[]

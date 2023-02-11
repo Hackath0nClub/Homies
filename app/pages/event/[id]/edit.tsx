@@ -11,6 +11,7 @@ import OrganizerRow from '../../../feature/event/components/OrganizerRow'
 import { EditImageRow } from '../../../feature/event/components/EditImageRow'
 import { EditTitleRow } from '../../../feature/event/components/EditTitleRow'
 import { EditDescriptionRow } from '../../../feature/event/components/EditDescriptionRow'
+import { EditEventItemsRow } from '../../../feature/event/components/EditEventItemsRow'
 
 // hooks
 import { useRouter } from 'next/router'
@@ -107,22 +108,11 @@ const EventDetails = () => {
           )}
         </div>
         <div className="md:col-span-4">
-          {event.base && event.listener && (
-            <EventItemsRow
-              price={event.base.price}
-              capacity={event.base.capacity}
-              date={
-                event.base.start_at ? getFullDate(event.base.start_at) : null
-              }
-              start_time={
-                event.base.start_at ? getTime(event.base.start_at) : null
-              }
-              end_time={event.base.end_at ? getTime(event.base.end_at) : null}
-              location_name={event.base.location_name}
-              location_url={event.base.location_url}
-              note={event.base.note}
-              listener={event.listener.length}
-            ></EventItemsRow>
+          {event.base && (
+            <EditEventItemsRow
+              base={event.base}
+              setBase={handleEvent.setBase}
+            />
           )}
           {event.organizers && (
             <OrganizerRow organizers={event.organizers}></OrganizerRow>

@@ -1,23 +1,20 @@
-import React, { useState, useRef } from 'react'
-import Head from 'next/head'
-import { supabase } from '../../../utils/supabaseClient'
+import React, { useEffect, useState, useRef } from 'react'
 
 // components
-import { TitleRow } from '../../../feature/event/components/TitleRow'
-import ImageRow from '../../../feature/event/components/ImageRow'
 import Bar from '../../../feature/event/components/Bar'
-import DescriptionRow from '../../../feature/event/components/DescriptionRow'
 import DjTimeTableRow from '../../../feature/event/components/DjTimeTableRow'
 import VjTimeTableRow from '../../../feature/event/components/VjTimeTableRow'
 import DjButton from '../../../feature/event/components/DjButton'
 import GuestRow from '../../../feature/event/components/GuestRow'
 import EventItemsRow from '../../../feature/event/components/EventItemsRow'
 import OrganizerRow from '../../../feature/event/components/OrganizerRow'
+import { EditImageRow } from '../../../feature/event/components/EditImageRow'
+import { EditTitleRow } from '../../../feature/event/components/EditTitleRow'
+import { EditDescriptionRow } from '../../../feature/event/components/EditDescriptionRow'
 
 // hooks
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
-import { useEvent, Event } from '../../../feature/event/hooks/useEvent'
+import { useEvent } from '../../../feature/event/hooks/useEvent'
 
 // function
 import { getFullDate, getTime } from '../../../lib/splitDateTime'
@@ -54,57 +51,22 @@ const EventDetails = () => {
           </button>
         </div>
         <div className="md:col-span-6 mt-4">
-          <label className="block text-gray-500 dark:text-gray-300">
-            イベントタイトル
-          </label>
           {event.base && (
-            <input
-              type="text"
-              className="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-              value={event.base.title ?? ''}
-              onChange={(e) =>
-                handleEvent.setBase({ ...event.base!, title: e.target.value })
-              }
-            />
+            <EditTitleRow base={event.base} setBase={handleEvent.setBase} />
           )}
-
-          <input
-            hidden
-            type="file"
-            accept="image/*"
-            ref={inputRef}
-            onChange={uploadImage}
-          />
-          <button
-            className="px-4 py-2 mt-4 text-white transition-colors duration-300 border border-gray-200 bg-[rgba(28,32,37,1)] rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
-            onClick={() => inputRef.current?.click()}
-          >
-            画像をアップロード
-          </button>
-
           {event.base && (
-            <img
-              alt={event.base.title!}
-              src={
-                event.file
-                  ? URL.createObjectURL(event.file)
-                  : event.base.image_url!
-              }
-              className="w-full my-4 rounded-lg"
+            <EditImageRow
+              base={event.base}
+              file={event.file}
+              setBase={handleEvent.setBase}
+              setFile={handleEvent.setFile}
             />
           )}
           <Bar />
-          <p className="text-white text-left font-bold text-2xl my-4">
-            イベント概要
-          </p>
           {event.base && (
-            <textarea
-              className="h-[60vh] block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-              id="message"
-              value={event.base.text ?? ''}
-              onChange={(e) =>
-                handleEvent.setBase({ ...event.base!, text: e.target.value })
-              }
+            <EditDescriptionRow
+              base={event.base}
+              setBase={handleEvent.setBase}
             />
           )}
           <Bar />

@@ -20,15 +20,9 @@ import { useEvent } from '../../../feature/event/hooks/useEvent'
 import { getFullDate, getTime } from '../../../lib/splitDateTime'
 
 const EventDetails = () => {
-  const inputRef = useRef<HTMLInputElement>(null)
   const { query, isReady } = useRouter()
   const id = Number(query.id)
   const { event, handleEvent } = useEvent()
-
-  const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const local_file = e.target.files?.[0]
-    if (local_file) handleEvent.setFile(local_file)
-  }
 
   const init = async () => {
     if (!isReady) return

@@ -29,6 +29,16 @@ export const useEvent = () => {
     if (lisners_data) setLisners(lisners_data)
   }
 
+  type updateEventType = {
+    id: number
+    input_title: string
+    input_description: string
+  }
+
+  async function updateEvent(input_event: updateEventType) {
+    await upsertEventById(input_event)
+  }
+
   return { event, organizers, timetable, vjtable, lisners, loadEvent } as const
 }
 

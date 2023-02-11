@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Head from 'next/head'
 
 // components
@@ -31,6 +31,8 @@ const EventDetails = () => {
   const id = Number(query.id)
   const { event, organizers, timetable, vjtable, lisners, loadEvent } =
     useEvent()
+  const [title, setTitle] = useState<string>()
+  const [description, setDescription] = useState<string>()
 
   const init = async () => {
     if (!isReady) return
@@ -63,6 +65,8 @@ const EventDetails = () => {
                 <input
                   type="text"
                   className="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                 />
               </div>
               <button className="px-4 py-2 mt-4 text-white transition-colors duration-300 border border-gray-200 bg-[rgba(28,32,37,1)] rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
@@ -80,6 +84,8 @@ const EventDetails = () => {
               <textarea
                 className="h-[60vh] block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
                 id="message"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               ></textarea>
               <Bar />
               <DjTimeTableRow

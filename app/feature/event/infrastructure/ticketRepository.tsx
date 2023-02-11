@@ -1,7 +1,7 @@
 import { supabase } from '../../../utils/supabaseClient'
-import { Lisners } from '../hooks/useEvent'
+import { Listener } from '../hooks/useEvent'
 
-export const selectLisnersByEventId = async (id: number) => {
+export const selectListenerByEventId = async (id: number) => {
   try {
     const { data, error } = await supabase
       .from('ticket')
@@ -14,9 +14,9 @@ export const selectLisnersByEventId = async (id: number) => {
       .eq('event_id', id)
     if (error) throw error
 
-    const lisners = flattenObjectList(data)
+    const listener = flattenObjectList(data)
 
-    return lisners as Lisners
+    return listener as Listener
   } catch (error) {
     alert('Error loading Getdata!')
     console.log(error)

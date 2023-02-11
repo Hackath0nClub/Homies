@@ -8,7 +8,7 @@ import event_json from './data/event.json'
 import organizer_json from './data/event_organizer.json'
 import timetable_json from './data/timetable.json'
 import vjtable_json from './data/vjtable.json'
-import lisner_json from './data/lisners.json'
+import lisner_json from './data/listener.json'
 import * as eventRepository from '../infrastructure/eventRepository'
 import * as eventOrganizerRepository from '../infrastructure/eventOrganizerRepository'
 import * as eventDjRepository from '../infrastructure/eventDjRepository'
@@ -33,17 +33,17 @@ const selectEventVjByEventIdMock =
   eventVjRepository.selectEventVjByEventId as jest.Mock
 
 jest.mock('../infrastructure/ticketRepository')
-const selectLisnersByEventIdMock =
-  ticketRepository.selectLisnersByEventId as jest.Mock
+const selectListenerByEventIdMock =
+  ticketRepository.selectListenerByEventId as jest.Mock
 
 import { useEvent } from '../hooks/useEvent'
 
 const data = {
-  base: convertDateStringToDateObject(event_json.event),
-  organizers: convertDateStringToDateObjectInList(organizer_json[0]),
-  timetable: convertDateStringToDateObjectInList(timetable_json[0]),
-  vjtable: convertDateStringToDateObjectInList(vjtable_json[0]),
-  lisners: convertDateStringToDateObjectInList(lisner_json[0]),
+  base: convertDateStringToDateObject(event_json.data),
+  organizers: convertDateStringToDateObjectInList(organizer_json.data),
+  timetable: convertDateStringToDateObjectInList(timetable_json.data),
+  vjtable: convertDateStringToDateObjectInList(vjtable_json.data),
+  listener: convertDateStringToDateObjectInList(lisner_json.data),
 }
 
 const update = {
@@ -62,7 +62,7 @@ test('loadEvent', async () => {
   selectOrganizersByEventIdMock.mockImplementation(() => data.organizers)
   selectEventDjByEventIdMock.mockImplementation(() => data.timetable)
   selectEventVjByEventIdMock.mockImplementation(() => data.vjtable)
-  selectLisnersByEventIdMock.mockImplementation(() => data.lisners)
+  selectListenerByEventIdMock.mockImplementation(() => data.listener)
 
   // Act
   await act(() => hook.current.handleEvent.loadEvent(1))
@@ -72,7 +72,7 @@ test('loadEvent', async () => {
   expect(hook.current.event.organizers).toStrictEqual(data.organizers)
   expect(hook.current.event.timetable).toStrictEqual(data.timetable)
   expect(hook.current.event.vjtable).toStrictEqual(data.vjtable)
-  expect(hook.current.event.lisners).toStrictEqual(data.lisners)
+  expect(hook.current.event.listener).toStrictEqual(data.listener)
 })
 
 test('updateEvent', async () => {

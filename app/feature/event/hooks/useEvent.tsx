@@ -6,14 +6,14 @@ import {
 import { selectOrganizersByEventId } from '../infrastructure/eventOrganizerRepository'
 import { selectEventDjByEventId } from '../infrastructure/eventDjRepository'
 import { selectEventVjByEventId } from '../infrastructure/eventVjRepository'
-import { selectLisnersByEventId } from '../infrastructure/ticketRepository'
+import { selectListenerByEventId } from '../infrastructure/ticketRepository'
 
 export const useEvent = () => {
   const [base, setBase] = useState<Event>()
   const [organizers, setOrganizers] = useState<Organizers>()
   const [timetable, setTimeTable] = useState<TimeTable>()
   const [vjtable, setVjTable] = useState<TimeTable>()
-  const [lisners, setLisners] = useState<Lisners>()
+  const [listener, setListener] = useState<Listener>()
 
   const loadEvent = async (id: number) => {
     const base_data = await selectEventById(id)
@@ -28,8 +28,8 @@ export const useEvent = () => {
     const vjtable_data = await selectEventVjByEventId(id)
     if (vjtable_data) setVjTable(vjtable_data)
 
-    const lisners_data = await selectLisnersByEventId(id)
-    if (lisners_data) setLisners(lisners_data)
+    const listener_data = await selectListenerByEventId(id)
+    if (listener_data) setListener(listener_data)
   }
 
   async function updateEvent() {
@@ -42,7 +42,7 @@ export const useEvent = () => {
       organizers,
       timetable,
       vjtable,
-      lisners,
+      listener,
     },
     handleEvent: {
       loadEvent,
@@ -96,7 +96,7 @@ export type VjTable = {
   end_time: Date
 }[]
 
-export type Lisners = {
+export type Listener = {
   user_id: string
   name: string
   icon_url: string | null

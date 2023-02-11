@@ -133,7 +133,7 @@ const EventDetails = () => {
           )}
         </div>
         <div className="md:col-span-4">
-          {event.base && event.lisners && (
+          {event.base && event.listener && (
             <EventItemsRow
               price={event.base.price}
               capacity={event.base.capacity}
@@ -147,7 +147,7 @@ const EventDetails = () => {
               location_name={event.base.location_name}
               location_url={event.base.location_url}
               note={event.base.note}
-              lisners={event.lisners.length}
+              listener={event.listener.length}
             ></EventItemsRow>
           )}
           {event.organizers && (

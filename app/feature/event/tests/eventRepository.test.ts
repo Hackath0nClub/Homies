@@ -5,7 +5,7 @@ import {
 } from '../infrastructure/eventRepository'
 import event_json from './data/event.json'
 
-const event_data = convertDateStringToDateObject(event_json.event)
+const event_data = convertDateStringToDateObject(event_json.data)
 const update_data = convertDateStringToDateObject(event_json.update)
 
 test('selectEventById id=1', async () => {

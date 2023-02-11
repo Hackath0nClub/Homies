@@ -7,7 +7,7 @@ type propsType = {
   location_name: string | null
   location_url: string | null
   note: string | null
-  lisners: number
+  listener: number
 }
 
 const EventItemsRow = (props: propsType) => {
@@ -62,7 +62,7 @@ const EventItemsRow = (props: propsType) => {
             日程
           </p>
           <p className="text-right text-white col-span-4">
-            {props.lisners}人 / {props.capacity}人
+            {props.listener}人 / {props.capacity}人
           </p>
         </div>
 

@@ -2,7 +2,7 @@ import { convertDateStringToDateObject } from '../../../lib/convertDateStringToD
 import {
   selectEventById,
   updateEventData,
-} from '../infrastructure/eventRepository'
+} from '../infrastructure/eventDatabase'
 import event_json from './data/event.json'
 
 const event_data = convertDateStringToDateObject(event_json.data)

@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import Head from 'next/head'
+import { supabase } from '../../../utils/supabaseClient'
 
 // components
 import { TitleRow } from '../../../feature/event/components/TitleRow'
@@ -19,17 +20,18 @@ import { useEffect } from 'react'
 import { useEvent, Event } from '../../../feature/event/hooks/useEvent'
 
 // function
-import {
-  getMonthDay,
-  getYear,
-  getFullDate,
-  getTime,
-} from '../../../lib/splitDateTime'
+import { getFullDate, getTime } from '../../../lib/splitDateTime'
 
 const EventDetails = () => {
+  const inputRef = useRef<HTMLInputElement>(null)
   const { query, isReady } = useRouter()
   const id = Number(query.id)
   const { event, handleEvent } = useEvent()
+
+  const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const local_file = e.target.files?.[0]
+    if (local_file) handleEvent.setFile(local_file)
+  }
 
   const init = async () => {
     if (!isReady) return
@@ -65,13 +67,29 @@ const EventDetails = () => {
               }
             />
           )}
-          <button className="px-4 py-2 mt-4 text-white transition-colors duration-300 border border-gray-200 bg-[rgba(28,32,37,1)] rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+
+          <input
+            hidden
+            type="file"
+            accept="image/*"
+            ref={inputRef}
+            onChange={uploadImage}
+          />
+          <button
+            className="px-4 py-2 mt-4 text-white transition-colors duration-300 border border-gray-200 bg-[rgba(28,32,37,1)] rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+            onClick={() => inputRef.current?.click()}
+          >
             画像をアップロード
           </button>
+
           {event.base && (
             <img
               alt={event.base.title!}
-              src={event.base.image_url!}
+              src={
+                event.file
+                  ? URL.createObjectURL(event.file)
+                  : event.base.image_url!
+              }
               className="w-full my-4 rounded-lg"
             />
           )}

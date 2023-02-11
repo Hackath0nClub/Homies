@@ -1,5 +1,5 @@
 import { convertDateStringToDateObjectInList } from '../../../lib/convertDateStringToDateObject'
-import { selectEventVjByEventId } from '../infrastructure/eventVjRepository'
+import { selectEventVjByEventId } from '../infrastructure/eventVjDatabase'
 import eventvj_json from './data/vjtable.json'
 
 const eventvj_data = convertDateStringToDateObjectInList(eventvj_json.data)

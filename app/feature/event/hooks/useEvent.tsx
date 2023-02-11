@@ -2,11 +2,12 @@ import { useState } from 'react'
 import {
   selectEventById,
   updateEventData,
-} from '../infrastructure/eventRepository'
-import { selectOrganizersByEventId } from '../infrastructure/eventOrganizerRepository'
-import { selectEventDjByEventId } from '../infrastructure/eventDjRepository'
-import { selectEventVjByEventId } from '../infrastructure/eventVjRepository'
-import { selectListenerByEventId } from '../infrastructure/ticketRepository'
+} from '../infrastructure/eventDatabase'
+import { selectOrganizersByEventId } from '../infrastructure/eventOrganizerDatabase'
+import { selectEventDjByEventId } from '../infrastructure/eventDjDatabase'
+import { selectEventVjByEventId } from '../infrastructure/eventVjDatabase'
+import { selectListenerByEventId } from '../infrastructure/ticketDatabase'
+import { uploadEventImage } from '../infrastructure/eventStrage'
 
 export const useEvent = () => {
   const [base, setBase] = useState<Event>()
@@ -14,6 +15,7 @@ export const useEvent = () => {
   const [timetable, setTimeTable] = useState<TimeTable>()
   const [vjtable, setVjTable] = useState<TimeTable>()
   const [listener, setListener] = useState<Listener>()
+  const [file, setFile] = useState<File>()
 
   const loadEvent = async (id: number) => {
     const base_data = await selectEventById(id)
@@ -32,7 +34,11 @@ export const useEvent = () => {
     if (listener_data) setListener(listener_data)
   }
 
-  async function updateEvent() {
+  const updateEvent = async () => {
+    if (base && file) {
+      const file_name = base.id + '.png'
+      await uploadEventImage({ file_name: file_name, file: file })
+    }
     if (base) await updateEventData(base)
   }
 
@@ -43,11 +49,13 @@ export const useEvent = () => {
       timetable,
       vjtable,
       listener,
+      file,
     },
     handleEvent: {
       loadEvent,
       updateEvent,
       setBase,
+      setFile,
     },
   } as const
 }

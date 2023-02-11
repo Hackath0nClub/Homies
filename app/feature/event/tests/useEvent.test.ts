@@ -9,32 +9,32 @@ import organizer_json from './data/event_organizer.json'
 import timetable_json from './data/timetable.json'
 import vjtable_json from './data/vjtable.json'
 import lisner_json from './data/listener.json'
-import * as eventRepository from '../infrastructure/eventRepository'
-import * as eventOrganizerRepository from '../infrastructure/eventOrganizerRepository'
-import * as eventDjRepository from '../infrastructure/eventDjRepository'
-import * as eventVjRepository from '../infrastructure/eventVjRepository'
-import * as ticketRepository from '../infrastructure/ticketRepository'
+import * as eventDatabase from '../infrastructure/eventDatabase'
+import * as eventOrganizerDatabase from '../infrastructure/eventOrganizerDatabase'
+import * as eventDjDatabase from '../infrastructure/eventDjDatabase'
+import * as eventVjDatabase from '../infrastructure/eventVjDatabase'
+import * as ticketDatabase from '../infrastructure/ticketDatabase'
 
 // 依存する関数をテスト対象のimportより先にモック化する
-jest.mock('../infrastructure/eventRepository')
-const selectEventByIdMock = eventRepository.selectEventById as jest.Mock
-const updateEventDataMock = eventRepository.updateEventData as jest.Mock
+jest.mock('../infrastructure/eventDatabase')
+const selectEventByIdMock = eventDatabase.selectEventById as jest.Mock
+const updateEventDataMock = eventDatabase.updateEventData as jest.Mock
 
-jest.mock('../infrastructure/eventOrganizerRepository')
+jest.mock('../infrastructure/eventOrganizerDatabase')
 const selectOrganizersByEventIdMock =
-  eventOrganizerRepository.selectOrganizersByEventId as jest.Mock
+  eventOrganizerDatabase.selectOrganizersByEventId as jest.Mock
 
-jest.mock('../infrastructure/eventDjRepository')
+jest.mock('../infrastructure/eventDjDatabase')
 const selectEventDjByEventIdMock =
-  eventDjRepository.selectEventDjByEventId as jest.Mock
+  eventDjDatabase.selectEventDjByEventId as jest.Mock
 
-jest.mock('../infrastructure/eventVjRepository')
+jest.mock('../infrastructure/eventVjDatabase')
 const selectEventVjByEventIdMock =
-  eventVjRepository.selectEventVjByEventId as jest.Mock
+  eventVjDatabase.selectEventVjByEventId as jest.Mock
 
-jest.mock('../infrastructure/ticketRepository')
+jest.mock('../infrastructure/ticketDatabase')
 const selectListenerByEventIdMock =
-  ticketRepository.selectListenerByEventId as jest.Mock
+  ticketDatabase.selectListenerByEventId as jest.Mock
 
 import { useEvent } from '../hooks/useEvent'
 

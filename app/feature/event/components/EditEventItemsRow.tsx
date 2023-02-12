@@ -1,5 +1,5 @@
 import { Event } from '../hooks/useEvent'
-import { getFullDate, getTime } from '../../../lib/splitDateTime'
+import { getUrlFromString } from '../../../lib/getUrlFromString'
 
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -131,7 +131,7 @@ export const EditEventItemsRow = (props: propsType) => {
             onChange={(e) =>
               props.setBase({
                 ...props.base!,
-                location_url: e.target.value,
+                location_url: getUrlFromString(e.target.value),
               })
             }
           />

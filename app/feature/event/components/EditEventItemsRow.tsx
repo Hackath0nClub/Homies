@@ -1,6 +1,9 @@
 import { Event } from '../hooks/useEvent'
 import { getFullDate, getTime } from '../../../lib/splitDateTime'
 
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+
 type propsType = {
   base: Event
   setBase: (base: Event) => void
@@ -11,15 +14,9 @@ export const EditEventItemsRow = (props: propsType) => {
     <>
       <div className="border border-gray-500 rounded-xl w-full bg-[rgba(47,51,56,1)] my-4">
         <p className="p-4 w-full flex items-start self-stretch text-xl text-white text-left">
-          チケット購入
+          イベント情報
         </p>
         <div className="border-t-2 border-gray-500"></div>
-
-        <div className="w-full text-center my-4">
-          <button className="border border-white px-16 py-3 text-white font-bold bg-gradient-to-r from-[rgba(232,112,39,1)] to-[rgba(232,189,39,1)] rounded-3xl">
-            チケット購入へ！
-          </button>
-        </div>
 
         <div className="w-full grid grid-cols-8 px-4 my-4">
           <div className="flex justify-center col-span-1">
@@ -72,27 +69,32 @@ export const EditEventItemsRow = (props: propsType) => {
             />
           </div>
           <p className="text-left text-[rgba(167,167,167,1)] col-span-2">
-            日程
+            開始日時
           </p>
-          <p className="text-right text-white col-span-4">
-            {props.base.start_at ? getFullDate(props.base.start_at) : null}
-          </p>
+          <DatePicker
+            selected={props.base.start_at}
+            onChange={(date) =>
+              props.setBase({ ...props.base, start_at: date })
+            }
+            showTimeSelect
+            dateFormat="MMMM d, yyyy h:mm aa"
+            className="col-span-5 text-right mx-2 px-2 block placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+          />
         </div>
 
         <div className="w-full grid grid-cols-8 px-4 my-4">
-          <div className="flex justify-center col-span-1">
-            <img
-              alt="ionticketoutline1031"
-              src="/playground_assets/icoutlineaccesstime1032-5mx.svg"
-            />
-          </div>
+          <div className="flex justify-center col-span-1" />
+
           <p className="text-left text-[rgba(167,167,167,1)] col-span-2">
-            時間
+            終了日時
           </p>
-          <p className="text-right text-white col-span-4">
-            {props.base.start_at ? getFullDate(props.base.start_at) : null} ～{' '}
-            {props.base.start_at ? getTime(props.base.start_at) : null}
-          </p>
+          <DatePicker
+            selected={props.base.end_at}
+            onChange={(date) => props.setBase({ ...props.base, end_at: date })}
+            showTimeSelect
+            dateFormat="MMMM d, yyyy h:mm aa"
+            className="col-span-5 text-right mx-2 px-2 block placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+          />
         </div>
 
         <div className="w-full grid grid-cols-8 px-4 my-4">

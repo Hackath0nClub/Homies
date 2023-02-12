@@ -12,6 +12,7 @@ import { EditImageRow } from '../../../feature/event/components/EditImageRow'
 import { EditTitleRow } from '../../../feature/event/components/EditTitleRow'
 import { EditDescriptionRow } from '../../../feature/event/components/EditDescriptionRow'
 import { EditEventItemsRow } from '../../../feature/event/components/EditEventItemsRow'
+import { EditDjTimeTableRow } from '../../../feature/event/components/EditDjTimeTableRow'
 
 // hooks
 import { useRouter } from 'next/router'
@@ -66,17 +67,10 @@ const EventDetails = () => {
           )}
           <Bar />
           {event.timetable && (
-            <DjTimeTableRow
-              timetable={event.timetable.map(
-                ({ start_time, end_time, ...others }) => {
-                  return {
-                    ...others,
-                    start_time: getTime(start_time),
-                    end_time: getTime(end_time),
-                  }
-                }
-              )}
-            ></DjTimeTableRow>
+            <EditDjTimeTableRow
+              timetable={event.timetable}
+              setTimetable={handleEvent.setTimeTable}
+            />
           )}
           {event.vjtable && (
             <VjTimeTableRow

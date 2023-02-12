@@ -56,6 +56,7 @@ export const useEvent = () => {
       updateEvent,
       setBase,
       setFile,
+      setTimeTable,
     },
   } as const
 }

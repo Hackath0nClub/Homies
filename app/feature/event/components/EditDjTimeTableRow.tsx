@@ -15,36 +15,72 @@ export const EditDjTimeTableRow = (props: propsType) => {
         タイムテーブル
       </p>
 
-      <div className="w-full grid grid-cols-6 gap-4">
-        <div className="col-span-1 grid grid-rows-3 items-center">
-          <DatePicker
-            selected={props.timetable[0].start_time}
-            onChange={(date) => date}
-            showTimeSelect
-            showTimeSelectOnly
-            timeIntervals={15}
-            timeCaption="Time"
-            dateFormat="h:mm aa"
-            className="px-2 w-full block placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-          />
-          <div className="text-center">～</div>
-          <DatePicker
-            selected={props.timetable[0].end_time}
-            onChange={(date) => date}
-            showTimeSelect
-            showTimeSelectOnly
-            timeIntervals={15}
-            timeCaption="Time"
-            dateFormat="h:mm aa"
-            className="px-2 w-full block placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-          />
-        </div>
-        <img
-          alt={props.timetable[0].name!}
-          src={props.timetable[0].icon_url!}
-          className="rounded-full col-span-1"
-        />
-      </div>
+      {props.timetable.map((row) => {
+        const bg =
+          row.row_number % 2 == 1
+            ? 'bg-[rgba(39,39,63,1)]' // 偶数行の背景色
+            : 'bg-[rgba(27,28,46,1)]' // 奇数行の背景色
+        return (
+          <div
+            className={`${bg} pt-2 pb-4 border-y border-white`}
+            key={row.row_number}
+          >
+            <div className="grid grid-rows-2">
+              <div className="row-span-1 h-full flex justify-center items-center">
+                <div className="grid grid-cols-3 w-3/5">
+                  <div className="col-span-1">
+                    <DatePicker
+                      selected={row.start_time}
+                      onChange={(date) => date}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={10}
+                      timeCaption="Time"
+                      dateFormat="h:mm aa"
+                      className="w-full px-2 block placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+                    />
+                  </div>
+                  <span className="col-span-1 text-center">-</span>
+                  <div className="col-span-1">
+                    <DatePicker
+                      selected={row.end_time}
+                      onChange={(date) => date}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={10}
+                      timeCaption="Time"
+                      dateFormat="h:mm aa"
+                      className="w-full px-2 block placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="row-span-1 h-full flex justify-center items-center">
+                <div className="grid grid-cols-2 w-3/5 gap-x-4">
+                  <div className="col-span-1">
+                    <span className="w-full text-sm">idで検索</span>
+                    <input
+                      type="text"
+                      className="row-span-1 w-full px-2 block placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+                      value={row.user_id ?? ''}
+                      onChange={(e) => {}}
+                    />
+                  </div>
+                  <div className="col-span-1">
+                    <span className="w-full text-sm">名前</span>
+                    <input
+                      type="text"
+                      className="row-span-1 w-full px-2 block placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+                      value={row.name ?? ''}
+                      onChange={(e) => {}}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+      })}
     </>
   )
 }

@@ -70,6 +70,7 @@ const EventDetails = () => {
             <EditDjTimeTableRow
               timetable={event.timetable}
               setTimetable={handleEvent.setTimeTable}
+              searchUser={handleEvent.searchUser}
             />
           )}
           {event.vjtable && (

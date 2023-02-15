@@ -43,8 +43,10 @@ export const useEvent = () => {
     if (base) await updateEventData(base)
   }
 
-  const searchUser = async (keyword: string) =>
-    await textSearchProfileById(keyword)
+  const searchUser = async (keyword: string) => {
+    const result = await textSearchProfileById(keyword)
+    return result ?? []
+  }
 
   return {
     event: {
@@ -112,6 +114,12 @@ export type VjTable = {
 
 export type Listener = {
   user_id: string
+  name: string
+  icon_url: string | null
+}[]
+
+export type Users = {
+  id: string
   name: string
   icon_url: string | null
 }[]

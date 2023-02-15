@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { TimeTable, Users } from '../hooks/useEvent'
+import { TimeTable, User, Users } from '../hooks/useEvent'
 
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -44,17 +44,19 @@ export const EditDjTimeTableRow = (props: propsType) => {
           setIsOpen(true)
         }
 
-        const handleSelect = (item: any) => {
-          setInputValue(item.id)
-          setIsOpen(false)
-        }
-
-        const updateItem = (index: number, new_id: string) => {
-          setInputValue(new_id)
+        const updateItem = (index: number, user: User) => {
+          setInputValue(user.id)
           setIsOpen(false)
 
           const newItems = [...props.timetable]
-          newItems[index].user_id = new_id
+          const updatedItem = {
+            ...newItems[index],
+            user_id: user.id,
+            name: user.name,
+            icon_url: user.icon_url,
+            text: user.text,
+          }
+          newItems[index] = updatedItem
           props.setTimetable(newItems)
         }
 
@@ -109,19 +111,19 @@ export const EditDjTimeTableRow = (props: propsType) => {
                     />
                     {isOpen && results.length > 0 && (
                       <ul className="absolute z-10 bg-[rgba(47,51,56,1)] mt-2 py-2 rounded-lg shadow-xl">
-                        {results.slice(0, 5).map((item) => (
+                        {results.slice(0, 5).map((user) => (
                           <li
-                            key={item.id}
+                            key={user.id}
                             className="flex align-items-center py-2 px-4 hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
-                            onClick={() => updateItem(index, item.id)}
+                            onClick={() => updateItem(index, user)}
                           >
                             <img
                               alt=""
-                              src={item.icon_url ?? ''}
+                              src={user.icon_url ?? ''}
                               className="rounded-full w-8"
                             />
                             <p className="mx-2">
-                              {item.id} : {item.name}
+                              {user.id} : {user.name}
                             </p>
                           </li>
                         ))}

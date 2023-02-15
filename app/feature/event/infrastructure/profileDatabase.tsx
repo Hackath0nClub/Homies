@@ -5,7 +5,7 @@ export const textSearchProfileById = async (keyword: string) => {
   try {
     const { data, error } = await supabase
       .from('profile')
-      .select('id, name, icon_url')
+      .select('id, name, icon_url, text')
       .textSearch('id', `'${keyword}'`)
       .limit(4)
     if (error) throw error

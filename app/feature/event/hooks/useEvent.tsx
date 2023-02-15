@@ -118,8 +118,11 @@ export type Listener = {
   icon_url: string | null
 }[]
 
-export type Users = {
+export type User = {
   id: string
   name: string
   icon_url: string | null
-}[]
+  text: string | null
+}
+
+export type Users = User[]

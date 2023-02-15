@@ -9,11 +9,13 @@ import organizer_json from './data/event_organizer.json'
 import timetable_json from './data/timetable.json'
 import vjtable_json from './data/vjtable.json'
 import lisner_json from './data/listener.json'
+import profile_json from './data/profile.json'
 import * as eventDatabase from '../infrastructure/eventDatabase'
 import * as eventOrganizerDatabase from '../infrastructure/eventOrganizerDatabase'
 import * as eventDjDatabase from '../infrastructure/eventDjDatabase'
 import * as eventVjDatabase from '../infrastructure/eventVjDatabase'
 import * as ticketDatabase from '../infrastructure/ticketDatabase'
+import * as profileDatabase from '../infrastructure/profileDatabase'
 
 // 依存する関数をテスト対象のimportより先にモック化する
 jest.mock('../infrastructure/eventDatabase')
@@ -36,6 +38,10 @@ jest.mock('../infrastructure/ticketDatabase')
 const selectListenerByEventIdMock =
   ticketDatabase.selectListenerByEventId as jest.Mock
 
+jest.mock('../infrastructure/profileDatabase')
+const textSearchProfileByIdMock =
+  profileDatabase.textSearchProfileById as jest.Mock
+
 import { useEvent } from '../hooks/useEvent'
 
 const data = {
@@ -44,6 +50,7 @@ const data = {
   timetable: convertDateStringToDateObjectInList(timetable_json.data),
   vjtable: convertDateStringToDateObjectInList(vjtable_json.data),
   listener: convertDateStringToDateObjectInList(lisner_json.data),
+  profile: profile_json.data,
 }
 
 const update = {
@@ -85,6 +92,16 @@ test('updateEvent', async () => {
   // Assert
   expect(updateEventDataMock).toHaveBeenCalledTimes(1)
   expect(updateEventDataMock).toBeCalledWith(update.base)
+})
+
+test('searchUser', async () => {
+  // Arrange
+  textSearchProfileByIdMock.mockImplementation(() => data.profile)
+  // Act
+  const result = await act(() => hook.current.handleEvent.searchUser('user'))
+  // Assert
+  expect(result).toStrictEqual(data.profile)
+  expect(textSearchProfileByIdMock).toBeCalledWith('user')
 })
 
 afterEach(() => {

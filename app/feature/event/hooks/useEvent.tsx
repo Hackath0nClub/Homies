@@ -8,6 +8,7 @@ import { selectEventDjByEventId } from '../infrastructure/eventDjDatabase'
 import { selectEventVjByEventId } from '../infrastructure/eventVjDatabase'
 import { selectListenerByEventId } from '../infrastructure/ticketDatabase'
 import { uploadEventImage } from '../infrastructure/eventStrage'
+import { textSearchProfileById } from '../infrastructure/profileDatabase'
 
 export const useEvent = () => {
   const [base, setBase] = useState<Event>()
@@ -42,6 +43,9 @@ export const useEvent = () => {
     if (base) await updateEventData(base)
   }
 
+  const searchUser = async (keyword: string) =>
+    await textSearchProfileById(keyword)
+
   return {
     event: {
       base,
@@ -57,6 +61,7 @@ export const useEvent = () => {
       setBase,
       setFile,
       setTimeTable,
+      searchUser,
     },
   } as const
 }

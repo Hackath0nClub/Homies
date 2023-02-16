@@ -3,22 +3,26 @@
     {
       "id": "user-a",
       "name": "userA",
-      "icon_url": "http://localhost:54321/storage/v1/object/public/profile/user-a.png"
+      "icon_url": "http://localhost:54321/storage/v1/object/public/profile/user-a.png",
+      "text": "userA sample text"
     },
     {
       "id": "user-b",
       "name": "userB",
-      "icon_url": "http://localhost:54321/storage/v1/object/public/profile/user-b.png"
+      "icon_url": "http://localhost:54321/storage/v1/object/public/profile/user-b.png",
+      "text": "userB sample text"
     },
     {
       "id": "user-c",
       "name": "userC",
-      "icon_url": "http://localhost:54321/storage/v1/object/public/profile/user-c.png"
+      "icon_url": "http://localhost:54321/storage/v1/object/public/profile/user-c.png",
+      "text": "userC sample text"
     },
     {
       "id": "user-d",
       "name": "userD",
-      "icon_url": "http://localhost:54321/storage/v1/object/public/profile/user-d.png"
+      "icon_url": "http://localhost:54321/storage/v1/object/public/profile/user-d.png",
+      "text": "userD sample text"
     }
   ]
 }

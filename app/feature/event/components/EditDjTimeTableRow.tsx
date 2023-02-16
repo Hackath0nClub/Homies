@@ -70,9 +70,9 @@ export const EditDjTimeTableRow = (props: propsType) => {
         const result = results[index]
 
         const handleInputChange = (event: any) => {
-          const newInputValues = [...keywords]
-          newInputValues[index] = event.target.value
-          setKeywords(newInputValues)
+          const newKeywords = [...keywords]
+          newKeywords[index] = event.target.value
+          setKeywords(newKeywords)
 
           const newIsOpens = [...isOpens]
           newIsOpens[index] = true
@@ -80,15 +80,15 @@ export const EditDjTimeTableRow = (props: propsType) => {
         }
 
         const updateItem = (index: number, user: User) => {
-          const newInputValues = [...keywords]
+          const newKeywords = [...keywords]
           const newIsOpens = [...isOpens]
           const newItems = [...props.timetable]
 
-          newInputValues[index] = user.id
+          newKeywords[index] = user.id
           newIsOpens[index] = false
           newItems[index] = { ...newItems[index], ...user }
 
-          setKeywords(newInputValues)
+          setKeywords(newKeywords)
           setIsOpens(newIsOpens)
           props.setTimetable(newItems)
         }

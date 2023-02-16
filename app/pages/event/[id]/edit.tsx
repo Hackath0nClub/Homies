@@ -79,8 +79,8 @@ const EventDetails = () => {
                 ({ start_time, end_time, ...others }) => {
                   return {
                     ...others,
-                    start_time: getTime(start_time),
-                    end_time: getTime(end_time),
+                    start_time: start_time ? getTime(start_time) : '',
+                    end_time: end_time ? getTime(end_time) : '',
                   }
                 }
               )}
@@ -94,8 +94,8 @@ const EventDetails = () => {
                 ({ start_time, end_time, ...others }) => {
                   return {
                     ...others,
-                    start_time: getTime(start_time),
-                    end_time: getTime(end_time),
+                    start_time: start_time ? getTime(start_time) : '',
+                    end_time: end_time ? getTime(end_time) : '',
                   }
                 }
               )}

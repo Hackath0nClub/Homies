@@ -60,6 +60,26 @@ export const EditDjTimeTableRow = (props: propsType) => {
           props.setTimetable(newItems)
         }
 
+        const updateStartTime = (index: number, start_time: Date | null) => {
+          const newItems = [...props.timetable]
+          const updatedItem = {
+            ...newItems[index],
+            start_time: start_time,
+          }
+          newItems[index] = updatedItem
+          props.setTimetable(newItems)
+        }
+
+        const updateEndTime = (index: number, end_time: Date | null) => {
+          const newItems = [...props.timetable]
+          const updatedItem = {
+            ...newItems[index],
+            end_time: end_time,
+          }
+          newItems[index] = updatedItem
+          props.setTimetable(newItems)
+        }
+
         const bg =
           row.row_number % 2 == 1
             ? 'bg-[rgba(39,39,63,1)]' // 偶数行の背景色
@@ -75,7 +95,7 @@ export const EditDjTimeTableRow = (props: propsType) => {
                   <div className="col-span-1">
                     <DatePicker
                       selected={row.start_time}
-                      onChange={(date) => date}
+                      onChange={(date) => updateStartTime(index, date)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={10}
@@ -88,7 +108,7 @@ export const EditDjTimeTableRow = (props: propsType) => {
                   <div className="col-span-1">
                     <DatePicker
                       selected={row.end_time}
-                      onChange={(date) => date}
+                      onChange={(date) => updateEndTime(index, date)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={10}

@@ -98,8 +98,8 @@ export type TimeTable = {
   name: string
   text: string | null
   icon_url: string | null
-  start_time: Date
-  end_time: Date
+  start_time: Date | null
+  end_time: Date | null
 }[]
 
 export type VjTable = {

@@ -11,12 +11,14 @@ type propsType = {
 }
 
 export const EditDjTimeTableRow = (props: propsType) => {
+  // ユーザー検索機能に必要なステータスの定義
   const length = props.timetable.length
   const [keywords, setKeywords] = useState<string[]>(Array(length).fill(''))
   const [results, setResults] = useState<Users[]>(Array(length).fill([]))
   const [isOpens, setIsOpens] = useState<boolean[]>(Array(length).fill(false))
   const [timer, setTimer] = useState<any>()
 
+  // ユーザー検索欄に文字が打ち込まれ、0.5秒操作が止まるとユーザー検索を開始する
   useEffect(() => {
     clearTimeout(timer)
     const newTimers = keywords.map((inputValue, index) => {

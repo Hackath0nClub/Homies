@@ -56,6 +56,7 @@ supabase stop
 
 ```sh
 cp ./app/.env.local.sample ./app/.env.local
+cp ./app/.env.local.sample ./app/.env.test.local
 ```
 
 ### 起動

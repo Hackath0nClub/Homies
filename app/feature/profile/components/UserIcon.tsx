@@ -12,7 +12,6 @@ export const UserIcon = (props: PropsType) => {
             alt={props.icon_url}
             src={props.icon_url}
           />
-          <p>{props.icon_url}</p>
         </>
       )}
     </>

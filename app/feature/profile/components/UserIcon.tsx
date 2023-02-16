@@ -7,7 +7,11 @@ export const UserIcon = (props: PropsType) => {
     <>
       {props.icon_url && (
         <>
-          <img alt={props.icon_url} src={props.icon_url} />
+          <img
+            className="rounded-full w-[72px] h-[72px] bg-[rgba(238,238,238,1)]"
+            alt={props.icon_url}
+            src={props.icon_url}
+          />
           <p>{props.icon_url}</p>
         </>
       )}

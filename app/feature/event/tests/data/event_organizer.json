@@ -1,0 +1,10 @@
+{
+  "data": [
+    {
+      "user_id": "user-a",
+      "name": "userA",
+      "icon_url": "http://localhost:54321/storage/v1/object/public/profile/user-a.png",
+      "text": "userA sample text"
+    }
+  ]
+}

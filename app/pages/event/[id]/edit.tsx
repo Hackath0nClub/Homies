@@ -1,12 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect } from 'react'
 
 // components
 import Bar from '../../../feature/event/components/Bar'
-import DjTimeTableRow from '../../../feature/event/components/DjTimeTableRow'
 import VjTimeTableRow from '../../../feature/event/components/VjTimeTableRow'
 import DjButton from '../../../feature/event/components/DjButton'
 import GuestRow from '../../../feature/event/components/GuestRow'
-import EventItemsRow from '../../../feature/event/components/EventItemsRow'
 import OrganizerRow from '../../../feature/event/components/OrganizerRow'
 import { EditImageRow } from '../../../feature/event/components/EditImageRow'
 import { EditTitleRow } from '../../../feature/event/components/EditTitleRow'
@@ -19,7 +17,7 @@ import { useRouter } from 'next/router'
 import { useEvent } from '../../../feature/event/hooks/useEvent'
 
 // function
-import { getFullDate, getTime } from '../../../lib/splitDateTime'
+import { getTime } from '../../../lib/splitDateTime'
 
 const EventDetails = () => {
   const { query, isReady } = useRouter()
@@ -70,7 +68,6 @@ const EventDetails = () => {
             <EditDjTimeTableRow
               timetable={event.timetable}
               setTimetable={handleEvent.setTimeTable}
-              searchUser={handleEvent.searchUser}
             />
           )}
           {event.vjtable && (

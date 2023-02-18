@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ChangeEvent } from 'react'
 import { TimeTable, User, Users } from './useEvent'
 import { textSearchProfileById } from '../infrastructure/profileDatabase'
 
@@ -102,4 +102,9 @@ export type HandleSearch = {
   setResults: (results: Users[]) => void
   setIsOpens: (isOpens: boolean[]) => void
   addEmptyTimetableRow: () => void
+  selectUser: (index: number, user: User) => TimeTable
+  handleInputChange: (
+    index: number,
+    value: ChangeEvent<HTMLInputElement>
+  ) => void
 }

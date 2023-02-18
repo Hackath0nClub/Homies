@@ -1,16 +1,16 @@
 import React from 'react'
 
 // components
-import { TitleRow } from '../../feature/event/components/TitleRow'
-import ImageRow from '../../feature/event/components/ImageRow'
+import { TitleRow } from '../../feature/event/components/Title'
+import ImageRow from '../../feature/event/components/Image'
 import Bar from '../../feature/event/components/Bar'
-import DescriptionRow from '../../feature/event/components/DescriptionRow'
-import DjTimeTableRow from '../../feature/event/components/DjTimeTableRow'
-import VjTimeTableRow from '../../feature/event/components/VjTimeTableRow'
+import DescriptionRow from '../../feature/event/components/Description'
+import DjTimeTableRow from '../../feature/event/components/DjTimeTable'
+import VjTimeTableRow from '../../feature/event/components/VjTimeTable'
 import DjButton from '../../feature/event/components/DjButton'
-import GuestRow from '../../feature/event/components/GuestRow'
-import EventItemsRow from '../../feature/event/components/EventItemsRow'
-import OrganizerRow from '../../feature/event/components/OrganizerRow'
+import GuestRow from '../../feature/event/components/Guest'
+import EventItemsRow from '../../feature/event/components/EventItems'
+import OrganizerRow from '../../feature/event/components/Organizer'
 
 // hooks
 import { useRouter } from 'next/router'

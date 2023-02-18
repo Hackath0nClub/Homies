@@ -2,15 +2,15 @@ import React, { useEffect } from 'react'
 
 // components
 import Bar from '../../../feature/event/components/Bar'
-import VjTimeTableRow from '../../../feature/event/components/VjTimeTableRow'
+import VjTimeTableRow from '../../../feature/event/components/VjTimeTable'
 import DjButton from '../../../feature/event/components/DjButton'
-import GuestRow from '../../../feature/event/components/GuestRow'
-import OrganizerRow from '../../../feature/event/components/OrganizerRow'
-import { EditImageRow } from '../../../feature/event/components/EditImageRow'
-import { EditTitleRow } from '../../../feature/event/components/EditTitleRow'
-import { EditDescriptionRow } from '../../../feature/event/components/EditDescriptionRow'
-import { EditEventItemsRow } from '../../../feature/event/components/EditEventItemsRow'
-import { EditDjTimeTableRow } from '../../../feature/event/components/EditDjTimeTableRow'
+import GuestRow from '../../../feature/event/components/Guest'
+import OrganizerRow from '../../../feature/event/components/Organizer'
+import { EditImageRow } from '../../../feature/event/components/EditImage'
+import { EditTitleRow } from '../../../feature/event/components/EditTitle'
+import { EditDescriptionRow } from '../../../feature/event/components/EditDescription'
+import { EditEventItemsRow } from '../../../feature/event/components/EditEventItems'
+import { EditDjTimeTableRow } from '../../../feature/event/components/EditDjTimeTable'
 
 // hooks
 import { useRouter } from 'next/router'

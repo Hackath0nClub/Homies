@@ -98,8 +98,11 @@ export const EditTimeTableRow = (props: propsType) => {
                       key={index}
                       className="flex align-items-center py-2 px-4 hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
                       onClick={() => {
-                        const table = props.handleSearch.selectUser(index, user)
-                        props.setTimetable(table)
+                        const newTimetable = props.handleSearch.selectUser(
+                          props.index,
+                          user
+                        )
+                        props.setTimetable(newTimetable)
                       }}
                     >
                       <img

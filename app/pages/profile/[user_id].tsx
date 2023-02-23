@@ -1,6 +1,7 @@
 // components
 import { UserName } from '../../feature/profile/components/UserName'
 import { UserIcon } from '../../feature/profile/components/UserIcon'
+import { UserText } from '../../feature/profile/components/UserText'
 
 // hooks
 import { useRouter } from 'next/router'
@@ -11,13 +12,11 @@ const ProfilePage = () => {
   const { query, isReady } = useRouter()
   const user_id = query.user_id
   const [profile, getProfile, setProfileText] = useProfile()
-  let [profileText, editText] = useState('')
 
   useEffect(() => {
     if (typeof user_id != 'string') return
     getProfile(user_id)
-    editText(profile?.text ?? '')
-  }, [isReady, profile?.text])
+  }, [isReady])
 
   return (
     <>
@@ -47,24 +46,10 @@ const ProfilePage = () => {
 
                 <div>
                   <UserName id={profile.id} name={profile.name}></UserName>
-                  <input
-                    type="text"
-                    value={profileText ?? ''}
-                    onChange={(e) => editText(e.target.value)}
-                  ></input>
-                  <button
-                    onClick={() => setProfileText(profileText ?? '', profile.id)}
-                  >
-                    押す
-                  </button>
+                  <UserText text={profile.text} id={profile.id} setProfileText={setProfileText}></UserText>
                 </div>
               </div>
               <div className="md:col-span-4">
-                <button
-                  onClick={() => setProfileText(profileText ?? '', profile.id)}
-                >
-                  押す
-                </button>
               </div>
             </div>
           </div>

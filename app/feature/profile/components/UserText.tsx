@@ -16,7 +16,7 @@ export const UserText = (props: PropsType) => {
 
   return (
     <>
-      <div className='w-auto'>
+      <div className='w-full'>
         <input
           type="text"
           value={text ?? ''}

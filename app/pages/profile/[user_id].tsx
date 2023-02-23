@@ -25,17 +25,17 @@ const ProfilePage = () => {
           <div className="flex justify-center min-h-screen bg-[rgba(28,32,37,1)]">
             <div className="w-5/6 grid md:grid-cols-10 sm:grid-cols-1 gap-8 m-8">
               <div className="md:col-span-6">
-                
+
                 <div className="grid grid-cols-10">
                   <div className="col-span-5">
                     <UserIcon icon_url={profile.icon_url}></UserIcon>
                   </div>
-                  <div className="col-span-5 text-right flex items-end">
+                  <div className="col-span-5 flex items-center">
                     <button>
                       ツイッター
                     </button>
                     <button
-                      className={`[box-shadow:0px_0px_0px_1px_rgba(84,_89,_92,_1)_inset] [box-shadow-width:1px] px-0 py-2 gap-2.5 inline-flex justify-center items-center text-white text-left rounded-[30px] font-['Hiragino_Kaku_Gothic_Pro'] hover:bg-white hover:text-[rgba(28,32,37,1)]`}
+                      className={`grow [box-shadow:0px_0px_0px_1px_rgba(84,_89,_92,_1)_inset] [box-shadow-width:1px] px-0 py-2 inline-flex justify-center items-center text-white rounded-[30px] font-['Hiragino_Kaku_Gothic_Pro'] hover:bg-white hover:text-[rgba(28,32,37,1)]`}
                     >
                       <span className="text-lg px-8 m-0 tracking-[-0.64px]">
                         プロフィールを編集する

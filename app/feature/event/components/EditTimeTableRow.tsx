@@ -119,13 +119,10 @@ export const EditTimeTableRow = (props: propsType) => {
               )}
             </div>
             <div className="col-span-1">
-              <span className="w-full text-sm">名前</span>
-              <input
-                type="text"
-                className="row-span-1 w-full px-2 block placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-                value={props.row.name ?? ''}
-                onChange={(e) => {}}
-              />
+              <p className="w-full text-sm">名前</p>
+              <p className="w-full mt-1 px-2 block placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg bg-[rgba(47,51,56,1)] text-gray-700 dark:text-gray-300">
+                {props.row.name}
+              </p>
             </div>
           </div>
         </div>

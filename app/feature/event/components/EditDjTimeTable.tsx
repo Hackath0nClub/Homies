@@ -7,7 +7,7 @@ type propsType = {
   setTimetable: (timetable: TimeTable) => void
 }
 
-export const EditDjTimeTableRow = (props: propsType) => {
+export const EditDjTimeTable = (props: propsType) => {
   const { search, handleSearch } = useSearchUser(props.timetable)
 
   return (

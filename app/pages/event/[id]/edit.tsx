@@ -10,7 +10,7 @@ import { EditImageRow } from '../../../feature/event/components/EditImage'
 import { EditTitleRow } from '../../../feature/event/components/EditTitle'
 import { EditDescriptionRow } from '../../../feature/event/components/EditDescription'
 import { EditEventItemsRow } from '../../../feature/event/components/EditEventItems'
-import { EditDjTimeTableRow } from '../../../feature/event/components/EditDjTimeTable'
+import { EditDjTimeTable } from '../../../feature/event/components/EditDjTimeTable'
 
 // hooks
 import { useRouter } from 'next/router'
@@ -65,7 +65,7 @@ const EventDetails = () => {
           )}
           <Bar />
           {event.timetable && (
-            <EditDjTimeTableRow
+            <EditDjTimeTable
               timetable={event.timetable}
               setTimetable={handleEvent.setTimeTable}
             />

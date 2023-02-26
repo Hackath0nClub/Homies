@@ -1,5 +1,4 @@
-import { renderHook } from '@testing-library/react'
-import { act } from 'react-dom/test-utils'
+import { act, renderHook } from '@testing-library/react'
 import {
   convertDateStringToDateObject,
   convertDateStringToDateObjectInList,
@@ -15,7 +14,6 @@ import * as eventOrganizerDatabase from '../infrastructure/eventOrganizerDatabas
 import * as eventDjDatabase from '../infrastructure/eventDjDatabase'
 import * as eventVjDatabase from '../infrastructure/eventVjDatabase'
 import * as ticketDatabase from '../infrastructure/ticketDatabase'
-import * as profileDatabase from '../infrastructure/profileDatabase'
 
 // 依存する関数をテスト対象のimportより先にモック化する
 jest.mock('../infrastructure/eventDatabase')
@@ -37,10 +35,6 @@ const selectEventVjByEventIdMock =
 jest.mock('../infrastructure/ticketDatabase')
 const selectListenerByEventIdMock =
   ticketDatabase.selectListenerByEventId as jest.Mock
-
-jest.mock('../infrastructure/profileDatabase')
-const textSearchProfileByIdMock =
-  profileDatabase.textSearchProfileById as jest.Mock
 
 import { useEvent } from '../hooks/useEvent'
 
@@ -92,16 +86,6 @@ test('updateEvent', async () => {
   // Assert
   expect(updateEventDataMock).toHaveBeenCalledTimes(1)
   expect(updateEventDataMock).toBeCalledWith(update.base)
-})
-
-test('searchUser', async () => {
-  // Arrange
-  textSearchProfileByIdMock.mockImplementation(() => data.profile)
-  // Act
-  const result = await act(() => hook.current.handleEvent.searchUser('user'))
-  // Assert
-  expect(result).toStrictEqual(data.profile)
-  expect(textSearchProfileByIdMock).toBeCalledWith('user')
 })
 
 afterEach(() => {

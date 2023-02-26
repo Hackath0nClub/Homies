@@ -5,7 +5,7 @@ const profile_data = profile_json.data
 
 test('textSearchProfileById', async () => {
   // Act
-  const result = await textSearchProfileById('user')
+  const result = await textSearchProfileById('user-b')
   // Assert
   expect(result).toStrictEqual(profile_data)
 })

@@ -7,20 +7,18 @@ export const useSearchUser = (timetable: TimeTable) => {
   const [keywords, setKeywords] = useState<string[]>(Array(length).fill(''))
   const [results, setResults] = useState<Users[]>(Array(length).fill([]))
   const [isOpens, setIsOpens] = useState<boolean[]>(Array(length).fill(false))
-  const [timer, setTimer] = useState<any>()
 
   useEffect(() => {
-    clearTimeout(timer)
-    const newTimers = keywords.map((inputValue, index) => {
-      if (!inputValue) return null
-      return setTimeout(async () => {
+    const timer = setTimeout(() => {
+      keywords.map(async (inputValue, index) => {
+        if (!inputValue) return null
         const users = await searchUser(inputValue)
         const newResults = [...results]
         newResults[index] = users
         setResults(newResults)
-      }, 500)
-    })
-    setTimer(newTimers)
+      })
+    }, 500) // 次の入力が0.5秒間ない場合に検索を実行
+    return () => clearTimeout(timer)
   }, [keywords])
 
   const searchUser = async (keyword: string) => {

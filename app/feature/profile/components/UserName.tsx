@@ -10,7 +10,7 @@ export const UserName = (props: PropsTupe) => {
         {props.name}
       </p>
       <p className="text-sm m-0 tracking-[-0.24px] leading-[normal] text-[rgba(170,170,170,1)]">
-        {props.id}
+        @{props.id}
       </p>
     </>
   )

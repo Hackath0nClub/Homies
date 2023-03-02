@@ -2,6 +2,7 @@
 import { UserName } from '../../feature/profile/components/UserName'
 import { UserIcon } from '../../feature/profile/components/UserIcon'
 import { UserText } from '../../feature/profile/components/UserText'
+import { UserCount } from '../../feature/profile/components/UserCount'
 
 // hooks
 import { useRouter } from 'next/router'
@@ -30,9 +31,9 @@ const ProfilePage = () => {
                   <div className="col-span-5">
                     <UserIcon icon_url={profile.icon_url}></UserIcon>
                   </div>
-                  <div className="col-span-5 flex items-center">
+                  <div className="col-span-5 flex items-end">
                     <button>
-                      ツイッター
+                      <img alt="Twitter" src="/playground_assets/twitter-icon.png" className="md:w-11 w-8 mx-3"></img>
                     </button>
                     <button
                       className={`grow [box-shadow:0px_0px_0px_1px_rgba(84,_89,_92,_1)_inset] [box-shadow-width:1px] px-0 py-2 inline-flex justify-center items-center text-white rounded-[30px] font-['Hiragino_Kaku_Gothic_Pro'] hover:bg-white hover:text-[rgba(28,32,37,1)]`}
@@ -48,6 +49,10 @@ const ProfilePage = () => {
                   <UserName id={profile.id} name={profile.name}></UserName>
                   <UserText text={profile.text} id={profile.id} setProfileText={setProfileText}></UserText>
                 </div>
+                <div>
+                  <UserCount></UserCount>
+                </div>
+
               </div>
               <div className="md:col-span-4">
               </div>

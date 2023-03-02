@@ -1,5 +1,6 @@
 import { act, renderHook } from '@testing-library/react'
 import { ChangeEvent } from 'react'
+import React from 'react'
 import { convertDateStringToDateObjectInList } from '../../../lib/convertDateStringToDateObject'
 import timetable_json from './data/timetable.json'
 import profile_json from './data/profile.json'

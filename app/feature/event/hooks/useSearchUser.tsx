@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEvent } from 'react'
+import { useState, useEffect, ChangeEvent, useRef } from 'react'
 import { TimeTable, User, Users } from './useEvent'
 import { textSearchProfileById } from '../infrastructure/profileDatabase'
 
@@ -7,16 +7,27 @@ export const useSearchUser = (timetable: TimeTable) => {
   const [keywords, setKeywords] = useState<string[]>(Array(length).fill(''))
   const [results, setResults] = useState<Users[]>(Array(length).fill([]))
   const [isOpens, setIsOpens] = useState<boolean[]>(Array(length).fill(false))
+  const isFirstRender = useRef(false)
+
+  useEffect(() => {
+    if (isFirstRender.current) return
+    const newKeywords = [...keywords]
+    timetable.map((row, index) => {
+      newKeywords[index] = row.user_id ?? ''
+    })
+    setKeywords(newKeywords)
+    isFirstRender.current = true
+  }, [])
 
   useEffect(() => {
     const timer = setTimeout(() => {
+      const newResults = [...results]
       keywords.map(async (inputValue, index) => {
         if (!inputValue) return null
         const users = await searchUser(inputValue)
-        const newResults = [...results]
         newResults[index] = users
-        setResults(newResults)
       })
+      setResults(newResults)
     }, 500) // 次の入力が0.5秒間ない場合に検索を実行
     return () => clearTimeout(timer)
   }, [keywords])

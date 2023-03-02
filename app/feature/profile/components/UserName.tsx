@@ -1,9 +1,9 @@
-type PropsTupe = {
+type PropsType = {
   id: string
   name: string | null
 }
 
-export const UserName = (props: PropsTupe) => {
+export const UserName = (props: PropsType) => {
   return (
     <>
       <p className="text-lg text-white m-0 tracking-[-0.24px] leading-[normal]">

@@ -20,13 +20,16 @@ export const useSearchUser = (timetable: TimeTable) => {
   }, [])
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const timer = setTimeout(async () => {
       const newResults = [...results]
-      keywords.map(async (inputValue, index) => {
-        if (!inputValue) return null
-        const users = await searchUser(inputValue)
-        newResults[index] = users
-      })
+      await Promise.all(
+        keywords.map(async (inputValue, index) => {
+          if (inputValue == '') return null
+          const users = await searchUser(inputValue)
+          console.log('searchUserが呼ばれた。users: ', users)
+          newResults[index] = users
+        })
+      )
       setResults(newResults)
     }, 500) // 次の入力が0.5秒間ない場合に検索を実行
     return () => clearTimeout(timer)

@@ -11,29 +11,22 @@ export const useSearchUser = (timetable: TimeTable) => {
 
   useEffect(() => {
     if (isFirstRender.current) return
-    const newKeywords = [...keywords]
-    timetable.map((row, index) => {
-      newKeywords[index] = row.user_id ?? ''
-    })
+    const newKeywords = timetable.map((row) => row.user_id ?? '')
     setKeywords(newKeywords)
     isFirstRender.current = true
   }, [])
 
   useEffect(() => {
-    const timer = setTimeout(async () => {
-      const newResults = [...results]
-      await Promise.all(
-        keywords.map(async (inputValue, index) => {
-          if (inputValue == '') return null
-          const users = await searchUser(inputValue)
-          console.log('searchUserが呼ばれた。users: ', users)
-          newResults[index] = users
-        })
-      )
-      setResults(newResults)
-    }, 500) // 次の入力が0.5秒間ない場合に検索を実行
+    const timer = setTimeout(triggerSearchUser, 500)
     return () => clearTimeout(timer)
   }, [keywords])
+
+  const triggerSearchUser = async () => {
+    const newResults = await Promise.all(
+      keywords.filter((value) => value !== '').map(searchUser)
+    )
+    setResults(newResults)
+  }
 
   const searchUser = async (keyword: string) => {
     const result = await textSearchProfileById(keyword)

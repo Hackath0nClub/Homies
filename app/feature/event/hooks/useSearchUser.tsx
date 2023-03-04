@@ -11,7 +11,6 @@ export const useSearchUser = (timetable: TimeTable) => {
     const length = inputTimetable.length
     setResults(Array(length).fill([]))
     setIsOpens(Array(length).fill(false))
-
     const newKeywords = inputTimetable.map((row) => row.user_id ?? '')
     setKeywords(newKeywords)
   }

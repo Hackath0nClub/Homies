@@ -50,14 +50,17 @@ export const useEvent = () => {
     if (base) await updateEventData(base)
   }
 
-  const updateDjStartTime = (index: number, start_time: Date | null) => {
+  const updateTimetableRowStartTime = (
+    index: number,
+    start_time: Date | null
+  ) => {
     if (!timetable) return
     const newTimetable = [...timetable]
     newTimetable[index].start_time = start_time
     setTimeTable(newTimetable)
   }
 
-  const updateDjEndTime = (index: number, end_time: Date | null) => {
+  const updateTimetableRowEndTime = (index: number, end_time: Date | null) => {
     if (!timetable) return
     const newTimetable = [...timetable]
     newTimetable[index].end_time = end_time
@@ -80,6 +83,18 @@ export const useEvent = () => {
     setTimeTable(newTimetable)
   }
 
+  const deleteTimetableRow = (index: number) => {
+    if (!timetable) return
+    let newTimetable = [...timetable]
+    newTimetable.splice(index, 1)
+    console.log('newTimetable', newTimetable)
+    newTimetable = newTimetable.map((row, index) => {
+      row.row_number = index + 1
+      return row
+    })
+    setTimeTable(newTimetable)
+  }
+
   return {
     event: {
       base,
@@ -95,9 +110,10 @@ export const useEvent = () => {
       setBase,
       setFile,
       setTimeTable,
-      updateDjStartTime,
-      updateDjEndTime,
+      updateTimetableRowStartTime,
+      updateTimetableRowEndTime,
       clearTimetableRow,
+      deleteTimetableRow,
     },
   } as const
 }
@@ -175,7 +191,8 @@ export type HandleEvent = {
   setBase: (base: Event) => void
   setFile: (file: File) => void
   setTimeTable: (timetable: TimeTable) => void
-  updateDjStartTime: (index: number, start_time: Date | null) => void
-  updateDjEndTime: (index: number, end_time: Date | null) => void
+  updateTimetableRowStartTime: (index: number, start_time: Date | null) => void
+  updateTimetableRowEndTime: (index: number, end_time: Date | null) => void
   clearTimetableRow: (index: number) => void
+  deleteTimetableRow: (index: number) => void
 }

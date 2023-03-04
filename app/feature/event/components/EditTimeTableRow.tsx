@@ -34,7 +34,10 @@ export const EditTimeTableRow = (props: propsType) => {
                     selected={props.row.start_time}
                     onChange={(date) => {
                       if (date)
-                        props.handleEvent.updateDjStartTime(props.index, date)
+                        props.handleEvent.updateTimetableRowStartTime(
+                          props.index,
+                          date
+                        )
                     }}
                     showTimeSelect
                     showTimeSelectOnly
@@ -50,7 +53,10 @@ export const EditTimeTableRow = (props: propsType) => {
                     selected={props.row.end_time}
                     onChange={(date) => {
                       if (date)
-                        props.handleEvent.updateDjEndTime(props.index, date)
+                        props.handleEvent.updateTimetableRowEndTime(
+                          props.index,
+                          date
+                        )
                     }}
                     showTimeSelect
                     showTimeSelectOnly
@@ -124,7 +130,8 @@ export const EditTimeTableRow = (props: propsType) => {
         <div className="col-span-1 h-full flex justify-center items-center">
           <div
             onClick={() => {
-              console.log('archive-box', props.index)
+              props.handleEvent.deleteTimetableRow(props.index)
+              props.handleSearch.deleteSearchUserRow(props.index)
             }}
           >
             <svg

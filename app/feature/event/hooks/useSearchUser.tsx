@@ -84,6 +84,20 @@ export const useSearchUser = (timetable: TimeTable) => {
     setKeywords(newKeywords)
   }
 
+  const deleteSearchUserRow = (index: number) => {
+    const newKeywords = [...keywords]
+    newKeywords.splice(index, 1)
+    setKeywords(newKeywords)
+
+    const newResults = [...results]
+    newResults.splice(index, 1)
+    setResults(newResults)
+
+    const newIsOpens = [...isOpens]
+    newIsOpens.splice(index, 1)
+    setIsOpens(newIsOpens)
+  }
+
   return {
     search: {
       keywords,
@@ -99,6 +113,7 @@ export const useSearchUser = (timetable: TimeTable) => {
       handleInputChange,
       selectUser,
       clearKeyword,
+      deleteSearchUserRow,
     },
   }
 }
@@ -121,4 +136,5 @@ export type HandleSearch = {
     value: ChangeEvent<HTMLInputElement>
   ) => void
   clearKeyword: (index: number) => void
+  deleteSearchUserRow: (index: number) => void
 }

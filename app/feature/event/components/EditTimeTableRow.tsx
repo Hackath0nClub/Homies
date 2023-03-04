@@ -1,4 +1,4 @@
-import { Dj, TimeTable } from '../hooks/useEvent'
+import { Dj, HandleEvent } from '../hooks/useEvent'
 import { Search, HandleSearch } from '../hooks/useSearchUser'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -8,53 +8,13 @@ type propsType = {
   index: number
   search: Search
   handleSearch: HandleSearch
-  timetable: TimeTable
-  setTimetable: (timetable: TimeTable) => void
+  handleEvent: HandleEvent
 }
 
 export const EditTimeTableRow = (props: propsType) => {
   const keyword = props.search.keywords[props.index]
   const result = props.search.results[props.index]
   const isOpen = props.search.isOpens[props.index]
-
-  const updateDjStartTime = (start_time: Date | null) => {
-    const newItems = [...props.timetable]
-    const updatedItem = {
-      ...newItems[props.index],
-      start_time: start_time,
-    }
-    newItems[props.index] = updatedItem
-    props.setTimetable(newItems)
-  }
-
-  const updateDjEndTime = (end_time: Date | null) => {
-    const newItems = [...props.timetable]
-    const updatedItem = {
-      ...newItems[props.index],
-      end_time: end_time,
-    }
-    newItems[props.index] = updatedItem
-    props.setTimetable(newItems)
-  }
-
-  const clearTableRow = () => {
-    const newItems = [...props.timetable]
-    const updatedItem = {
-      ...newItems[props.index],
-      user_id: null,
-      name: '',
-      text: null,
-      icon_url: null,
-      start_time: null,
-      end_time: null,
-    }
-    newItems[props.index] = updatedItem
-    props.setTimetable(newItems)
-
-    const newKeywords = [...props.search.keywords]
-    newKeywords[props.index] = ''
-    props.handleSearch.setKeywords(newKeywords)
-  }
 
   const bg =
     props.index % 2 == 1
@@ -70,7 +30,8 @@ export const EditTimeTableRow = (props: propsType) => {
               <DatePicker
                 selected={props.row.start_time}
                 onChange={(date) => {
-                  if (date) updateDjStartTime(date)
+                  if (date)
+                    props.handleEvent.updateDjStartTime(props.index, date)
                 }}
                 showTimeSelect
                 showTimeSelectOnly
@@ -85,7 +46,7 @@ export const EditTimeTableRow = (props: propsType) => {
               <DatePicker
                 selected={props.row.end_time}
                 onChange={(date) => {
-                  if (date) updateDjEndTime(date)
+                  if (date) props.handleEvent.updateDjEndTime(props.index, date)
                 }}
                 showTimeSelect
                 showTimeSelectOnly
@@ -121,7 +82,7 @@ export const EditTimeTableRow = (props: propsType) => {
                           props.index,
                           user
                         )
-                        props.setTimetable(newTimetable)
+                        props.handleEvent.setTimeTable(newTimetable)
                       }}
                     >
                       <img
@@ -143,7 +104,10 @@ export const EditTimeTableRow = (props: propsType) => {
                 <div className="text-left">{props.row.name}</div>
                 <div
                   className="text-right cursor-pointer"
-                  onClick={clearTableRow}
+                  onClick={() => {
+                    props.handleEvent.clearTimetableRow(props.index)
+                    props.handleSearch.clearKeyword(props.index)
+                  }}
                 >
                   ×
                 </div>

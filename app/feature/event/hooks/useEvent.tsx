@@ -50,6 +50,36 @@ export const useEvent = () => {
     if (base) await updateEventData(base)
   }
 
+  const updateDjStartTime = (index: number, start_time: Date | null) => {
+    if (!timetable) return
+    const newTimetable = [...timetable]
+    newTimetable[index].start_time = start_time
+    setTimeTable(newTimetable)
+  }
+
+  const updateDjEndTime = (index: number, end_time: Date | null) => {
+    if (!timetable) return
+    const newTimetable = [...timetable]
+    newTimetable[index].end_time = end_time
+    setTimeTable(newTimetable)
+  }
+
+  const clearTimetableRow = (index: number) => {
+    if (!timetable) return
+    const newTimetable = [...timetable]
+    const updatedTimetable = {
+      ...newTimetable[index],
+      user_id: null,
+      name: '',
+      text: null,
+      icon_url: null,
+      start_time: null,
+      end_time: null,
+    }
+    newTimetable[index] = updatedTimetable
+    setTimeTable(newTimetable)
+  }
+
   return {
     event: {
       base,
@@ -65,6 +95,9 @@ export const useEvent = () => {
       setBase,
       setFile,
       setTimeTable,
+      updateDjStartTime,
+      updateDjEndTime,
+      clearTimetableRow,
     },
   } as const
 }
@@ -129,3 +162,20 @@ export type User = {
 }
 
 export type Users = User[]
+
+export type HandleEvent = {
+  loadEvent: (id: number) => Promise<{
+    data: Event | undefined
+    organizers: Organizers | undefined
+    timetable: TimeTable | undefined
+    vjtable: VjTable | undefined
+    listener: Listener | undefined
+  }>
+  updateEvent: () => Promise<void>
+  setBase: (base: Event) => void
+  setFile: (file: File) => void
+  setTimeTable: (timetable: TimeTable) => void
+  updateDjStartTime: (index: number, start_time: Date | null) => void
+  updateDjEndTime: (index: number, end_time: Date | null) => void
+  clearTimetableRow: (index: number) => void
+}

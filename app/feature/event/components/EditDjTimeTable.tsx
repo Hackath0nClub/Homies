@@ -1,11 +1,9 @@
 import { TimeTable } from '../hooks/useEvent'
-import { Search, HandleSearch } from '../hooks/useSearchUser'
+import { HandleSearch } from '../hooks/useSearchUser'
 
 type propsType = {
-  children: any
-  timetable: TimeTable
+  children: React.ReactNode
   setTimetable: (timetable: TimeTable) => void
-  search: Search
   handleSearch: HandleSearch
 }
 

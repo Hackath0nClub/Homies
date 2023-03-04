@@ -1,20 +1,20 @@
-import { useState, useEffect, ChangeEvent, useRef } from 'react'
-import { TimeTable, User, Users } from './useEvent'
+import { useState, useEffect, ChangeEvent } from 'react'
+import { TimeTable, User, Users, Dj } from './useEvent'
 import { textSearchProfileById } from '../infrastructure/profileDatabase'
 
 export const useSearchUser = (timetable: TimeTable) => {
-  const length = timetable.length
-  const [keywords, setKeywords] = useState<string[]>(Array(length).fill(''))
-  const [results, setResults] = useState<Users[]>(Array(length).fill([]))
-  const [isOpens, setIsOpens] = useState<boolean[]>(Array(length).fill(false))
-  const isFirstRender = useRef(false)
+  const [keywords, setKeywords] = useState<string[]>([])
+  const [results, setResults] = useState<Users[]>([])
+  const [isOpens, setIsOpens] = useState<boolean[]>([])
 
-  useEffect(() => {
-    if (isFirstRender.current) return
-    const newKeywords = timetable.map((row) => row.user_id ?? '')
+  const setupSearchUser = async (inputTimetable: TimeTable) => {
+    const length = inputTimetable.length
+    setResults(Array(length).fill([]))
+    setIsOpens(Array(length).fill(false))
+
+    const newKeywords = inputTimetable.map((row) => row.user_id ?? '')
     setKeywords(newKeywords)
-    isFirstRender.current = true
-  }, [])
+  }
 
   useEffect(() => {
     const timer = setTimeout(triggerSearchUser, 500)
@@ -22,13 +22,12 @@ export const useSearchUser = (timetable: TimeTable) => {
   }, [keywords])
 
   const triggerSearchUser = async () => {
-    const newResults = await Promise.all(
-      keywords.filter((value) => value !== '').map(searchUser)
-    )
+    const newResults = await Promise.all(keywords.map(searchUser))
     setResults(newResults)
   }
 
   const searchUser = async (keyword: string) => {
+    if (keyword == '') return []
     const result = await textSearchProfileById(keyword)
     return result ?? []
   }
@@ -87,6 +86,7 @@ export const useSearchUser = (timetable: TimeTable) => {
       isOpens,
     },
     handleSearch: {
+      setupSearchUser,
       setKeywords,
       setResults,
       setIsOpens,
@@ -107,7 +107,7 @@ export type HandleSearch = {
   setKeywords: (keywords: string[]) => void
   setResults: (results: Users[]) => void
   setIsOpens: (isOpens: boolean[]) => void
-  addEmptyTimetableRow: () => void
+  addEmptyTimetableRow: () => Dj[]
   selectUser: (index: number, user: User) => TimeTable
   handleInputChange: (
     index: number,

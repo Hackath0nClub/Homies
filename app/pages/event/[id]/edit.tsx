@@ -11,10 +11,12 @@ import { EditTitleRow } from '../../../feature/event/components/EditTitle'
 import { EditDescriptionRow } from '../../../feature/event/components/EditDescription'
 import { EditEventItemsRow } from '../../../feature/event/components/EditEventItems'
 import { EditDjTimeTable } from '../../../feature/event/components/EditDjTimeTable'
+import { EditTimeTableRow } from '../../../feature/event/components/EditTimeTableRow'
 
 // hooks
 import { useRouter } from 'next/router'
 import { useEvent } from '../../../feature/event/hooks/useEvent'
+import { useSearchUser } from '../../../feature/event/hooks/useSearchUser'
 
 // function
 import { getTime } from '../../../lib/splitDateTime'
@@ -23,10 +25,13 @@ const EventDetails = () => {
   const { query, isReady } = useRouter()
   const id = Number(query.id)
   const { event, handleEvent } = useEvent()
+  const { search, handleSearch } = useSearchUser(event.timetable ?? [])
 
   const init = async () => {
     if (!isReady) return
-    handleEvent.loadEvent(id)
+    const initEvent = await handleEvent.loadEvent(id)
+    if (!initEvent.timetable) return
+    handleSearch.setupSearchUser(initEvent.timetable)
   }
 
   useEffect(() => {
@@ -68,7 +73,24 @@ const EventDetails = () => {
             <EditDjTimeTable
               timetable={event.timetable}
               setTimetable={handleEvent.setTimeTable}
-            />
+              search={search}
+              handleSearch={handleSearch}
+            >
+              {event.timetable.map((row, index) => {
+                return (
+                  <div key={row.row_number}>
+                    <EditTimeTableRow
+                      row={row}
+                      index={index}
+                      search={search}
+                      handleSearch={handleSearch}
+                      timetable={event.timetable!}
+                      setTimetable={handleEvent.setTimeTable}
+                    />
+                  </div>
+                )
+              })}
+            </EditDjTimeTable>
           )}
           {event.vjtable && (
             <VjTimeTableRow

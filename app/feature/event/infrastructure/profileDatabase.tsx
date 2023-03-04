@@ -12,6 +12,6 @@ export const textSearchProfileById = async (keyword: string) => {
     return data as Users
   } catch (error) {
     alert('Error')
-    console.error(error)
+    console.error('textSearchProfileById error', error)
   }
 }

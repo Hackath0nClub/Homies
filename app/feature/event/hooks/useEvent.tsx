@@ -32,6 +32,14 @@ export const useEvent = () => {
 
     const listener_data = await selectListenerByEventId(id)
     if (listener_data) setListener(listener_data)
+
+    return {
+      data: base_data,
+      organizers: organizers_data,
+      timetable: timetable_data,
+      vjtable: vjtable_data,
+      listener: listener_data,
+    } as const
   }
 
   const updateEvent = async () => {

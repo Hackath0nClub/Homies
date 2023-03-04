@@ -33,6 +33,20 @@ export const useSearchUser = (timetable: TimeTable) => {
     return result ?? []
   }
 
+  const handleInputChange = (
+    index: number,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    console.log(e.target.value)
+    const newKeywords = [...keywords]
+    newKeywords[index] = e.target.value
+    setKeywords(newKeywords)
+
+    const newIsOpens = [...isOpens]
+    newIsOpens[index] = e.target.value == '' ? false : true
+    setIsOpens(newIsOpens)
+  }
+
   const addEmptyTimetableRow = () => {
     setKeywords([...keywords, ''])
     setResults([...results, []])
@@ -50,19 +64,6 @@ export const useSearchUser = (timetable: TimeTable) => {
       },
     ]
     return newTimetable
-  }
-
-  const handleInputChange = (
-    index: number,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const newKeywords = [...keywords]
-    newKeywords[index] = e.target.value
-    setKeywords(newKeywords)
-
-    const newIsOpens = [...isOpens]
-    newIsOpens[index] = true
-    setIsOpens(newIsOpens)
   }
 
   const selectUser = (index: number, user: User) => {

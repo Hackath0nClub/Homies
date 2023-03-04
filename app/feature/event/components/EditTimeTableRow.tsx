@@ -17,24 +17,43 @@ export const EditTimeTableRow = (props: propsType) => {
   const result = props.search.results[props.index]
   const isOpen = props.search.isOpens[props.index]
 
-  const updateDjStartTime = (index: number, start_time: Date | null) => {
+  const updateDjStartTime = (start_time: Date | null) => {
     const newItems = [...props.timetable]
     const updatedItem = {
-      ...newItems[index],
+      ...newItems[props.index],
       start_time: start_time,
     }
-    newItems[index] = updatedItem
+    newItems[props.index] = updatedItem
     props.setTimetable(newItems)
   }
 
-  const updateDjEndTime = (index: number, end_time: Date | null) => {
+  const updateDjEndTime = (end_time: Date | null) => {
     const newItems = [...props.timetable]
     const updatedItem = {
-      ...newItems[index],
+      ...newItems[props.index],
       end_time: end_time,
     }
-    newItems[index] = updatedItem
+    newItems[props.index] = updatedItem
     props.setTimetable(newItems)
+  }
+
+  const clearTableRow = () => {
+    const newItems = [...props.timetable]
+    const updatedItem = {
+      ...newItems[props.index],
+      user_id: null,
+      name: '',
+      text: null,
+      icon_url: null,
+      start_time: null,
+      end_time: null,
+    }
+    newItems[props.index] = updatedItem
+    props.setTimetable(newItems)
+
+    const newKeywords = [...props.search.keywords]
+    newKeywords[props.index] = ''
+    props.handleSearch.setKeywords(newKeywords)
   }
 
   const bg =
@@ -51,7 +70,7 @@ export const EditTimeTableRow = (props: propsType) => {
               <DatePicker
                 selected={props.row.start_time}
                 onChange={(date) => {
-                  if (date) updateDjStartTime(props.index, date)
+                  if (date) updateDjStartTime(date)
                 }}
                 showTimeSelect
                 showTimeSelectOnly
@@ -66,7 +85,7 @@ export const EditTimeTableRow = (props: propsType) => {
               <DatePicker
                 selected={props.row.end_time}
                 onChange={(date) => {
-                  if (date) updateDjEndTime(props.index, date)
+                  if (date) updateDjEndTime(date)
                 }}
                 showTimeSelect
                 showTimeSelectOnly
@@ -120,9 +139,15 @@ export const EditTimeTableRow = (props: propsType) => {
             </div>
             <div className="col-span-1">
               <p className="w-full text-sm">名前</p>
-              <p className="w-full mt-1 px-2 block placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg bg-[rgba(47,51,56,1)] text-gray-700 dark:text-gray-300">
-                {props.row.name}
-              </p>
+              <div className="w-full mt-1 px-2 flex justify-between placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg bg-[rgba(47,51,56,1)] text-gray-700 dark:text-gray-300">
+                <div className="text-left">{props.row.name}</div>
+                <div
+                  className="text-right cursor-pointer"
+                  onClick={clearTableRow}
+                >
+                  ×
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -87,7 +87,6 @@ export const useEvent = () => {
     if (!timetable) return
     let newTimetable = [...timetable]
     newTimetable.splice(index, 1)
-    console.log('newTimetable', newTimetable)
     newTimetable = newTimetable.map((row, index) => {
       row.row_number = index + 1
       return row

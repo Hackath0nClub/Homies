@@ -24,7 +24,24 @@ export const EditTimeTableRow = (props: propsType) => {
   return (
     <div className={`${bg} pt-2 pb-4 border-y border-white`}>
       <div className="grid grid-cols-5">
-        <div className="col-span-1" />
+        <div className="col-span-1 h-full flex justify-center items-center">
+          <div
+            onClick={() => {
+              props.handleEvent.shiftUpTimetableRow(props.index)
+              props.handleSearch.shiftUpSearchUserRow(props.index)
+            }}
+          >
+            <IconArrowUp />
+          </div>
+          <div
+            onClick={() => {
+              props.handleEvent.shiftUpTimetableRow(props.index + 1)
+              props.handleSearch.shiftUpSearchUserRow(props.index + 1)
+            }}
+          >
+            <IconArrowDown />
+          </div>
+        </div>
         <div className="col-span-3">
           <div className="grid grid-rows-2">
             <div className="row-span-1 h-full flex justify-center items-center">
@@ -142,6 +159,8 @@ export const EditTimeTableRow = (props: propsType) => {
   )
 }
 
+// Beautiful hand-crafted SVG icons, by the makers of Tailwind CSS.
+// https://heroicons.com/
 const IconArchiveBox = () => {
   return (
     <svg
@@ -156,6 +175,44 @@ const IconArchiveBox = () => {
         strokeLinecap="round"
         strokeLinejoin="round"
         d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"
+      />
+    </svg>
+  )
+}
+
+const IconArrowUp = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      className="w-5 h-5 cursor-pointer stroke-gray-500"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18"
+      />
+    </svg>
+  )
+}
+
+const IconArrowDown = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+      className="w-5 h-5 cursor-pointer stroke-gray-500"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3"
       />
     </svg>
   )

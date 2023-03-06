@@ -94,6 +94,20 @@ export const useEvent = () => {
     setTimeTable(newTimetable)
   }
 
+  const shiftUpTimetableRow = (index: number) => {
+    if (!timetable) return
+    if (index == 0) return
+    let newTimetable = [...timetable]
+    const target = newTimetable[index]
+    newTimetable[index] = newTimetable[index - 1]
+    newTimetable[index - 1] = target
+    newTimetable = newTimetable.map((row, index) => {
+      row.row_number = index + 1
+      return row
+    })
+    setTimeTable(newTimetable)
+  }
+
   return {
     event: {
       base,
@@ -113,6 +127,7 @@ export const useEvent = () => {
       updateTimetableRowEndTime,
       clearTimetableRow,
       deleteTimetableRow,
+      shiftUpTimetableRow,
     },
   } as const
 }
@@ -194,4 +209,5 @@ export type HandleEvent = {
   updateTimetableRowEndTime: (index: number, end_time: Date | null) => void
   clearTimetableRow: (index: number) => void
   deleteTimetableRow: (index: number) => void
+  shiftUpTimetableRow: (index: number) => void
 }

@@ -98,6 +98,27 @@ export const useSearchUser = (timetable: TimeTable) => {
     setIsOpens(newIsOpens)
   }
 
+  const shiftUpSearchUserRow = (index: number) => {
+    if (index == 0) return
+    let newKeywords = [...keywords]
+    const targetKeyword = newKeywords[index]
+    newKeywords[index] = newKeywords[index - 1]
+    newKeywords[index - 1] = targetKeyword
+    setKeywords(newKeywords)
+
+    const newResults = [...results]
+    const targetResult = newResults[index]
+    newResults[index] = newResults[index - 1]
+    newResults[index - 1] = targetResult
+    setResults(newResults)
+
+    const newIsOpens = [...isOpens]
+    const targetIsOpen = newIsOpens[index]
+    newIsOpens[index] = newIsOpens[index - 1]
+    newIsOpens[index - 1] = targetIsOpen
+    setIsOpens(newIsOpens)
+  }
+
   return {
     search: {
       keywords,
@@ -114,6 +135,7 @@ export const useSearchUser = (timetable: TimeTable) => {
       selectUser,
       clearKeyword,
       deleteSearchUserRow,
+      shiftUpSearchUserRow,
     },
   }
 }
@@ -137,4 +159,5 @@ export type HandleSearch = {
   ) => void
   clearKeyword: (index: number) => void
   deleteSearchUserRow: (index: number) => void
+  shiftUpSearchUserRow: (index: number) => void
 }

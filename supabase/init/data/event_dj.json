@@ -4,6 +4,9 @@
     "user_id": "user-b",
     "event_id": 1,
     "row_number": 1,
+    "name": "",
+    "icon_url": "",
+    "text": "",
     "start_time": "2023-01-06T18:00:33.621Z",
     "end_time": "2023-01-06T18:30:33.621Z"
   },
@@ -12,6 +15,9 @@
     "user_id": "user-c",
     "event_id": 1,
     "row_number": 2,
+    "name": "",
+    "icon_url": "",
+    "text": "",
     "start_time": "2023-01-06T18:30:33.621Z",
     "end_time": "2023-01-06T19:00:33.621Z"
   },
@@ -20,6 +26,9 @@
     "user_id": "user-b",
     "event_id": 2,
     "row_number": 1,
+    "name": "",
+    "icon_url": "",
+    "text": "",
     "start_time": "2023-01-06T18:00:33.621Z",
     "end_time": "2023-01-06T18:30:33.621Z"
   },
@@ -28,6 +37,9 @@
     "user_id": "user-c",
     "event_id": 2,
     "row_number": 2,
+    "name": "",
+    "icon_url": "",
+    "text": "",
     "start_time": "2023-01-06T18:30:33.621Z",
     "end_time": "2023-01-06T19:00:33.621Z"
   },
@@ -36,6 +48,9 @@
     "user_id": "user-b",
     "event_id": 3,
     "row_number": 1,
+    "name": "",
+    "icon_url": "",
+    "text": "",
     "start_time": "2023-01-06T18:00:33.621Z",
     "end_time": "2023-01-06T18:30:33.621Z"
   },
@@ -44,6 +59,9 @@
     "user_id": "user-c",
     "event_id": 3,
     "row_number": 2,
+    "name": "",
+    "icon_url": "",
+    "text": "",
     "start_time": "2023-01-06T18:30:33.621Z",
     "end_time": "2023-01-06T19:00:33.621Z"
   }

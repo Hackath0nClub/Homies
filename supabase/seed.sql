@@ -42,9 +42,9 @@ create table event_dj (
   user_id text not null references profile(id),
   event_id serial not null references event(id),
   row_number int not null,
-  name text,
-  icon_url text,
-  text text,
+  guest_name text,
+  guest_icon_url text,
+  guest_text text,
   start_time timestamp with time zone,
   end_time timestamp with time zone,
   primary key (user_id, event_id)

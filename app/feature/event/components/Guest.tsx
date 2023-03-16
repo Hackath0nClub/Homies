@@ -8,10 +8,13 @@ type propsType = {
         icon_url: string | null
         start_time: string
         end_time: string
+        guest_name: string | null
+        guest_text: string | null
+        guest_icon_url: string | null
       }[]
 }
 
-const GuestRow = (props: propsType) => {
+const Guest = (props: propsType) => {
   return (
     <>
       <p className="text-white text-left font-bold text-2xl my-4">
@@ -41,4 +44,4 @@ const GuestRow = (props: propsType) => {
   )
 }
 
-export default GuestRow
+export default Guest

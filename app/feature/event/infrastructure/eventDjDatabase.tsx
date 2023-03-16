@@ -12,6 +12,9 @@ export const selectEventDjByEventId = async (id: number) => {
         start_time,
         end_time,
         user_id,
+        guest_name,
+        guest_text,
+        guest_icon_url,
         user:user_id(name,icon_url,text)
         `
       )

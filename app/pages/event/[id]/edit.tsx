@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import Bar from '../../../feature/event/components/Bar'
 import VjTimeTableRow from '../../../feature/event/components/VjTimeTable'
 import DjButton from '../../../feature/event/components/DjButton'
-import GuestRow from '../../../feature/event/components/Guest'
+import Guest from '../../../feature/event/components/Guest'
 import OrganizerRow from '../../../feature/event/components/Organizer'
 import { EditImageRow } from '../../../feature/event/components/EditImage'
 import { EditTitleRow } from '../../../feature/event/components/EditTitle'
@@ -105,8 +105,8 @@ const EventDetails = () => {
           <DjButton />
           <Bar />
           {event.timetable && event.vjtable && (
-            <GuestRow
-              timetable={[...event.timetable, ...event.vjtable].map(
+            <Guest
+              timetable={[...event.timetable].map(
                 ({ start_time, end_time, ...others }) => {
                   return {
                     ...others,
@@ -115,7 +115,18 @@ const EventDetails = () => {
                   }
                 }
               )}
-            ></GuestRow>
+            ></Guest>
+            // <Guest
+            //   timetable={[...event.timetable, ...event.vjtable].map(
+            //     ({ start_time, end_time, ...others }) => {
+            //       return {
+            //         ...others,
+            //         start_time: start_time ? getTime(start_time) : '',
+            //         end_time: end_time ? getTime(end_time) : '',
+            //       }
+            //     }
+            //   )}
+            // ></Guest>
           )}
         </div>
         <div className="md:col-span-4">

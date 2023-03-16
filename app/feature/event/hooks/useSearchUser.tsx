@@ -59,6 +59,9 @@ export const useSearchUser = (timetable: TimeTable) => {
         icon_url: null,
         start_time: null,
         end_time: null,
+        guest_name: null,
+        guest_text: null,
+        guest_icon_url: null,
       },
     ]
     return newTimetable

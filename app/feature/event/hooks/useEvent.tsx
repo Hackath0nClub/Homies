@@ -13,7 +13,7 @@ export const useEvent = () => {
   const [base, setBase] = useState<Event>()
   const [organizers, setOrganizers] = useState<Organizers>()
   const [timetable, setTimeTable] = useState<TimeTable>()
-  const [vjtable, setVjTable] = useState<TimeTable>()
+  const [vjtable, setVjTable] = useState<VjTable>()
   const [listener, setListener] = useState<Listener>()
   const [file, setFile] = useState<File>()
 
@@ -164,6 +164,9 @@ export type Dj = {
   icon_url: string | null
   start_time: Date | null
   end_time: Date | null
+  guest_name: string | null
+  guest_text: string | null
+  guest_icon_url: string | null
 }
 
 export type TimeTable = Dj[]

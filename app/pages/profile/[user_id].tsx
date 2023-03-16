@@ -13,6 +13,7 @@ const ProfilePage = () => {
   const { query, isReady } = useRouter()
   const user_id = query.user_id
   const [profile, getProfile, setProfileText] = useProfile()
+  let [isEdit, editProfile] = useState<boolean>(false)
 
   useEffect(() => {
     if (typeof user_id != 'string') return
@@ -37,6 +38,7 @@ const ProfilePage = () => {
                     </button>
                     <button
                       className={`grow [box-shadow:0px_0px_0px_1px_rgba(84,_89,_92,_1)_inset] [box-shadow-width:1px] px-0 py-2 inline-flex justify-center items-center text-white rounded-[30px] font-['Hiragino_Kaku_Gothic_Pro'] hover:bg-white hover:text-[rgba(28,32,37,1)]`}
+                      onClick={() => editProfile(!isEdit)}
                     >
                       <span className="text-lg px-8 m-0 tracking-[-0.64px]">
                         プロフィールを編集する
@@ -47,7 +49,7 @@ const ProfilePage = () => {
 
                 <div>
                   <UserName id={profile.id} name={profile.name}></UserName>
-                  <UserText text={profile.text} id={profile.id} setProfileText={setProfileText}></UserText>
+                  <UserText text={profile.text} id={profile.id} setProfileText={setProfileText} isEdit={isEdit}></UserText>
                 </div>
                 <div>
                   <UserCount></UserCount>

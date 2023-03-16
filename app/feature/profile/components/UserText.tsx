@@ -4,6 +4,7 @@ type PropsType = {
   text: string | null
   id: string
   setProfileText: (text: string | null, id: string) => Promise<void>
+  isEdit: boolean
 }
 
 export const UserText = (props: PropsType) => {
@@ -13,24 +14,29 @@ export const UserText = (props: PropsType) => {
     editText(text ?? '')
   })
 
-
   return (
     <>
-      <div className='w-full'>
-        <input
-          type="text"
-          value={text ?? ''}
-          onChange={(e) => editText(e.target.value)}
-        ></input>
-        <p className='text-white'>
-          {props.text}
-        </p>
-      </div>
-      <button
-        onClick={() => props.setProfileText(text ?? '', props.id)}
-      >
-        押す
-      </button>
+      { props.isEdit ?
+        <div>
+          <input
+              type="text"
+              value={text ?? props.text}
+              onChange={(e) => editText(e.target.value)}
+            ></input>
+          <button
+            onClick={() => props.setProfileText(text ?? '', props.id)}
+            className="bg-red-500"
+          >
+            更新
+          </button>
+        </div>
+        :
+        <div className='w-full'>
+          <p className='text-white'>
+            {props.text}
+          </p>
+        </div>
+      }
     </>
   )
 }

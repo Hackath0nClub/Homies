@@ -22,22 +22,41 @@ const Guest = (props: propsType) => {
       </p>
       <div className="guest-row-guest-details">
         {props.timetable.map((row) => {
-          return (
-            <div
-              className="w-full grid grid-cols-3 gap-8 m-8"
-              key={row.user_id}
-            >
-              <img
-                alt={row.name!}
-                src={row.icon_url!}
-                className="rounded-full col-span-1"
-              />
-              <div className="col-span-2">
-                <p className="text-white text-xl">{row.name}</p>
-                <p className="text-white text-base">{row.text}</p>
+          if (row.user_id) {
+            return (
+              <div
+                className="w-full grid grid-cols-3 gap-8 m-8"
+                key={row.user_id}
+              >
+                <img
+                  alt={row.name!}
+                  src={row.icon_url!}
+                  className="rounded-full col-span-1"
+                />
+                <div className="col-span-2">
+                  <p className="text-white text-xl">{row.name}</p>
+                  <p className="text-white text-base">{row.text}</p>
+                </div>
               </div>
-            </div>
-          )
+            )
+          } else {
+            return (
+              <div
+                className="w-full grid grid-cols-3 gap-8 m-8"
+                key={row.user_id}
+              >
+                <img
+                  alt="icon"
+                  src="/user.png"
+                  className="rounded-full col-span-1"
+                />
+                <div className="col-span-2">
+                  <p className="text-white text-xl">test</p>
+                  <p className="text-white text-base">test</p>
+                </div>
+              </div>
+            )
+          }
         })}
       </div>
     </>

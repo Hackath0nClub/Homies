@@ -62,8 +62,6 @@ const ProfilePage = () => {
           </div>
         </>
       )}
-
-      {/* <ProfileText text={_profile!.text}></ProfileText> */}
     </>
   )
 }

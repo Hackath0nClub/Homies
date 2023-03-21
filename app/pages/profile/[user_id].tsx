@@ -3,6 +3,7 @@ import { UserName } from '../../feature/profile/components/UserName'
 import { UserIcon } from '../../feature/profile/components/UserIcon'
 import { UserText } from '../../feature/profile/components/UserText'
 import { UserCount } from '../../feature/profile/components/UserCount'
+import { UserEvent } from '../../feature/profile/components/UserEvent'
 import Footer from '../../components/Footer'
 
 // hooks
@@ -54,6 +55,10 @@ const ProfilePage = () => {
                 </div>
                 <div>
                   <UserCount></UserCount>
+                </div>
+
+                <div>
+                  <UserEvent></UserEvent>
                 </div>
 
               </div>

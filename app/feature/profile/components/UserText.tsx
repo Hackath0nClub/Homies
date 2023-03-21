@@ -20,7 +20,7 @@ export const UserText = (props: PropsType) => {
         <div>
           <input
               type="text"
-              value={text ?? props.text}
+              defaultValue={String(props.text)}
               onChange={(e) => editText(e.target.value)}
             ></input>
           <button

@@ -1,17 +1,8 @@
+import { HandleEvent, TimeTable } from '../hooks/useEvent'
+
 type propsType = {
-  timetable:
-    | {
-        row_number: number
-        name: string | null
-        user_id: string | null
-        text: string | null
-        icon_url: string | null
-        start_time: string
-        end_time: string
-        guest_name: string | null
-        guest_text: string | null
-        guest_icon_url: string | null
-      }[]
+  timetable: TimeTable
+  handleEvent: HandleEvent
 }
 
 const Guest = (props: propsType) => {
@@ -21,7 +12,7 @@ const Guest = (props: propsType) => {
         ゲストDJ/VJ
       </p>
       <div className="guest-row-guest-details">
-        {props.timetable.map((row) => {
+        {props.timetable.map((row, index) => {
           if (row.user_id) {
             return (
               <div
@@ -51,8 +42,26 @@ const Guest = (props: propsType) => {
                   className="rounded-full col-span-1"
                 />
                 <div className="col-span-2">
-                  <p className="text-white text-xl">{row.name}</p>
-                  <p className="text-white text-base">{row.user_id}</p>
+                  <input
+                    type="text"
+                    className="block mt-2 h-8 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+                    value={row.guest_name ?? ''}
+                    onChange={(e) => {
+                      let newRow = row
+                      newRow.guest_name = e.target.value
+                      props.handleEvent.setTimetableRow(index, newRow)
+                    }}
+                  />
+                  <textarea
+                    className="block mt-2 h-32 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+                    id="message"
+                    value={row.guest_text ?? ''}
+                    onChange={(e) => {
+                      let newRow = row
+                      newRow.guest_text = e.target.value
+                      props.handleEvent.setTimetableRow(index, newRow)
+                    }}
+                  />
                 </div>
               </div>
             )

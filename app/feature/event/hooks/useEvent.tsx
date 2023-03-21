@@ -50,6 +50,13 @@ export const useEvent = () => {
     if (base) await updateEventData(base)
   }
 
+  const setTimetableRow = (index: number, row: Dj) => {
+    if (!timetable) return
+    const newTimetable = [...timetable]
+    newTimetable[index] = row
+    setTimeTable(newTimetable)
+  }
+
   const addEmptyTimetableRow = () => {
     if (!timetable) return
     const newTimetable = [
@@ -143,6 +150,7 @@ export const useEvent = () => {
       setBase,
       setFile,
       setTimeTable,
+      setTimetableRow,
       addEmptyTimetableRow,
       updateTimetableRowStartTime,
       updateTimetableRowEndTime,
@@ -229,6 +237,7 @@ export type HandleEvent = {
   setBase: (base: Event) => void
   setFile: (file: File) => void
   setTimeTable: (timetable: TimeTable) => void
+  setTimetableRow: (index: number, row: Dj) => void
   addEmptyTimetableRow: () => void
   updateTimetableRowStartTime: (index: number, start_time: Date | null) => void
   updateTimetableRowEndTime: (index: number, end_time: Date | null) => void

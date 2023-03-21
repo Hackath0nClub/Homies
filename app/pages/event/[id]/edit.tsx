@@ -106,15 +106,8 @@ const EventDetails = () => {
           <Bar />
           {event.timetable && event.vjtable && (
             <Guest
-              timetable={[...event.timetable].map(
-                ({ start_time, end_time, ...others }) => {
-                  return {
-                    ...others,
-                    start_time: start_time ? getTime(start_time) : '',
-                    end_time: end_time ? getTime(end_time) : '',
-                  }
-                }
-              )}
+              timetable={event.timetable}
+              handleEvent={handleEvent}
             ></Guest>
             // <Guest
             //   timetable={[...event.timetable, ...event.vjtable].map(

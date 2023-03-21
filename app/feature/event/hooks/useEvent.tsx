@@ -50,6 +50,26 @@ export const useEvent = () => {
     if (base) await updateEventData(base)
   }
 
+  const addEmptyTimetableRow = () => {
+    if (!timetable) return
+    const newTimetable = [
+      ...timetable,
+      {
+        row_number: timetable.length + 1,
+        user_id: null,
+        name: '',
+        text: null,
+        icon_url: null,
+        start_time: null,
+        end_time: null,
+        guest_name: null,
+        guest_text: null,
+        guest_icon_url: null,
+      },
+    ]
+    setTimeTable(newTimetable)
+  }
+
   const updateTimetableRowStartTime = (
     index: number,
     start_time: Date | null
@@ -123,6 +143,7 @@ export const useEvent = () => {
       setBase,
       setFile,
       setTimeTable,
+      addEmptyTimetableRow,
       updateTimetableRowStartTime,
       updateTimetableRowEndTime,
       clearTimetableRow,
@@ -208,6 +229,7 @@ export type HandleEvent = {
   setBase: (base: Event) => void
   setFile: (file: File) => void
   setTimeTable: (timetable: TimeTable) => void
+  addEmptyTimetableRow: () => void
   updateTimetableRowStartTime: (index: number, start_time: Date | null) => void
   updateTimetableRowEndTime: (index: number, end_time: Date | null) => void
   clearTimetableRow: (index: number) => void

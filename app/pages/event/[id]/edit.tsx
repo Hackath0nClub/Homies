@@ -71,7 +71,7 @@ const EventDetails = () => {
           <Bar />
           {event.timetable && (
             <EditDjTimeTable
-              setTimetable={handleEvent.setTimeTable}
+              handleEvent={handleEvent}
               handleSearch={handleSearch}
             >
               {event.timetable.map((row, index) => {

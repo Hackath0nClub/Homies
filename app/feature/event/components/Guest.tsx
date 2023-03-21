@@ -51,8 +51,8 @@ const Guest = (props: propsType) => {
                   className="rounded-full col-span-1"
                 />
                 <div className="col-span-2">
-                  <p className="text-white text-xl">test</p>
-                  <p className="text-white text-base">test</p>
+                  <p className="text-white text-xl">{row.name}</p>
+                  <p className="text-white text-base">{row.user_id}</p>
                 </div>
               </div>
             )

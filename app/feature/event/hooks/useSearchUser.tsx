@@ -49,22 +49,6 @@ export const useSearchUser = (timetable: TimeTable) => {
     setKeywords([...keywords, ''])
     setResults([...results, []])
     setIsOpens([...isOpens, false])
-    const newTimetable = [
-      ...timetable,
-      {
-        row_number: timetable.length + 1,
-        user_id: null,
-        name: '',
-        text: null,
-        icon_url: null,
-        start_time: null,
-        end_time: null,
-        guest_name: null,
-        guest_text: null,
-        guest_icon_url: null,
-      },
-    ]
-    return newTimetable
   }
 
   const selectUser = (index: number, user: User) => {
@@ -74,7 +58,15 @@ export const useSearchUser = (timetable: TimeTable) => {
 
     newKeywords[index] = user.id
     newIsOpens[index] = false
-    newItems[index] = { ...newItems[index], ...user }
+
+    const newUser = {
+      user_id: user.id,
+      name: user.name,
+      icon_url: user.icon_url,
+      text: user.text,
+    }
+
+    newItems[index] = { ...newItems[index], ...newUser }
 
     setKeywords(newKeywords)
     setIsOpens(newIsOpens)
@@ -154,7 +146,7 @@ export type HandleSearch = {
   setKeywords: (keywords: string[]) => void
   setResults: (results: Users[]) => void
   setIsOpens: (isOpens: boolean[]) => void
-  addEmptyTimetableRow: () => Dj[]
+  addEmptyTimetableRow: () => void
   selectUser: (index: number, user: User) => TimeTable
   handleInputChange: (
     index: number,

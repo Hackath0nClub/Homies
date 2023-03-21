@@ -1,9 +1,9 @@
-import { TimeTable } from '../hooks/useEvent'
+import { HandleEvent } from '../hooks/useEvent'
 import { HandleSearch } from '../hooks/useSearchUser'
 
 type propsType = {
   children: React.ReactNode
-  setTimetable: (timetable: TimeTable) => void
+  handleEvent: HandleEvent
   handleSearch: HandleSearch
 }
 
@@ -17,8 +17,8 @@ export const EditDjTimeTable = (props: propsType) => {
         <button
           className="px-4 py-2 mb-4 text-white transition-colors duration-300 border border-gray-200 bg-[rgba(28,32,37,1)] rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
           onClick={() => {
-            const newTimetable = props.handleSearch.addEmptyTimetableRow()
-            props.setTimetable(newTimetable)
+            props.handleSearch.addEmptyTimetableRow()
+            props.handleEvent.addEmptyTimetableRow()
           }}
         >
           行追加

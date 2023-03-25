@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { UserEventCell } from "./UserEvent/UserEventCell"
 
 export const UserEvent = (props: any) => {
   const [openTab, setOpenTab] = useState(1)
@@ -27,7 +28,7 @@ export const UserEvent = (props: any) => {
                   data-toggle="tab"
                   role="tablist"
                 >
-                  概要/外部リンク
+                  概要 / 外部リンク
                 </a>
               </li>
               <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -69,13 +70,13 @@ export const UserEvent = (props: any) => {
                 </a>
               </li>
             </ul>
-            <div className="flex relative flex-col min-w-0 break-words bg-white w-full mb-6">
+            <div className="flex relative flex-col min-w-0 break-words w-full mb-6">
               <div className="px-4 py-5 flex-auto">
                 <div className="tab-content tab-space">
                   <div className={openTab === 1 ? "block" : "hidden"} id="overview">
-                    <p>
-                      ここにイベント入るよ
-                    </p>
+                    <div>
+                      <UserEventCell></UserEventCell>
+                    </div>
                   </div>
                   <div className={openTab === 2 ? "block" : "hidden"} id="performance">
                     <p>

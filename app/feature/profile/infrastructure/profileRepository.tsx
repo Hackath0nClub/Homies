@@ -1,4 +1,4 @@
-import { supabase } from './createClient'
+import { supabase } from '../../../utils/supabaseClient'
 import { Profile } from '../../profile/hooks/useProfile'
 
 export const selectProfileById = async (id: string) => {

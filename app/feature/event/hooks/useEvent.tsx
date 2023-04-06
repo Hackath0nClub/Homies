@@ -126,3 +126,5 @@ export type User = {
 }
 
 export type Users = User[]
+
+export type Events = Event[]

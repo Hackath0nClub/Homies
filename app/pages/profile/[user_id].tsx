@@ -10,6 +10,7 @@ import Footer from '../../components/Footer'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useProfile } from '../../feature/profile/hooks/useProfile'
+import { useEvent } from '../../feature/event/hooks/useEvent'
 
 const ProfilePage = () => {
   const { query, isReady } = useRouter()

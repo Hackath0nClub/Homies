@@ -1,4 +1,4 @@
-import { Event } from '../hooks/useEvent'
+import { Event } from '../../hooks/useEvent'
 
 type propsType = {
   base: Event

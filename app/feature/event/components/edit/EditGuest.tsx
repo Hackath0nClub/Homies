@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { HandleEvent, TimeTable } from '../hooks/useEvent'
+import { HandleEvent, TimeTable } from '../../hooks/useEvent'
 
 type propsType = {
   timetable: TimeTable

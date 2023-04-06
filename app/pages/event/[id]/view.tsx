@@ -1,21 +1,21 @@
 import React from 'react'
 
 // components
-import { TitleRow } from '../../feature/event/components/Title'
-import ImageRow from '../../feature/event/components/Image'
-import Bar from '../../feature/event/components/Bar'
-import DescriptionRow from '../../feature/event/components/Description'
-import DjTimeTableRow from '../../feature/event/components/DjTimeTable'
-import VjTimeTableRow from '../../feature/event/components/VjTimeTable'
-import DjButton from '../../feature/event/components/DjButton'
-import Guest from '../../feature/event/components/Guest'
-import EventItemsRow from '../../feature/event/components/EventItems'
-import OrganizerRow from '../../feature/event/components/Organizer'
+import { TitleRow } from '../../../feature/event/components/Title'
+import ImageRow from '../../../feature/event/components/Image'
+import Bar from '../../../feature/event/components/Bar'
+import DescriptionRow from '../../../feature/event/components/Description'
+import DjTimeTableRow from '../../../feature/event/components/DjTimeTable'
+import VjTimeTableRow from '../../../feature/event/components/VjTimeTable'
+import DjButton from '../../../feature/event/components/DjButton'
+import Guest from '../../../feature/event/components/Guest'
+import EventItemsRow from '../../../feature/event/components/EventItems'
+import OrganizerRow from '../../../feature/event/components/Organizer'
 
 // hooks
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { useEvent } from '../../feature/event/hooks/useEvent'
+import { useEvent } from '../../../feature/event/hooks/useEvent'
 
 // function
 import {
@@ -23,7 +23,7 @@ import {
   getYear,
   getFullDate,
   getTime,
-} from '../../lib/splitDateTime'
+} from '../../../lib/splitDateTime'
 
 const EventDetails = () => {
   const { query, isReady } = useRouter()

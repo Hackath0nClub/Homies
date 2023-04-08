@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useRecoilState } from 'recoil'
+import { atomEventBase } from '../store/eventState'
 import {
   selectEventById,
   updateEventData,
@@ -10,7 +12,7 @@ import { selectListenerByEventId } from '../infrastructure/ticketDatabase'
 import { uploadEventImage } from '../infrastructure/eventStrage'
 
 export const useEvent = () => {
-  const [base, setBase] = useState<Event>()
+  const [base, setBase] = useRecoilState(atomEventBase)
   const [organizers, setOrganizers] = useState<Organizers>()
   const [timetable, setTimeTable] = useState<TimeTable>()
   const [vjtable, setVjTable] = useState<VjTable>()
@@ -136,6 +138,7 @@ export const useEvent = () => {
   }
 
   return {
+    base,
     event: {
       base,
       organizers,
@@ -159,23 +162,6 @@ export const useEvent = () => {
       shiftUpTimetableRow,
     },
   } as const
-}
-
-export type Event = {
-  id: number
-  title: string | null
-  text: string | null
-  start_at: Date | null
-  end_at: Date | null
-  capacity: number | null
-  image_url: string | null
-  location_name: string | null
-  location_url: string | null
-  note: string | null
-  price: number | null
-  publicly: boolean | null
-  create_at: Date | null
-  updated_at: Date | null
 }
 
 export type Organizers = {

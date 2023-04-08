@@ -1,6 +1,6 @@
 import { convertDateStringToDateObject } from '../../../lib/convertDateStringToDateObject'
 import { supabase } from '../../../utils/supabaseClient'
-import { Event } from '../hooks/useEvent'
+import { Event } from '../store/eventState'
 
 export const selectEventById = async (id: number) => {
   try {

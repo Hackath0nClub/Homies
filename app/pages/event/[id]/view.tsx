@@ -16,6 +16,7 @@ import OrganizerRow from '../../../feature/event/components/view/Organizer'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useEvent } from '../../../feature/event/hooks/useEvent'
+import { useRecoil } from '../../../feature/event/hooks/useRecoil'
 
 // function
 import {
@@ -26,6 +27,7 @@ import {
 } from '../../../lib/splitDateTime'
 
 const EventDetails = () => {
+  const { status, setStatus } = useRecoil()
   const { query, isReady } = useRouter()
   const id = Number(query.id)
   const { event, handleEvent } = useEvent()
@@ -43,6 +45,7 @@ const EventDetails = () => {
     <div className="flex justify-center min-h-screen bg-[rgba(28,32,37,1)]">
       <div className="w-5/6 grid md:grid-cols-10 sm:grid-cols-1 gap-8 m-8">
         <div className="md:col-span-6">
+          <p>{status}</p>
           {event.base && (
             <TitleRow
               title={event.base.title}

@@ -10,7 +10,7 @@ import VjTimeTableRow from '../../feature/event/components/view/VjTimeTable'
 import DjButton from '../../feature/event/components/view/DjButton'
 import Guest from '../../feature/event/components/view/Guest'
 import EventItemsRow from '../../feature/event/components/view/EventItems'
-import OrganizerRow from '../../feature/event/components/view/Organizer'
+import OrganizerRow from '../../feature/event/components/view/Organizers'
 
 // hooks
 import { useRouter } from 'next/router'

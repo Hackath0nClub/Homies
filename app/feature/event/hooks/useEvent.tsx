@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import { useRecoilState } from 'recoil'
-import { atomEventBase } from '../store/eventState'
+import {
+  eventBaseState,
+  organizersState,
+  OrganizersType,
+} from '../store/eventState'
 import {
   selectEventById,
   updateEventData,
@@ -12,8 +16,8 @@ import { selectListenerByEventId } from '../infrastructure/ticketDatabase'
 import { uploadEventImage } from '../infrastructure/eventStrage'
 
 export const useEvent = () => {
-  const [base, setBase] = useRecoilState(atomEventBase)
-  const [organizers, setOrganizers] = useState<Organizers>()
+  const [base, setBase] = useRecoilState(eventBaseState)
+  const [organizers, setOrganizers] = useRecoilState(organizersState)
   const [timetable, setTimeTable] = useState<TimeTable>()
   const [vjtable, setVjTable] = useState<VjTable>()
   const [listener, setListener] = useState<Listener>()
@@ -139,6 +143,7 @@ export const useEvent = () => {
 
   return {
     base,
+    organizers,
     event: {
       base,
       organizers,
@@ -163,13 +168,6 @@ export const useEvent = () => {
     },
   } as const
 }
-
-export type Organizers = {
-  user_id: string
-  name: string
-  icon_url: string | null
-  text: string | null
-}[]
 
 export type Dj = {
   row_number: number
@@ -214,7 +212,7 @@ export type Users = User[]
 export type HandleEvent = {
   loadEvent: (id: number) => Promise<{
     data: Event | undefined
-    organizers: Organizers | undefined
+    organizers: OrganizersType | undefined
     timetable: TimeTable | undefined
     vjtable: VjTable | undefined
     listener: Listener | undefined

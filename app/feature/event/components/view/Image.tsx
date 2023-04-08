@@ -1,14 +1,6 @@
-type propsType = {
-  alt: string
-  src: string
-}
+import { useEvent } from '../../../../feature/event/hooks/useEvent'
 
-const ImageRow = (props: propsType) => {
-  return (
-    <>
-      <img alt={props.alt} src={props.src} className="w-full my-4 rounded-lg" />
-    </>
-  )
+export const Image = () => {
+  const { base } = useEvent()
+  return <img alt="" src={base.image_url} className="w-full my-4 rounded-lg" />
 }
-
-export default ImageRow

@@ -17,8 +17,21 @@ const EventbaseInitial = {
   create_at: utcToZonedTime(new Date(), 'Asia/Tokyo'),
   updated_at: utcToZonedTime(new Date(), 'Asia/Tokyo'),
 }
-export type Event = Partial<typeof EventbaseInitial>
-export const atomEventBase = atom<Event>({
+export type EventType = Partial<typeof EventbaseInitial>
+export const eventBaseState = atom<EventType>({
   key: 'base',
   default: EventbaseInitial,
+})
+
+const OrganizerInitial = {
+  user_id: '',
+  name: '',
+  icon_url: '',
+  text: '',
+}
+export type OrganizerType = Partial<typeof OrganizerInitial>
+export type OrganizersType = OrganizerType[]
+export const organizersState = atom<OrganizersType>({
+  key: 'organizers',
+  default: [OrganizerInitial],
 })

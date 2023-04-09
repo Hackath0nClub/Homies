@@ -13,6 +13,15 @@ create table profile (
   updated_at timestamp with time zone
 );
 
+create table guest (
+  id text unique not null,
+  name text not null,
+  icon_url text,
+  text text,
+  create_at timestamp with time zone,
+  updated_at timestamp with time zone
+);
+
 create table event (
   id serial not null primary key,
   title text,
@@ -42,9 +51,16 @@ create table event_dj (
   user_id text not null references profile(id),
   event_id serial not null references event(id),
   row_number int not null,
-  guest_name text,
-  guest_icon_url text,
-  guest_text text,
+  start_time timestamp with time zone,
+  end_time timestamp with time zone,
+  primary key (user_id, event_id)
+);
+
+create table event_guestdj (
+  id serial not null,
+  user_id text not null references profile(id),
+  event_id serial not null references event(id),
+  row_number int not null,
   start_time timestamp with time zone,
   end_time timestamp with time zone,
   primary key (user_id, event_id)
@@ -55,9 +71,16 @@ create table event_vj (
   user_id text not null references profile(id),
   event_id serial not null references event(id),
   row_number int not null,
-  name text,
-  icon_url text,
-  text text,
+  start_time timestamp with time zone,
+  end_time timestamp with time zone,
+  primary key (user_id, event_id)
+);
+
+create table event_guestvj (
+  id serial not null,
+  user_id text not null references profile(id),
+  event_id serial not null references event(id),
+  row_number int not null,
   start_time timestamp with time zone,
   end_time timestamp with time zone,
   primary key (user_id, event_id)
@@ -82,6 +105,14 @@ CREATE POLICY "profile select policy" ON storage.objects FOR SELECT TO public US
 CREATE POLICY "profile insert policy" ON storage.objects FOR INSERT TO public WITH CHECK (bucket_id = 'profile');
 CREATE POLICY "profile update policy" ON storage.objects FOR UPDATE TO public USING (bucket_id = 'profile');
 CREATE POLICY "profile delete policy" ON storage.objects FOR DELETE TO public USING (bucket_id = 'profile');
+
+insert into storage.buckets (id, name, public)
+values ('guest', 'guest', true);
+
+CREATE POLICY "guest select policy" ON storage.objects FOR SELECT TO public USING (bucket_id = 'guest');
+CREATE POLICY "guest insert policy" ON storage.objects FOR INSERT TO public WITH CHECK (bucket_id = 'guest');
+CREATE POLICY "guest update policy" ON storage.objects FOR UPDATE TO public USING (bucket_id = 'guest');
+CREATE POLICY "guest delete policy" ON storage.objects FOR DELETE TO public USING (bucket_id = 'guest');
 
 insert into storage.buckets (id, name, public)
 values ('event', 'event', true);

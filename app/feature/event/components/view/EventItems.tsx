@@ -2,7 +2,7 @@ import { useEvent } from '../../../../feature/event/hooks/useEvent'
 import { getFullDate, getTime } from '../../../../lib/splitDateTime'
 
 export const EventItems = () => {
-  const { event, base } = useEvent()
+  const { base, listener } = useEvent()
 
   const TopText = () => {
     return (
@@ -46,7 +46,7 @@ export const EventItems = () => {
           制限人数
         </p>
         <p className="text-right text-white col-span-4">
-          {event.listener?.length}人 / {base.capacity}人
+          {listener.length}人 / {base.capacity}人
         </p>
       </div>
     )

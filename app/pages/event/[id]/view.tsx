@@ -1,14 +1,12 @@
-import React from 'react'
-
 // components
 import { Title } from '../../../feature/event/components/view/Title'
 import { Image } from '../../../feature/event/components/view/Image'
-import Bar from '../../../feature/event/components/view/Bar'
+import { Bar } from '../../../feature/event/components/view/Bar'
 import { Description } from '../../../feature/event/components/view/Description'
 import { DjTimeTable } from '../../../feature/event/components/view/DjTimeTable'
 import { VjTimeTable } from '../../../feature/event/components/view/VjTimeTable'
-import DjButton from '../../../feature/event/components/view/DjButton'
-import Guest from '../../../feature/event/components/view/Guest'
+import { DjButton } from '../../../feature/event/components/view/DjButton'
+import { Guest } from '../../../feature/event/components/view/Guest'
 import { EventItems } from '../../../feature/event/components/view/EventItems'
 import { Organizers } from '../../../feature/event/components/view/Organizers'
 
@@ -19,16 +17,10 @@ import { useEvent } from '../../../feature/event/hooks/useEvent'
 
 const EventDetails = () => {
   const { query, isReady } = useRouter()
-  const id = Number(query.id)
-  const { event, handleEvent } = useEvent()
-
-  const init = async () => {
-    if (!isReady) return
-    handleEvent.loadEvent(id)
-  }
+  const { handleEvent } = useEvent()
 
   useEffect(() => {
-    init()
+    if (isReady) handleEvent.loadEvent(Number(query.id))
   }, [isReady])
 
   return (
@@ -44,12 +36,7 @@ const EventDetails = () => {
           <VjTimeTable />
           <DjButton />
           <Bar />
-          {/* {event.timetable && event.vjtable && (
-            <Guest
-              timetable={event.timetable}
-              handleEvent={handleEvent}
-            ></Guest>
-          )} */}
+          <Guest />
         </div>
         <div className="md:col-span-4">
           <EventItems />

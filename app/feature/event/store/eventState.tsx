@@ -67,3 +67,21 @@ export const vjTableState = atom<VjTableType>({
   key: 'vjtable',
   default: [VjInitial],
 })
+
+const ListenerInitial = {
+  user_id: '',
+  name: '',
+  icon_url: '',
+}
+export type ListenerType = Partial<typeof ListenerInitial>
+export type ListenersType = ListenerType[]
+export const listenersState = atom<ListenersType>({
+  key: 'listeners',
+  default: [ListenerInitial],
+})
+
+export type Listener = {
+  user_id: string
+  name: string
+  icon_url: string | null
+}[]

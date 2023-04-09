@@ -5,7 +5,7 @@ import { Title } from '../../../feature/event/components/view/Title'
 import { Image } from '../../../feature/event/components/view/Image'
 import Bar from '../../../feature/event/components/view/Bar'
 import { Description } from '../../../feature/event/components/view/Description'
-import DjTimeTableRow from '../../../feature/event/components/view/DjTimeTable'
+import { DjTimeTable } from '../../../feature/event/components/view/DjTimeTable'
 import VjTimeTableRow from '../../../feature/event/components/view/VjTimeTable'
 import DjButton from '../../../feature/event/components/view/DjButton'
 import Guest from '../../../feature/event/components/view/Guest'
@@ -43,19 +43,7 @@ const EventDetails = () => {
           <Bar />
           <Description />
           <Bar />
-          {event.timetable && (
-            <DjTimeTableRow
-              timetable={event.timetable.map(
-                ({ start_time, end_time, ...others }) => {
-                  return {
-                    ...others,
-                    start_time: start_time ? getTime(start_time) : '',
-                    end_time: end_time ? getTime(end_time) : '',
-                  }
-                }
-              )}
-            />
-          )}
+          <DjTimeTable />
           {event.vjtable && (
             <VjTimeTableRow
               timetable={event.vjtable.map(

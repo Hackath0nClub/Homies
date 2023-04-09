@@ -1,9 +1,13 @@
 import { useState } from 'react'
 import { useRecoilState } from 'recoil'
+import { utcToZonedTime } from 'date-fns-tz'
 import {
   eventBaseState,
   organizersState,
   OrganizersType,
+  timeTableState,
+  TimeTableType,
+  DjType,
 } from '../store/eventState'
 import {
   selectEventById,
@@ -18,7 +22,7 @@ import { uploadEventImage } from '../infrastructure/eventStrage'
 export const useEvent = () => {
   const [base, setBase] = useRecoilState(eventBaseState)
   const [organizers, setOrganizers] = useRecoilState(organizersState)
-  const [timetable, setTimeTable] = useState<TimeTable>()
+  const [timetable, setTimeTable] = useRecoilState(timeTableState)
   const [vjtable, setVjTable] = useState<VjTable>()
   const [listener, setListener] = useState<Listener>()
   const [file, setFile] = useState<File>()
@@ -56,7 +60,7 @@ export const useEvent = () => {
     if (base) await updateEventData(base)
   }
 
-  const setTimetableRow = (index: number, row: Dj) => {
+  const setTimetableRow = (index: number, row: DjType) => {
     if (!timetable) return
     const newTimetable = [...timetable]
     newTimetable[index] = row
@@ -69,31 +73,25 @@ export const useEvent = () => {
       ...timetable,
       {
         row_number: timetable.length + 1,
-        user_id: null,
+        user_id: '',
         name: '',
-        text: null,
-        icon_url: null,
-        start_time: null,
-        end_time: null,
-        guest_name: null,
-        guest_text: null,
-        guest_icon_url: null,
+        text: '',
+        icon_url: '',
+        start_time: utcToZonedTime(new Date(), 'Asia/Tokyo'),
+        end_time: utcToZonedTime(new Date(), 'Asia/Tokyo'),
       },
     ]
     setTimeTable(newTimetable)
   }
 
-  const updateTimetableRowStartTime = (
-    index: number,
-    start_time: Date | null
-  ) => {
+  const updateTimetableRowStartTime = (index: number, start_time: Date) => {
     if (!timetable) return
     const newTimetable = [...timetable]
     newTimetable[index].start_time = start_time
     setTimeTable(newTimetable)
   }
 
-  const updateTimetableRowEndTime = (index: number, end_time: Date | null) => {
+  const updateTimetableRowEndTime = (index: number, end_time: Date) => {
     if (!timetable) return
     const newTimetable = [...timetable]
     newTimetable[index].end_time = end_time
@@ -105,12 +103,12 @@ export const useEvent = () => {
     const newTimetable = [...timetable]
     const updatedTimetable = {
       ...newTimetable[index],
-      user_id: null,
+      user_id: '',
       name: '',
-      text: null,
-      icon_url: null,
-      start_time: null,
-      end_time: null,
+      text: '',
+      icon_url: '',
+      start_time: utcToZonedTime(new Date(), 'Asia/Tokyo'),
+      end_time: utcToZonedTime(new Date(), 'Asia/Tokyo'),
     }
     newTimetable[index] = updatedTimetable
     setTimeTable(newTimetable)
@@ -144,6 +142,7 @@ export const useEvent = () => {
   return {
     base,
     organizers,
+    timetable,
     event: {
       base,
       organizers,
@@ -169,20 +168,17 @@ export const useEvent = () => {
   } as const
 }
 
-export type Dj = {
-  row_number: number
-  user_id: string | null
-  name: string
-  text: string | null
-  icon_url: string | null
-  start_time: Date | null
-  end_time: Date | null
-  guest_name: string | null
-  guest_text: string | null
-  guest_icon_url: string | null
-}
+// export type Dj = {
+//   row_number: number
+//   user_id: string | null
+//   name: string
+//   text: string | null
+//   icon_url: string | null
+//   start_time: Date | null
+//   end_time: Date | null
+// }
 
-export type TimeTable = Dj[]
+// export type TimeTable = Dj[]
 
 export type VjTable = {
   row_number: number
@@ -213,15 +209,15 @@ export type HandleEvent = {
   loadEvent: (id: number) => Promise<{
     data: Event | undefined
     organizers: OrganizersType | undefined
-    timetable: TimeTable | undefined
+    timetable: TimeTableType | undefined
     vjtable: VjTable | undefined
     listener: Listener | undefined
   }>
   updateEvent: () => Promise<void>
   setBase: (base: Event) => void
   setFile: (file: File) => void
-  setTimeTable: (timetable: TimeTable) => void
-  setTimetableRow: (index: number, row: Dj) => void
+  setTimeTable: (timetable: TimeTableType) => void
+  setTimetableRow: (index: number, row: DjType) => void
   addEmptyTimetableRow: () => void
   updateTimetableRowStartTime: (index: number, start_time: Date | null) => void
   updateTimetableRowEndTime: (index: number, end_time: Date | null) => void

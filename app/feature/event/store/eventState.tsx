@@ -35,3 +35,19 @@ export const organizersState = atom<OrganizersType>({
   key: 'organizers',
   default: [OrganizerInitial],
 })
+
+const DjInitial = {
+  row_number: 0,
+  user_id: '',
+  name: '',
+  text: '',
+  icon_url: '',
+  start_time: utcToZonedTime(new Date(), 'Asia/Tokyo'),
+  end_time: utcToZonedTime(new Date(), 'Asia/Tokyo'),
+}
+export type DjType = Partial<typeof DjInitial>
+export type TimeTableType = DjType[]
+export const timeTableState = atom<TimeTableType>({
+  key: 'timetable',
+  default: [DjInitial],
+})

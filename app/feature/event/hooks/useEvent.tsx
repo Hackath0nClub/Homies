@@ -8,6 +8,8 @@ import {
   timeTableState,
   TimeTableType,
   DjType,
+  vjTableState,
+  VjTableType,
 } from '../store/eventState'
 import {
   selectEventById,
@@ -23,7 +25,7 @@ export const useEvent = () => {
   const [base, setBase] = useRecoilState(eventBaseState)
   const [organizers, setOrganizers] = useRecoilState(organizersState)
   const [timetable, setTimeTable] = useRecoilState(timeTableState)
-  const [vjtable, setVjTable] = useState<VjTable>()
+  const [vjtable, setVjTable] = useRecoilState(vjTableState)
   const [listener, setListener] = useState<Listener>()
   const [file, setFile] = useState<File>()
 
@@ -143,6 +145,7 @@ export const useEvent = () => {
     base,
     organizers,
     timetable,
+    vjtable,
     event: {
       base,
       organizers,
@@ -168,28 +171,6 @@ export const useEvent = () => {
   } as const
 }
 
-// export type Dj = {
-//   row_number: number
-//   user_id: string | null
-//   name: string
-//   text: string | null
-//   icon_url: string | null
-//   start_time: Date | null
-//   end_time: Date | null
-// }
-
-// export type TimeTable = Dj[]
-
-export type VjTable = {
-  row_number: number
-  user_id: string | null
-  name: string
-  text: string | null
-  icon_url: string | null
-  start_time: Date
-  end_time: Date
-}[]
-
 export type Listener = {
   user_id: string
   name: string
@@ -210,7 +191,7 @@ export type HandleEvent = {
     data: Event | undefined
     organizers: OrganizersType | undefined
     timetable: TimeTableType | undefined
-    vjtable: VjTable | undefined
+    vjtable: VjTableType | undefined
     listener: Listener | undefined
   }>
   updateEvent: () => Promise<void>

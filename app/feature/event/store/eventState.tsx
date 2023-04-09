@@ -51,3 +51,19 @@ export const timeTableState = atom<TimeTableType>({
   key: 'timetable',
   default: [DjInitial],
 })
+
+const VjInitial = {
+  row_number: 0,
+  user_id: '',
+  name: '',
+  text: '',
+  icon_url: '',
+  start_time: utcToZonedTime(new Date(), 'Asia/Tokyo'),
+  end_time: utcToZonedTime(new Date(), 'Asia/Tokyo'),
+}
+export type VjType = Partial<typeof VjInitial>
+export type VjTableType = VjType[]
+export const vjTableState = atom<VjTableType>({
+  key: 'vjtable',
+  default: [VjInitial],
+})

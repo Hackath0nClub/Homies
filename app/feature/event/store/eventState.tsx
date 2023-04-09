@@ -1,7 +1,8 @@
 import { atom } from 'recoil'
 import { utcToZonedTime } from 'date-fns-tz'
+import { type } from 'os'
 
-const EventbaseInitial = {
+const eventbaseInitial = {
   id: 0,
   title: '',
   text: '',
@@ -17,26 +18,26 @@ const EventbaseInitial = {
   create_at: utcToZonedTime(new Date(), 'Asia/Tokyo'),
   updated_at: utcToZonedTime(new Date(), 'Asia/Tokyo'),
 }
-export type EventType = Partial<typeof EventbaseInitial>
+export type EventType = Partial<typeof eventbaseInitial>
 export const eventBaseState = atom<EventType>({
   key: 'base',
-  default: EventbaseInitial,
+  default: eventbaseInitial,
 })
 
-const OrganizerInitial = {
+const organizerInitial = {
   user_id: '',
   name: '',
   icon_url: '',
   text: '',
 }
-export type OrganizerType = Partial<typeof OrganizerInitial>
+export type OrganizerType = Partial<typeof organizerInitial>
 export type OrganizersType = OrganizerType[]
 export const organizersState = atom<OrganizersType>({
   key: 'organizers',
-  default: [OrganizerInitial],
+  default: [organizerInitial],
 })
 
-const DjInitial = {
+export const djInitial = {
   row_number: 0,
   user_id: '',
   name: '',
@@ -45,14 +46,14 @@ const DjInitial = {
   start_time: utcToZonedTime(new Date(), 'Asia/Tokyo'),
   end_time: utcToZonedTime(new Date(), 'Asia/Tokyo'),
 }
-export type DjType = Partial<typeof DjInitial>
+export type DjType = Partial<typeof djInitial>
 export type TimeTableType = DjType[]
 export const timeTableState = atom<TimeTableType>({
   key: 'timetable',
-  default: [DjInitial],
+  default: [djInitial],
 })
 
-const VjInitial = {
+const vjInitial = {
   row_number: 0,
   user_id: '',
   name: '',
@@ -61,23 +62,23 @@ const VjInitial = {
   start_time: utcToZonedTime(new Date(), 'Asia/Tokyo'),
   end_time: utcToZonedTime(new Date(), 'Asia/Tokyo'),
 }
-export type VjType = Partial<typeof VjInitial>
+export type VjType = Partial<typeof vjInitial>
 export type VjTableType = VjType[]
 export const vjTableState = atom<VjTableType>({
   key: 'vjtable',
-  default: [VjInitial],
+  default: [vjInitial],
 })
 
-const ListenerInitial = {
+const listenerInitial = {
   user_id: '',
   name: '',
   icon_url: '',
 }
-export type ListenerType = Partial<typeof ListenerInitial>
+export type ListenerType = Partial<typeof listenerInitial>
 export type ListenersType = ListenerType[]
 export const listenersState = atom<ListenersType>({
   key: 'listeners',
-  default: [ListenerInitial],
+  default: [listenerInitial],
 })
 
 export type Listener = {
@@ -85,3 +86,31 @@ export type Listener = {
   name: string
   icon_url: string | null
 }[]
+
+export const fileState = atom<File | null>({
+  key: 'file',
+  default: null,
+})
+
+export const keywordState = atom<string[]>({
+  key: 'keyword',
+  default: [],
+})
+
+const userInitial = {
+  id: '',
+  name: '',
+  icon_url: '',
+  text: '',
+}
+export type UserType = Partial<typeof userInitial>
+export type UsersType = UserType[]
+export const usersState = atom<UsersType[]>({
+  key: 'users',
+  default: [],
+})
+
+export const isOpenState = atom<boolean[]>({
+  key: 'isOpen',
+  default: [],
+})

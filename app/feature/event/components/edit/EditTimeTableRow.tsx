@@ -1,23 +1,27 @@
-import { Dj, HandleEvent } from '../hooks/useEvent'
-import { Search, HandleSearch } from '../hooks/useSearchUser'
+// import { Dj, HandleEvent } from '../hooks/useEvent'
+// import { Search, HandleSearch } from '../hooks/useSearchUser'
+import { useTimetable } from '../../hooks/useTimetable'
+import { useSearchUser } from '../../hooks/useSearchUser'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
-type propsType = {
-  row: Dj
-  index: number
-  search: Search
-  handleSearch: HandleSearch
-  handleEvent: HandleEvent
-}
+// type propsType = {
+//   row: Dj
+//   index: number
+//   search: Search
+//   handleSearch: HandleSearch
+//   handleEvent: HandleEvent
+// }
 
-export const EditTimeTableRow = (props: propsType) => {
-  const keyword = props.search.keywords[props.index]
-  const result = props.search.results[props.index]
-  const isOpen = props.search.isOpens[props.index]
+export const EditTimeTableRow = ({ index }: { index: number }) => {
+  const { timetable } = useTimetable()
+  const { keywords, results, isOpens } = useSearchUser()
+  const keyword = keywords[index]
+  const result = results[index]
+  const isOpen = isOpens[index]
 
   const bg =
-    props.index % 2 == 1
+    index % 2 == 1
       ? 'bg-[rgba(39,39,63,1)]' // 偶数行の背景色
       : 'bg-[rgba(27,28,46,1)]' // 奇数行の背景色
 
@@ -25,29 +29,29 @@ export const EditTimeTableRow = (props: propsType) => {
     <div className={`${bg} pt-2 pb-4 border-y border-white`}>
       <div className="grid grid-cols-5">
         <div className="col-span-1 h-full flex justify-center items-center">
-          <div
+          {/* <div
             onClick={() => {
               props.handleEvent.shiftUpTimetableRow(props.index)
               props.handleSearch.shiftUpSearchUserRow(props.index)
             }}
-          >
-            <IconArrowUp />
-          </div>
-          <div
+          > */}
+          <IconArrowUp />
+          {/* </div> */}
+          {/* <div
             onClick={() => {
               props.handleEvent.shiftUpTimetableRow(props.index + 1)
               props.handleSearch.shiftUpSearchUserRow(props.index + 1)
             }}
-          >
-            <IconArrowDown />
-          </div>
+          > */}
+          <IconArrowDown />
+          {/* </div> */}
         </div>
         <div className="col-span-3">
           <div className="grid grid-rows-2">
             <div className="row-span-1 h-full flex justify-center items-center">
               <div className="grid grid-cols-3">
                 <div className="col-span-1">
-                  <DatePicker
+                  {/* <DatePicker
                     selected={props.row.start_time}
                     onChange={(date) => {
                       if (date)
@@ -62,11 +66,11 @@ export const EditTimeTableRow = (props: propsType) => {
                     timeCaption="Time"
                     dateFormat="h:mm aa"
                     className="w-full px-2 block placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-                  />
+                  /> */}
                 </div>
                 <span className="col-span-1 text-center">-</span>
                 <div className="col-span-1">
-                  <DatePicker
+                  {/* <DatePicker
                     selected={props.row.end_time}
                     onChange={(date) => {
                       if (date)
@@ -81,7 +85,7 @@ export const EditTimeTableRow = (props: propsType) => {
                     timeCaption="Time"
                     dateFormat="h:mm aa"
                     className="w-full px-2 block placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-                  />
+                  /> */}
                 </div>
               </div>
             </div>
@@ -89,16 +93,16 @@ export const EditTimeTableRow = (props: propsType) => {
               <div className="grid grid-cols-2 gap-x-4">
                 <div className="col-span-1">
                   <span className="w-full text-sm">idで検索</span>
-                  <input
+                  {/* <input
                     type="text"
                     className="row-span-1 w-full px-2 block placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
                     value={keyword ?? ''}
                     onChange={(value) => {
                       props.handleSearch.handleInputChange(props.index, value)
                     }}
-                  />
+                  /> */}
 
-                  {isOpen && (
+                  {/* {isOpen && (
                     <ul className="absolute z-10 bg-[rgba(47,51,56,1)] mt-2 py-2 rounded-lg shadow-xl">
                       {result.map((user, index) => (
                         <li
@@ -123,13 +127,13 @@ export const EditTimeTableRow = (props: propsType) => {
                         </li>
                       ))}
                     </ul>
-                  )}
+                  )} */}
                 </div>
                 <div className="col-span-1">
                   <p className="w-full text-sm">名前</p>
                   <div className="w-full mt-1 px-2 flex justify-between placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg bg-[rgba(47,51,56,1)] text-gray-700 dark:text-gray-300">
-                    <div className="text-left">{props.row.name}</div>
-                    <div
+                    {/* <div className="text-left">{props.row.name}</div> */}
+                    {/* <div
                       className="text-right cursor-pointer"
                       onClick={() => {
                         props.handleEvent.clearTimetableRow(props.index)
@@ -137,7 +141,7 @@ export const EditTimeTableRow = (props: propsType) => {
                       }}
                     >
                       ×
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
@@ -145,14 +149,14 @@ export const EditTimeTableRow = (props: propsType) => {
           </div>
         </div>
         <div className="col-span-1 h-full flex justify-center items-center">
-          <div
+          {/* <div
             onClick={() => {
               props.handleEvent.deleteTimetableRow(props.index)
               props.handleSearch.deleteSearchUserRow(props.index)
             }}
-          >
-            <IconArchiveBox />
-          </div>
+          > */}
+          <IconArchiveBox />
+          {/* </div> */}
         </div>
       </div>
     </div>

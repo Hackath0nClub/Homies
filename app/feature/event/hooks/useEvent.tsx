@@ -12,6 +12,7 @@ import {
   VjTableType,
   listenersState,
   ListenersType,
+  fileState,
 } from '../store/eventState'
 import {
   selectEventById,
@@ -29,7 +30,7 @@ export const useEvent = () => {
   const [timetable, setTimeTable] = useRecoilState(timeTableState)
   const [vjtable, setVjTable] = useRecoilState(vjTableState)
   const [listener, setListener] = useRecoilState(listenersState)
-  const [file, setFile] = useState<File>()
+  const [file, setFile] = useRecoilState(fileState)
 
   const loadEvent = async (id: number) => {
     const base_data = await selectEventById(id)
@@ -56,7 +57,11 @@ export const useEvent = () => {
     } as const
   }
 
+  const setTitle = (title: string) => setBase({ ...base, title: title })
+  const setText = (text: string) => setBase({ ...base, text: text })
+
   const updateEvent = async () => {
+    console.log(file)
     if (base && file) {
       const file_name = base.id + '.png'
       await uploadEventImage({ file_name: file_name, file: file })
@@ -150,6 +155,11 @@ export const useEvent = () => {
     vjtable,
     listener,
     file,
+    loadEvent,
+    updateEvent,
+    setTitle,
+    setText,
+    setFile,
     event: {
       base,
       organizers,
@@ -174,15 +184,6 @@ export const useEvent = () => {
     },
   } as const
 }
-
-export type User = {
-  id: string
-  name: string
-  icon_url: string | null
-  text: string | null
-}
-
-export type Users = User[]
 
 export type HandleEvent = {
   loadEvent: (id: number) => Promise<{

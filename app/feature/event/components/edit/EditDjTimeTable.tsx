@@ -1,13 +1,10 @@
-import { HandleEvent } from '../hooks/useEvent'
-import { HandleSearch } from '../hooks/useSearchUser'
+import { useTimetable } from '../../hooks/useTimetable'
+import { useSearchUser } from '../../hooks/useSearchUser'
+import { EditTimeTableRow } from './EditTimeTableRow'
 
-type propsType = {
-  children: React.ReactNode
-  handleEvent: HandleEvent
-  handleSearch: HandleSearch
-}
-
-export const EditDjTimeTable = (props: propsType) => {
+export const EditDjTimeTable = () => {
+  const { timetable, addEmptyTimetableRow } = useTimetable()
+  const { addEmptySearchUser } = useSearchUser()
   return (
     <>
       <div className="w-full text-center">
@@ -17,14 +14,16 @@ export const EditDjTimeTable = (props: propsType) => {
         <button
           className="px-4 py-2 mb-4 text-white transition-colors duration-300 border border-gray-200 bg-[rgba(28,32,37,1)] rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
           onClick={() => {
-            props.handleSearch.addEmptyTimetableRow()
-            props.handleEvent.addEmptyTimetableRow()
+            addEmptyTimetableRow()
+            addEmptySearchUser()
           }}
         >
           行追加
         </button>
       </div>
-      {props.children}
+      {timetable.map((row, index) => (
+        <EditTimeTableRow index={index} />
+      ))}
     </>
   )
 }

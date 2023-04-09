@@ -1,12 +1,12 @@
-import { Event } from '../hooks/useEvent'
-import { getUrlFromGoogleMapHtml } from '../../../lib/getUrlFromGoogleMapHtml'
+import { EventType } from '../../store/eventState'
+import { getUrlFromGoogleMapHtml } from '../../../../lib/getUrlFromGoogleMapHtml'
 
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
 type propsType = {
-  base: Event
-  setBase: (base: Event) => void
+  base: EventType
+  setBase: (base: EventType) => void
 }
 
 export const EditEventItemsRow = (props: propsType) => {

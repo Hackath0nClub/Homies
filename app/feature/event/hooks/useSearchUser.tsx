@@ -1,13 +1,28 @@
 import { useState, useEffect, ChangeEvent } from 'react'
-import { TimeTable, User, Users, Dj } from './useEvent'
+import { useRecoilState } from 'recoil'
+// import { TimeTable, User, Users, Dj } from './useEvent'
+import {
+  DjType,
+  TimeTableType,
+  UserType,
+  UsersType,
+  isOpenState,
+  keywordState,
+  timeTableState,
+  usersState,
+} from '../store/eventState'
 import { textSearchProfileById } from '../infrastructure/profileDatabase'
 
-export const useSearchUser = (timetable: TimeTable) => {
-  const [keywords, setKeywords] = useState<string[]>([])
-  const [results, setResults] = useState<Users[]>([])
-  const [isOpens, setIsOpens] = useState<boolean[]>([])
+export const useSearchUser = () => {
+  // const [keywords, setKeywords] = useState<string[]>([])
+  // const [results, setResults] = useState<UsersType[]>([])
+  // const [isOpens, setIsOpens] = useState<boolean[]>([])
+  const [timetable] = useRecoilState(timeTableState)
+  const [keywords, setKeywords] = useRecoilState(keywordState)
+  const [results, setResults] = useRecoilState(usersState)
+  const [isOpens, setIsOpens] = useRecoilState(isOpenState)
 
-  const setupSearchUser = async (inputTimetable: TimeTable) => {
+  const setupSearchUser = async (inputTimetable: TimeTableType) => {
     const length = inputTimetable.length
     setResults(Array(length).fill([]))
     setIsOpens(Array(length).fill(false))
@@ -45,18 +60,18 @@ export const useSearchUser = (timetable: TimeTable) => {
     setIsOpens(newIsOpens)
   }
 
-  const addEmptyTimetableRow = () => {
+  const addEmptySearchUser = () => {
     setKeywords([...keywords, ''])
     setResults([...results, []])
     setIsOpens([...isOpens, false])
   }
 
-  const selectUser = (index: number, user: User) => {
+  const selectUser = (index: number, user: UserType) => {
     const newKeywords = [...keywords]
     const newIsOpens = [...isOpens]
     const newItems = [...timetable]
 
-    newKeywords[index] = user.id
+    newKeywords[index] = user.id ?? ''
     newIsOpens[index] = false
 
     const newUser = {
@@ -115,6 +130,10 @@ export const useSearchUser = (timetable: TimeTable) => {
   }
 
   return {
+    keywords,
+    results,
+    isOpens,
+    addEmptySearchUser,
     search: {
       keywords,
       results,
@@ -125,7 +144,7 @@ export const useSearchUser = (timetable: TimeTable) => {
       setKeywords,
       setResults,
       setIsOpens,
-      addEmptyTimetableRow,
+      // addEmptyTimetableRow,
       handleInputChange,
       selectUser,
       clearKeyword,
@@ -137,17 +156,17 @@ export const useSearchUser = (timetable: TimeTable) => {
 
 export type Search = {
   keywords: string[]
-  results: Users[]
+  results: UsersType[]
   isOpens: boolean[]
 }
 
 export type HandleSearch = {
-  setupSearchUser: (timetable: TimeTable) => void
+  setupSearchUser: (timetable: TimeTableType) => void
   setKeywords: (keywords: string[]) => void
-  setResults: (results: Users[]) => void
+  setResults: (results: UsersType[]) => void
   setIsOpens: (isOpens: boolean[]) => void
   addEmptyTimetableRow: () => void
-  selectUser: (index: number, user: User) => TimeTable
+  selectUser: (index: number, user: UserType) => TimeTableType
   handleInputChange: (
     index: number,
     value: ChangeEvent<HTMLInputElement>

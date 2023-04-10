@@ -1,6 +1,5 @@
-import { useState, useEffect, ChangeEvent } from 'react'
-import { useRecoilState } from 'recoil'
-// import { TimeTable, User, Users, Dj } from './useEvent'
+import { useEffect, ChangeEvent } from 'react'
+import { useRecoilState, useRecoilCallback, CallbackInterface } from 'recoil'
 import {
   DjType,
   TimeTableType,
@@ -14,19 +13,17 @@ import {
 import { textSearchProfileById } from '../infrastructure/profileDatabase'
 
 export const useSearchUser = () => {
-  // const [keywords, setKeywords] = useState<string[]>([])
-  // const [results, setResults] = useState<UsersType[]>([])
-  // const [isOpens, setIsOpens] = useState<boolean[]>([])
   const [timetable] = useRecoilState(timeTableState)
   const [keywords, setKeywords] = useRecoilState(keywordState)
   const [results, setResults] = useRecoilState(usersState)
   const [isOpens, setIsOpens] = useRecoilState(isOpenState)
 
-  const setupSearchUser = async (inputTimetable: TimeTableType) => {
-    const length = inputTimetable.length
+  const setupSearchUser = async (inputTable: TimeTableType) => {
+    if (!inputTable) return
+    const length = inputTable.length
+    const newKeywords = inputTable.map((dj) => dj.user_id ?? '')
     setResults(Array(length).fill([]))
     setIsOpens(Array(length).fill(false))
-    const newKeywords = inputTimetable.map((row) => row.user_id ?? '')
     setKeywords(newKeywords)
   }
 
@@ -46,17 +43,13 @@ export const useSearchUser = () => {
     return result ?? []
   }
 
-  const handleInputChange = (
-    index: number,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    console.log(e.target.value)
+  const handleInputChange = (index: number, value: string) => {
     const newKeywords = [...keywords]
-    newKeywords[index] = e.target.value
+    newKeywords[index] = value
     setKeywords(newKeywords)
 
     const newIsOpens = [...isOpens]
-    newIsOpens[index] = e.target.value == '' ? false : true
+    newIsOpens[index] = value == '' ? false : true
     setIsOpens(newIsOpens)
   }
 
@@ -69,7 +62,7 @@ export const useSearchUser = () => {
   const selectUser = (index: number, user: UserType) => {
     const newKeywords = [...keywords]
     const newIsOpens = [...isOpens]
-    const newItems = [...timetable]
+    const newTimetable = [...timetable]
 
     newKeywords[index] = user.id ?? ''
     newIsOpens[index] = false
@@ -81,11 +74,11 @@ export const useSearchUser = () => {
       text: user.text,
     }
 
-    newItems[index] = { ...newItems[index], ...newUser }
+    newTimetable[index] = { ...newTimetable[index], ...newUser }
 
     setKeywords(newKeywords)
     setIsOpens(newIsOpens)
-    return newItems
+    return newTimetable
   }
 
   const clearKeyword = (index: number) => {
@@ -133,7 +126,12 @@ export const useSearchUser = () => {
     keywords,
     results,
     isOpens,
+    setupSearchUser,
     addEmptySearchUser,
+    shiftUpSearchUserRow,
+    handleInputChange,
+    selectUser,
+    clearKeyword,
     search: {
       keywords,
       results,
@@ -152,26 +150,4 @@ export const useSearchUser = () => {
       shiftUpSearchUserRow,
     },
   }
-}
-
-export type Search = {
-  keywords: string[]
-  results: UsersType[]
-  isOpens: boolean[]
-}
-
-export type HandleSearch = {
-  setupSearchUser: (timetable: TimeTableType) => void
-  setKeywords: (keywords: string[]) => void
-  setResults: (results: UsersType[]) => void
-  setIsOpens: (isOpens: boolean[]) => void
-  addEmptyTimetableRow: () => void
-  selectUser: (index: number, user: UserType) => TimeTableType
-  handleInputChange: (
-    index: number,
-    value: ChangeEvent<HTMLInputElement>
-  ) => void
-  clearKeyword: (index: number) => void
-  deleteSearchUserRow: (index: number) => void
-  shiftUpSearchUserRow: (index: number) => void
 }

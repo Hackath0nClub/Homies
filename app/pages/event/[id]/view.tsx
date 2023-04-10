@@ -14,13 +14,18 @@ import { Organizers } from '../../../feature/event/components/view/Organizers'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useEvent } from '../../../feature/event/hooks/useEvent'
+import { useTimetable } from '../../../feature/event/hooks/useTimetable'
 
 const EventDetails = () => {
   const { query, isReady } = useRouter()
-  const { handleEvent } = useEvent()
+  const { loadEvent } = useEvent()
+  const { loadTimetable } = useTimetable()
 
   useEffect(() => {
-    if (isReady) handleEvent.loadEvent(Number(query.id))
+    if (isReady) {
+      loadEvent(Number(query.id))
+      loadTimetable(Number(query.id))
+    }
   }, [isReady])
 
   return (

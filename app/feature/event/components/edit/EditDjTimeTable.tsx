@@ -21,8 +21,8 @@ export const EditDjTimeTable = () => {
           行追加
         </button>
       </div>
-      {timetable.map((row, index) => (
-        <EditTimeTableRow index={index} />
+      {timetable.map((dj, index) => (
+        <EditTimeTableRow dj={dj} key={index} />
       ))}
     </>
   )

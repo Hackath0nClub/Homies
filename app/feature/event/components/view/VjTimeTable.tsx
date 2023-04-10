@@ -1,9 +1,9 @@
-import { useEvent } from '../../../../feature/event/hooks/useEvent'
+import { useTimetable } from '../../../../feature/event/hooks/useTimetable'
 import { getTime } from '../../../../lib/splitDateTime'
 import { VjType } from '../../store/eventState'
 
 export const VjTimeTable = () => {
-  const { vjtable } = useEvent()
+  const { vjtable } = useTimetable()
 
   const VjTimeTableRow = ({ vj }: { vj: VjType }) => {
     const bg =

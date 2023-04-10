@@ -18,22 +18,17 @@ import { EditTimeTableRow } from '../../../feature/event/components/edit/EditTim
 import { useRouter } from 'next/router'
 import { useEvent } from '../../../feature/event/hooks/useEvent'
 import { useSearchUser } from '../../../feature/event/hooks/useSearchUser'
+import { useTimetable } from '../../../feature/event/hooks/useTimetable'
 
 const EventDetails = () => {
   const { query, isReady } = useRouter()
-  const id = Number(query.id)
-  const { event, handleEvent, loadEvent } = useEvent()
-  const { search, handleSearch } = useSearchUser()
-
-  const init = async () => {
-    if (!isReady) return
-    const initEvent = await handleEvent.loadEvent(id)
-    if (!initEvent.timetable) return
-    handleSearch.setupSearchUser(initEvent.timetable)
-  }
+  const { loadEvent } = useEvent()
+  const { loadTimetable } = useTimetable()
 
   useEffect(() => {
-    init()
+    if (!isReady) return
+    loadEvent(Number(query.id))
+    loadTimetable(Number(query.id))
   }, [isReady])
 
   return (
@@ -84,12 +79,12 @@ const EventDetails = () => {
           )} */}
         </div>
         <div className="md:col-span-4">
-          {event.base && (
+          {/* {event.base && (
             <EditEventItemsRow
               base={event.base}
               setBase={handleEvent.setBase}
             />
-          )}
+          )} */}
           {/* {event.organizers && (
             <Organizers organizers={event.organizers}></Organizers>
           )} */}

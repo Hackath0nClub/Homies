@@ -1,9 +1,9 @@
-import { useEvent } from '../../../../feature/event/hooks/useEvent'
+import { useTimetable } from '../../../../feature/event/hooks/useTimetable'
 import { getTime } from '../../../../lib/splitDateTime'
 import { DjType } from '../../store/eventState'
 
 export const DjTimeTable = () => {
-  const { timetable } = useEvent()
+  const { timetable } = useTimetable()
 
   const DjTimeTableRow = ({ dj }: { dj: DjType }) => {
     const bg =

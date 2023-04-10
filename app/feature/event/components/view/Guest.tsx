@@ -1,8 +1,8 @@
-import { useEvent } from '../../../../feature/event/hooks/useEvent'
+import { useTimetable } from '../../../../feature/event/hooks/useTimetable'
 import { DjType, VjType } from '../../store/eventState'
 
 export const Guest = () => {
-  const { timetable, vjtable } = useEvent()
+  const { timetable, vjtable } = useTimetable()
 
   const GuestRow = ({ dj }: { dj: DjType | VjType }) => {
     return (

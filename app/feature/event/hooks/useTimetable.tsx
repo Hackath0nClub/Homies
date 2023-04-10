@@ -1,20 +1,15 @@
-import { useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { utcToZonedTime } from 'date-fns-tz'
 import {
   djInitial,
   timeTableState,
-  TimeTableType,
-  DjType,
   vjTableState,
-  VjTableType,
+  UserType,
 } from '../store/eventState'
-import { useSearchUser } from './useSearchUser'
 import { selectEventDjByEventId } from '../infrastructure/eventDjDatabase'
 import { selectEventVjByEventId } from '../infrastructure/eventVjDatabase'
 
 export const useTimetable = () => {
-  const { setupSearchUser } = useSearchUser()
   const [timetable, setTimeTable] = useRecoilState(timeTableState)
   const [vjtable, setVjTable] = useRecoilState(vjTableState)
 
@@ -24,7 +19,6 @@ export const useTimetable = () => {
     if (!timetable_data || !vjtable_data) return
     setTimeTable(timetable_data)
     setVjTable(vjtable_data)
-    setupSearchUser(timetable_data)
   }
 
   const addEmptyTimetableRow = () => {
@@ -50,6 +44,19 @@ export const useTimetable = () => {
     if (!timetable) return
     const newTimetable = [...timetable]
     newTimetable[index] = { ...newTimetable[index], end_time: end_time }
+    setTimeTable(newTimetable)
+  }
+
+  const updateTimetableRowUser = (index: number, user: UserType) => {
+    if (!timetable) return
+    const newTimetable = [...timetable]
+    newTimetable[index] = {
+      ...newTimetable[index],
+      user_id: user.id,
+      name: user.name,
+      icon_url: user.icon_url,
+      text: user.text,
+    }
     setTimeTable(newTimetable)
   }
 
@@ -81,6 +88,16 @@ export const useTimetable = () => {
     setTimeTable(newTimetable)
   }
 
+  const deleteTimetableRow = (index: number) => {
+    if (!timetable) return
+    let newTimetable = [...timetable]
+    newTimetable.splice(index, 1)
+    newTimetable = newTimetable.map((row, index) => {
+      return { ...row, row_number: index + 1 }
+    })
+    setTimeTable(newTimetable)
+  }
+
   return {
     timetable,
     vjtable,
@@ -89,7 +106,9 @@ export const useTimetable = () => {
     addEmptyTimetableRow,
     updateTimetableRowStartTime,
     updateTimetableRowEndTime,
+    updateTimetableRowUser,
     shiftUpTimetableRow,
     clearTimetableRow,
+    deleteTimetableRow,
   } as const
 }

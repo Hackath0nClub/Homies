@@ -92,11 +92,6 @@ export const fileState = atom<File | null>({
   default: null,
 })
 
-export const keywordState = atom<string[]>({
-  key: 'keyword',
-  default: [],
-})
-
 const userInitial = {
   id: '',
   name: '',
@@ -105,12 +100,13 @@ const userInitial = {
 }
 export type UserType = Partial<typeof userInitial>
 export type UsersType = UserType[]
-export const usersState = atom<UsersType[]>({
-  key: 'users',
-  default: [],
+
+export const keywordState = atom<string>({
+  key: 'keyword',
+  default: '',
 })
 
-export const isOpenState = atom<boolean[]>({
-  key: 'isOpen',
+export const usersState = atom<UsersType>({
+  key: 'users',
   default: [],
 })

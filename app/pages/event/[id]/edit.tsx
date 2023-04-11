@@ -67,12 +67,7 @@ const EventDetails = () => {
           )} */}
         </div>
         <div className="md:col-span-4">
-          {/* {event.base && (
-            <EditEventItemsRow
-              base={event.base}
-              setBase={handleEvent.setBase}
-            />
-          )} */}
+          <EditEventItemsRow />
           {/* {event.organizers && (
             <Organizers organizers={event.organizers}></Organizers>
           )} */}

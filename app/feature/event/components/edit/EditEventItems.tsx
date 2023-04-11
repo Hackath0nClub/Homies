@@ -1,15 +1,21 @@
 import { EventType } from '../../store/eventState'
+import { useEvent } from '../../../../feature/event/hooks/useEvent'
 import { getUrlFromGoogleMapHtml } from '../../../../lib/getUrlFromGoogleMapHtml'
-
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
-type propsType = {
-  base: EventType
-  setBase: (base: EventType) => void
-}
+export const EditEventItemsRow = () => {
+  const {
+    base,
+    setPrice,
+    setCapacity,
+    setStartTime,
+    setEndTime,
+    setLocationName,
+    setLocationUrl,
+    setNote,
+  } = useEvent()
 
-export const EditEventItemsRow = (props: propsType) => {
   return (
     <>
       <div className="border border-gray-500 rounded-xl w-full bg-[rgba(47,51,56,1)] my-4">
@@ -31,10 +37,8 @@ export const EditEventItemsRow = (props: propsType) => {
           <input
             type="number"
             className="col-span-5 text-right mx-2 px-2 block placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-            value={props.base.price ?? ''}
-            onChange={(e) =>
-              props.setBase({ ...props.base!, price: Number(e.target.value) })
-            }
+            value={base.price ?? ''}
+            onChange={(e) => setPrice(Number(e.target.value))}
           />
         </div>
 
@@ -51,13 +55,8 @@ export const EditEventItemsRow = (props: propsType) => {
           <input
             type="number"
             className="col-span-5 text-right mx-2 px-2 block placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-            value={props.base.capacity ?? ''}
-            onChange={(e) =>
-              props.setBase({
-                ...props.base!,
-                capacity: Number(e.target.value),
-              })
-            }
+            value={base.capacity ?? ''}
+            onChange={(e) => setCapacity(Number(e.target.value))}
           />
         </div>
 
@@ -72,10 +71,10 @@ export const EditEventItemsRow = (props: propsType) => {
             開始日時
           </p>
           <DatePicker
-            selected={props.base.start_at}
-            onChange={(date) =>
-              props.setBase({ ...props.base, start_at: date })
-            }
+            selected={base.start_at}
+            onChange={(date) => {
+              if (date) setStartTime(date)
+            }}
             showTimeSelect
             dateFormat="MMMM d, yyyy h:mm aa"
             className="col-span-5 text-right mx-2 px-2 block placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
@@ -89,8 +88,10 @@ export const EditEventItemsRow = (props: propsType) => {
             終了日時
           </p>
           <DatePicker
-            selected={props.base.end_at}
-            onChange={(date) => props.setBase({ ...props.base, end_at: date })}
+            selected={base.end_at}
+            onChange={(date) => {
+              if (date) setEndTime(date)
+            }}
             showTimeSelect
             dateFormat="MMMM d, yyyy h:mm aa"
             className="col-span-5 text-right mx-2 px-2 block placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
@@ -110,13 +111,8 @@ export const EditEventItemsRow = (props: propsType) => {
           <input
             type="text"
             className="col-span-5 text-right mx-2 px-2 block placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-            value={props.base.location_name ?? ''}
-            onChange={(e) =>
-              props.setBase({
-                ...props.base!,
-                location_name: e.target.value,
-              })
-            }
+            value={base.location_name ?? ''}
+            onChange={(e) => setLocationName(e.target.value)}
           />
         </div>
         <div className="w-full grid grid-cols-8 px-4 my-4">
@@ -127,19 +123,13 @@ export const EditEventItemsRow = (props: propsType) => {
           <input
             type="text"
             className="col-span-5 text-right mx-2 px-2 block placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-            value={props.base.location_url ?? ''}
+            value={base.location_url ?? ''}
             onChange={(e) =>
-              props.setBase({
-                ...props.base!,
-                location_url: getUrlFromGoogleMapHtml(e.target.value),
-              })
+              setLocationUrl(getUrlFromGoogleMapHtml(e.target.value))
             }
           />
         </div>
-        <iframe
-          className="w-full px-8 my-4"
-          src={props.base.location_url!}
-        ></iframe>
+        <iframe className="w-full px-8 my-4" src={base.location_url}></iframe>
 
         <div className="w-full grid grid-cols-8 px-4 my-4">
           <div className="flex justify-center col-span-1">
@@ -156,10 +146,8 @@ export const EditEventItemsRow = (props: propsType) => {
           <textarea
             className="col-span-7 h-[10vh] block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
             id="message"
-            value={props.base.note ?? ''}
-            onChange={(e) =>
-              props.setBase({ ...props.base!, note: e.target.value })
-            }
+            value={base.note ?? ''}
+            onChange={(e) => setNote(e.target.value)}
           />
         </div>
       </div>

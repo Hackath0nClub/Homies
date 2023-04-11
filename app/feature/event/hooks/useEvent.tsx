@@ -38,6 +38,18 @@ export const useEvent = () => {
 
   const setTitle = (title: string) => setBase({ ...base, title: title })
   const setText = (text: string) => setBase({ ...base, text: text })
+  const setPrice = (price: number) => setBase({ ...base, price: price })
+  const setCapacity = (capacity: number) =>
+    setBase({ ...base, capacity: capacity })
+  const setStartTime = (start_at: Date) =>
+    setBase({ ...base, start_at: start_at })
+  const setEndTime = (end_at: Date) => setBase({ ...base, end_at: end_at })
+  const setLocationName = (location_name: string) =>
+    setBase({ ...base, location_name: location_name })
+  const setLocationUrl = (location_url: string) =>
+    setBase({ ...base, location_url: location_url })
+  const setNote = (note: string) => setBase({ ...base, note: note })
+
   const updateEvent = async () => {
     console.log(file)
     if (base && file) {
@@ -57,5 +69,11 @@ export const useEvent = () => {
     setTitle,
     setText,
     setFile,
+    setPrice,
+    setCapacity,
+    setStartTime,
+    setEndTime,
+    setLocationName,
+    setLocationUrl,
   } as const
 }

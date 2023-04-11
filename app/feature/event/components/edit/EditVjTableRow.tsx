@@ -5,15 +5,15 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { DjType } from '../../store/eventState'
 import { useState } from 'react'
 
-export const EditTimeTableRow = ({ dj }: { dj: DjType }) => {
+export const EditVjTableRow = ({ vj }: { vj: DjType }) => {
   const {
-    updateTimetableRowStartTime,
-    updateTimetableRowEndTime,
-    shiftUpTimetableRow,
-    clearTimetableRow,
-    deleteTimetableRow,
+    updateVjtableRowStartTime,
+    updateVjtableRowEndTime,
+    shiftUpVjtableRow,
+    clearVjtableRow,
+    deleteVjtableRow,
   } = useTimetable()
-  const index = dj.row_number ? dj.row_number - 1 : 0
+  const index = vj.row_number ? vj.row_number - 1 : 0
 
   const bg =
     index % 2 == 0
@@ -22,9 +22,9 @@ export const EditTimeTableRow = ({ dj }: { dj: DjType }) => {
 
   const StartTimePicker = () => (
     <DatePicker
-      selected={dj.start_time}
+      selected={vj.start_time}
       onChange={(date) => {
-        if (date) updateTimetableRowStartTime(index, date)
+        if (date) updateVjtableRowStartTime(index, date)
       }}
       showTimeSelect
       showTimeSelectOnly
@@ -37,9 +37,9 @@ export const EditTimeTableRow = ({ dj }: { dj: DjType }) => {
 
   const EndTimePicker = () => (
     <DatePicker
-      selected={dj.end_time}
+      selected={vj.end_time}
       onChange={(date) => {
-        if (date) updateTimetableRowEndTime(index, date)
+        if (date) updateVjtableRowEndTime(index, date)
       }}
       showTimeSelect
       showTimeSelectOnly
@@ -53,10 +53,10 @@ export const EditTimeTableRow = ({ dj }: { dj: DjType }) => {
   const TimetableRowShiftButtons = () => {
     return (
       <>
-        <div onClick={() => shiftUpTimetableRow(index)}>
+        <div onClick={() => shiftUpVjtableRow(index)}>
           <IconArrowUp />
         </div>
-        <div onClick={() => shiftUpTimetableRow(index + 1)}>
+        <div onClick={() => shiftUpVjtableRow(index + 1)}>
           <IconArrowDown />
         </div>
       </>
@@ -68,10 +68,10 @@ export const EditTimeTableRow = ({ dj }: { dj: DjType }) => {
       <>
         <p className="w-full text-sm">名前</p>
         <div className="w-full mt-1 px-2 flex justify-between placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg bg-[rgba(47,51,56,1)] text-gray-700 dark:text-gray-300">
-          <div className="text-left">{dj.name}</div>
+          <div className="text-left">{vj.name}</div>
           <div
             className="text-right cursor-pointer"
-            onClick={() => clearTimetableRow(index)}
+            onClick={() => clearVjtableRow(index)}
           >
             ×
           </div>
@@ -82,7 +82,7 @@ export const EditTimeTableRow = ({ dj }: { dj: DjType }) => {
 
   const TimetableRowDeleteButton = () => {
     return (
-      <div onClick={() => deleteTimetableRow(index)}>
+      <div onClick={() => deleteVjtableRow(index)}>
         <IconArchiveBox />
       </div>
     )
@@ -152,7 +152,7 @@ const UserSearchInput = ({ index }: { index: number }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [onMouseOver, setOnMouseOver] = useState(false)
   const { handleInputChange, results } = useSearchUser()
-  const { updateTimetableRowUser } = useTimetable()
+  const { updateVjtableRowUser } = useTimetable()
 
   return (
     <>
@@ -182,7 +182,7 @@ const UserSearchInput = ({ index }: { index: number }) => {
               key={user.id}
               className="flex align-items-center py-2 px-4 hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
               onClick={() => {
-                updateTimetableRowUser(index, user)
+                updateVjtableRowUser(index, user)
                 handleInputChange('')
                 setIsOpen(false)
               }}

@@ -98,6 +98,83 @@ export const useTimetable = () => {
     setTimeTable(newTimetable)
   }
 
+  const addEmptyVjtableRow = () => {
+    if (!vjtable) return
+    const newTimetable = [
+      ...vjtable,
+      {
+        ...djInitial,
+        row_number: vjtable.length + 1,
+      },
+    ]
+    setVjTable(newTimetable)
+  }
+
+  const updateVjtableRowStartTime = (index: number, start_time: Date) => {
+    if (!vjtable) return
+    const newVjtable = [...vjtable]
+    newVjtable[index] = { ...newVjtable[index], start_time: start_time }
+    setVjTable(newVjtable)
+  }
+
+  const updateVjtableRowEndTime = (index: number, end_time: Date) => {
+    if (!vjtable) return
+    const newVjtable = [...vjtable]
+    newVjtable[index] = { ...newVjtable[index], end_time: end_time }
+    setVjTable(newVjtable)
+  }
+
+  const updateVjtableRowUser = (index: number, user: UserType) => {
+    if (!vjtable) return
+    const newVjtable = [...vjtable]
+    newVjtable[index] = {
+      ...newVjtable[index],
+      user_id: user.id,
+      name: user.name,
+      icon_url: user.icon_url,
+      text: user.text,
+    }
+    setVjTable(newVjtable)
+  }
+
+  const shiftUpVjtableRow = (index: number) => {
+    if (!vjtable || index === 0) return
+    let newVjtable = [...vjtable]
+    const target = newVjtable[index]
+    newVjtable[index] = newVjtable[index - 1]
+    newVjtable[index - 1] = target
+    newVjtable = newVjtable.map((row, idx) => {
+      return { ...row, row_number: idx + 1 }
+    })
+    setVjTable(newVjtable)
+  }
+
+  const clearVjtableRow = (index: number) => {
+    if (!vjtable) return
+    const newVjtable = [...vjtable]
+    const updatedVjtable = {
+      ...newVjtable[index],
+      user_id: '',
+      name: '',
+      text: '',
+      icon_url: '',
+      start_time: utcToZonedTime(new Date(), 'Asia/Tokyo'),
+      end_time: utcToZonedTime(new Date(), 'Asia/Tokyo'),
+    }
+    newVjtable[index] = updatedVjtable
+    setVjTable(newVjtable)
+  }
+
+  const deleteVjtableRow = (index: number) => {
+    if (!vjtable) return
+    let newVjtable = [...vjtable]
+    newVjtable.splice(index, 1)
+    newVjtable = newVjtable.map((row, index) => {
+      return { ...row, row_number: index + 1 }
+    })
+    setVjTable(newVjtable)
+  }
+
   return {
     timetable,
     vjtable,
@@ -110,5 +187,12 @@ export const useTimetable = () => {
     shiftUpTimetableRow,
     clearTimetableRow,
     deleteTimetableRow,
+    addEmptyVjtableRow,
+    updateVjtableRowStartTime,
+    updateVjtableRowEndTime,
+    updateVjtableRowUser,
+    shiftUpVjtableRow,
+    clearVjtableRow,
+    deleteVjtableRow,
   } as const
 }

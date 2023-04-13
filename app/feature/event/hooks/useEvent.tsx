@@ -75,5 +75,6 @@ export const useEvent = () => {
     setEndTime,
     setLocationName,
     setLocationUrl,
+    setNote,
   } as const
 }

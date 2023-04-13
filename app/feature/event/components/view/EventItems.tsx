@@ -4,6 +4,23 @@ import { getFullDate, getTime } from '../../../../lib/splitDateTime'
 export const EventItems = () => {
   const { base, listener } = useEvent()
 
+  const main = () => {
+    return (
+      <div className="border border-gray-500 rounded-xl w-full bg-[rgba(47,51,56,1)] my-4">
+        <TopText />
+        <div className="border-t-2 border-gray-500"></div>
+        <BuyTicketButton />
+        <Price />
+        <Capacity />
+        <Date />
+        <Time />
+        <Location />
+        <Map />
+        <Note />
+      </div>
+    )
+  }
+
   const TopText = () => {
     return (
       <p className="p-4 w-full flex items-start self-stretch text-xl text-white text-left">
@@ -124,18 +141,5 @@ export const EventItems = () => {
     )
   }
 
-  return (
-    <div className="border border-gray-500 rounded-xl w-full bg-[rgba(47,51,56,1)] my-4">
-      <TopText />
-      <div className="border-t-2 border-gray-500"></div>
-      <BuyTicketButton />
-      <Price />
-      <Capacity />
-      <Date />
-      <Time />
-      <Location />
-      <Map />
-      <Note />
-    </div>
-  )
+  return main()
 }

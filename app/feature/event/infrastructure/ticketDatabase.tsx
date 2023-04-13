@@ -1,5 +1,5 @@
 import { supabase } from '../../../utils/supabaseClient'
-import { Listener } from '../hooks/useEvent'
+import { ListenersType } from '../store/eventState'
 
 export const selectListenerByEventId = async (id: number) => {
   try {
@@ -16,7 +16,7 @@ export const selectListenerByEventId = async (id: number) => {
 
     const listener = flattenObjectList(data)
 
-    return listener as Listener
+    return listener as ListenersType
   } catch (error) {
     alert('Error loading Getdata!')
     console.log(error)

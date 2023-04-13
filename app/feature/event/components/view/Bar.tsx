@@ -1,4 +1,4 @@
-const Bar = () => {
+export const Bar = () => {
   return (
     <>
       <div className="mt-8"></div>
@@ -7,5 +7,3 @@ const Bar = () => {
     </>
   )
 }
-
-export default Bar

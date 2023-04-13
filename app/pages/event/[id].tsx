@@ -1,16 +1,16 @@
 import React from 'react'
 
 // components
-import { TitleRow } from '../../feature/event/components/TitleRow'
-import ImageRow from '../../feature/event/components/ImageRow'
-import Bar from '../../feature/event/components/Bar'
-import DescriptionRow from '../../feature/event/components/DescriptionRow'
-import DjTimeTableRow from '../../feature/event/components/DjTimeTableRow'
-import VjTimeTableRow from '../../feature/event/components/VjTimeTableRow'
-import DjButton from '../../feature/event/components/DjButton'
-import GuestRow from '../../feature/event/components/GuestRow'
-import EventItemsRow from '../../feature/event/components/EventItemsRow'
-import OrganizerRow from '../../feature/event/components/OrganizerRow'
+import { TitleRow } from '../../feature/event/components/view/Title'
+import ImageRow from '../../feature/event/components/view/Image'
+import Bar from '../../feature/event/components/view/Bar'
+import DescriptionRow from '../../feature/event/components/view/Description'
+import DjTimeTableRow from '../../feature/event/components/view/DjTimeTable'
+import VjTimeTableRow from '../../feature/event/components/view/VjTimeTable'
+import DjButton from '../../feature/event/components/view/DjButton'
+import Guest from '../../feature/event/components/view/Guest'
+import EventItemsRow from '../../feature/event/components/view/EventItems'
+import OrganizerRow from '../../feature/event/components/view/Organizers'
 
 // hooks
 import { useRouter } from 'next/router'
@@ -64,8 +64,8 @@ const EventDetails = () => {
                 ({ start_time, end_time, ...others }) => {
                   return {
                     ...others,
-                    start_time: getTime(start_time),
-                    end_time: getTime(end_time),
+                    start_time: start_time ? getTime(start_time) : '',
+                    end_time: end_time ? getTime(end_time) : '',
                   }
                 }
               )}
@@ -77,8 +77,8 @@ const EventDetails = () => {
                 ({ start_time, end_time, ...others }) => {
                   return {
                     ...others,
-                    start_time: getTime(start_time),
-                    end_time: getTime(end_time),
+                    start_time: start_time ? getTime(start_time) : '',
+                    end_time: end_time ? getTime(end_time) : '',
                   }
                 }
               )}
@@ -87,17 +87,21 @@ const EventDetails = () => {
           <DjButton />
           <Bar />
           {event.timetable && event.vjtable && (
-            <GuestRow
-              timetable={[...event.timetable, ...event.vjtable].map(
-                ({ start_time, end_time, ...others }) => {
-                  return {
-                    ...others,
-                    start_time: getTime(start_time),
-                    end_time: getTime(end_time),
-                  }
-                }
-              )}
-            />
+            <Guest
+              timetable={event.timetable}
+              handleEvent={handleEvent}
+            ></Guest>
+            // <GuestRow
+            //   timetable={[...event.timetable, ...event.vjtable].map(
+            //     ({ start_time, end_time, ...others }) => {
+            //       return {
+            //         ...others,
+            //         start_time: start_time ? getTime(start_time) : '',
+            //         end_time: end_time ? getTime(end_time) : '',
+            //       }
+            //     }
+            //   )}
+            // />
           )}
         </div>
         <div className="md:col-span-4">

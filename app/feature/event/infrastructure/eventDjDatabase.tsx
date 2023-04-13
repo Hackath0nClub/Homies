@@ -1,6 +1,6 @@
 import { convertDateStringToDateObjectInList } from '../../../lib/convertDateStringToDateObject'
 import { supabase } from '../../../utils/supabaseClient'
-import { TimeTable } from '../hooks/useEvent'
+import { TimeTableType } from '../store/eventState'
 
 export const selectEventDjByEventId = async (id: number) => {
   try {
@@ -22,7 +22,7 @@ export const selectEventDjByEventId = async (id: number) => {
     timetable = convertDateStringToDateObjectInList(timetable)
     if (data.length > 1) timetable = sortByTimetable(timetable)
 
-    return timetable as TimeTable
+    return timetable as TimeTableType
   } catch (error) {
     alert('Error loading Getdata!')
     console.log(error)

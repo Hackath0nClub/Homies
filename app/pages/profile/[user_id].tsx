@@ -1,9 +1,9 @@
 // components
-import { UserName } from '../../feature/profile/components/UserName'
-import { UserIcon } from '../../feature/profile/components/UserIcon'
-import { UserText } from '../../feature/profile/components/UserText'
-import { UserCount } from '../../feature/profile/components/UserCount'
-import { UserEvent } from '../../feature/profile/components/UserEvent'
+import { UserName } from '../../feature/profile/components/view/UserName'
+import { UserIcon } from '../../feature/profile/components/view/UserIcon'
+import { UserText } from '../../feature/profile/components/view/UserText'
+import { UserCount } from '../../feature/profile/components/view/UserCount'
+import { UserEvent } from '../../feature/profile/components/view/UserEvent'
 import Footer from '../../components/Footer'
 
 // hooks

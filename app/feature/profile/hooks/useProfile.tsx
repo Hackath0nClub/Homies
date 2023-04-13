@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { selectProfileById, upsertProfileById } from '../infrastructure/profileRepository'
+import { selectEventByUserId } from '../infrastructure//eventRepository'
+import { Event, Events } from '../../event/hooks/useEvent'
 
 export type Profile =
   | {
@@ -18,6 +20,7 @@ export type Profile =
 
 export const useProfile = () => {
   const [profile, setProfile] = useState<Profile>()
+  const [events, setEvents] = useState<Events>()
 
   async function getProfile(id: string) {
     const data = await selectProfileById(id)
@@ -29,5 +32,20 @@ export const useProfile = () => {
     if (data) setProfile(data)
   }
 
-  return [profile, getProfile, setProfileText] as const
+  async function getEventByUserId(user_id: string) {
+    const events = await selectEventByUserId(user_id)
+    if (events) setEvents(events)
+  }
+
+  return {
+    profileData: {
+      profile,
+      events
+    },
+    handleProfile: {
+      getProfile,
+      setProfileText,
+      getEventByUserId
+    }
+  } as const
 }

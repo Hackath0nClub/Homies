@@ -10,22 +10,22 @@ import Footer from '../../components/Footer'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useProfile } from '../../feature/profile/hooks/useProfile'
-import { useEvent } from '../../feature/event/hooks/useEvent'
 
 const ProfilePage = () => {
   const { query, isReady } = useRouter()
   const user_id = query.user_id
-  const [profile, getProfile, setProfileText] = useProfile()
+  const { profileData, handleProfile } = useProfile()
   let [isEdit, editProfile] = useState<boolean>(false)
 
   useEffect(() => {
     if (typeof user_id != 'string') return
-    getProfile(user_id)
+    handleProfile.getProfile(user_id)
+    handleProfile.getEventByUserId(user_id)
   }, [isReady])
 
   return (
     <>
-      {profile != undefined && (
+      {profileData.profile != undefined && (
         <>
           <div className="flex justify-center min-h-screen bg-[rgba(28,32,37,1)]">
             <div className="w-5/6 grid md:grid-cols-10 sm:grid-cols-1 gap-8 m-8">
@@ -33,7 +33,7 @@ const ProfilePage = () => {
 
                 <div className="grid grid-cols-10">
                   <div className="col-span-5">
-                    <UserIcon icon_url={profile.icon_url}></UserIcon>
+                    <UserIcon icon_url={profileData.profile.icon_url}></UserIcon>
                   </div>
                   <div className="col-span-5 flex items-end">
                     <button>
@@ -51,8 +51,8 @@ const ProfilePage = () => {
                 </div>
 
                 <div>
-                  <UserName id={profile.id} name={profile.name}></UserName>
-                  <UserText text={profile.text} id={profile.id} setProfileText={setProfileText} isEdit={isEdit}></UserText>
+                  <UserName id={profileData.profile.id} name={profileData.profile.name}></UserName>
+                  <UserText text={profileData.profile.text} id={profileData.profile.id} setProfileText={handleProfile.setProfileText} isEdit={isEdit}></UserText>
                 </div>
                 <div>
                   <UserCount></UserCount>

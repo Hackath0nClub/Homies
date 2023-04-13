@@ -1,18 +1,12 @@
 import { useRef } from 'react'
-import { Event } from '../hooks/useEvent'
+import { useEvent } from '../../hooks/useEvent'
 
-type propsType = {
-  base: Event
-  file: File | undefined
-  setBase: (base: Event) => void
-  setFile: (file: File) => void
-}
-
-export const EditImageRow = (props: propsType) => {
+export const EditImageRow = () => {
+  const { base, file, setFile } = useEvent()
   const inputRef = useRef<HTMLInputElement>(null)
   const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const local_file = e.target.files?.[0]
-    if (local_file) props.setFile(local_file)
+    if (local_file) setFile(local_file)
   }
 
   return (
@@ -32,10 +26,8 @@ export const EditImageRow = (props: propsType) => {
       </button>
 
       <img
-        alt={props.base.title!}
-        src={
-          props.file ? URL.createObjectURL(props.file) : props.base.image_url!
-        }
+        alt={base.title}
+        src={file ? URL.createObjectURL(file) : base.image_url}
         className="w-full my-4 rounded-lg"
       />
     </>

@@ -1,5 +1,6 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
+import { RecoilRoot } from 'recoil'
 import Layout from '../components/Layout'
 
 import { useState } from 'react'
@@ -14,9 +15,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       supabaseClient={supabase}
       initialSession={pageProps.initialSession}
     >
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <RecoilRoot>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </RecoilRoot>
     </SessionContextProvider>
   )
 }

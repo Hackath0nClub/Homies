@@ -1,5 +1,5 @@
 import { supabase } from '../../../utils/supabaseClient'
-import { Organizers } from '../hooks/useEvent'
+import { OrganizersType } from '../store/eventState'
 
 export const selectOrganizersByEventId = async (id: number) => {
   try {
@@ -13,7 +13,7 @@ export const selectOrganizersByEventId = async (id: number) => {
       )
       .eq('event_id', id)
     if (error) throw error
-    const organizers: Organizers = flattenObjectList(data)
+    const organizers: OrganizersType = flattenObjectList(data)
     return organizers
   } catch (error) {
     alert('Error loading Getdata!')

@@ -1,6 +1,6 @@
 import { convertDateStringToDateObjectInList } from '../../../lib/convertDateStringToDateObject'
 import { supabase } from '../../../utils/supabaseClient'
-import { VjTable } from '../hooks/useEvent'
+import { VjTableType } from '../store/eventState'
 
 export const selectEventVjByEventId = async (id: number) => {
   try {
@@ -22,7 +22,7 @@ export const selectEventVjByEventId = async (id: number) => {
     vjtable = convertDateStringToDateObjectInList(vjtable)
     if (data.length > 1) vjtable = sortByTimetable(vjtable)
 
-    return vjtable as VjTable
+    return vjtable as VjTableType
   } catch (error) {
     alert('Error loading Getdata!')
     console.log(error)

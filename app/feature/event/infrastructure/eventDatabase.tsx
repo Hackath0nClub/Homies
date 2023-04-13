@@ -1,6 +1,6 @@
 import { convertDateStringToDateObject } from '../../../lib/convertDateStringToDateObject'
 import { supabase } from '../../../utils/supabaseClient'
-import { Event } from '../hooks/useEvent'
+import { EventType } from '../store/eventState'
 
 export const selectEventById = async (id: number) => {
   try {
@@ -28,14 +28,14 @@ export const selectEventById = async (id: number) => {
     if (error) throw error
 
     const event = convertDateStringToDateObject(data)
-    return event as Event
+    return event as EventType
   } catch (error) {
     alert('Error loading Getdata!')
     console.error(error)
   }
 }
 
-export const updateEventData = async (event: Event) => {
+export const updateEventData = async (event: EventType) => {
   try {
     const { error } = await supabase
       .from('event')

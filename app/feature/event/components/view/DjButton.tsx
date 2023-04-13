@@ -1,4 +1,4 @@
-const DJButton = (props: any) => {
+export const DjButton = () => {
   return (
     <>
       <div className="w-full text-center my-8">
@@ -9,5 +9,3 @@ const DJButton = (props: any) => {
     </>
   )
 }
-
-export default DJButton

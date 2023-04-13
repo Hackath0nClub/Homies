@@ -9,6 +9,8 @@ const init = async () => {
   try {
     await CreateUsers();
     await UploadIcon();
+    await InsertGuest();
+    await UploadGuestIcon();
     await InsertEvent();
     await UploadEventImage();
     await InsertEventOrganizer();
@@ -53,6 +55,32 @@ const UploadIcon = async () => {
   }
 
   console.log("Successfully upload icon image!");
+};
+
+const InsertGuest = async () => {
+  const guestjson = await fs.promises.readFile("./data/guest.json", "utf8");
+  const guestdata = JSON.parse(guestjson);
+  const { error } = await supabase.from("guest").insert(guestdata);
+  if (error) throw error;
+  console.log("Successfully inserted guest data!");
+};
+
+const UploadGuestIcon = async () => {
+  const guestjson = await fs.promises.readFile("./data/guest.json", "utf8");
+  let guestdata = JSON.parse(guestjson);
+
+  for (let i = 0; i < 3; i++) {
+    const path = "./data/guest" + i + ".png";
+    const icon = await fs.readFileSync(path);
+    const { data, error } = await supabase.storage
+      .from("guest")
+      .upload(guestdata[i].id + ".png", icon, {
+        contentType: "image/png",
+      });
+    if (error) throw error;
+  }
+
+  console.log("Successfully upload guest icon image!");
 };
 
 const InsertEvent = async () => {

@@ -19,67 +19,67 @@ export const EditGuest = () => {
       </p>
       <div className="guest-row-guest-details">
         {timetable.map((row, index) => {
-          // if (row.user_id) {
-          return (
-            <div
-              className="w-full grid grid-cols-3 gap-8 m-8"
-              key={row.user_id}
-            >
-              <img
-                alt={row.name}
-                src={row.icon_url!}
-                className="rounded-full col-span-1"
-              />
-              <div className="col-span-2">
-                <p className="text-white text-xl">{row.name}</p>
-                <p className="text-white text-base">{row.text}</p>
+          if (row.user_id?.charAt(0) === '@') {
+            return (
+              <div
+                className="w-full grid grid-cols-3 gap-8 m-8"
+                key={row.user_id}
+              >
+                <img
+                  alt={row.name}
+                  src={row.icon_url!}
+                  className="rounded-full col-span-1"
+                />
+                <div className="col-span-2">
+                  <p className="text-white text-xl">{row.name}</p>
+                  <p className="text-white text-base">{row.text}</p>
+                </div>
               </div>
-            </div>
-          )
-          // } else {
-          //   return (
-          //     <div
-          //       className="w-full grid grid-cols-3 gap-8 m-8"
-          //       key={row.user_id}
-          //     >
-          //       <input
-          //         hidden
-          //         type="file"
-          //         accept="image/*"
-          //         ref={inputRef}
-          //         onChange={uploadImage}
-          //       />
-          //       <img
-          //         alt="icon"
-          //         src="/user.png"
-          //         className="rounded-full col-span-1"
-          //         onClick={() => inputRef.current?.click()}
-          //       />
-          //       <div className="col-span-2">
-          //         <input
-          //           type="text"
-          //           className="block mt-2 h-8 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-2 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-          //           value={row.guest_name ?? ''}
-          //           onChange={(e) => {
-          //             let newRow = row
-          //             newRow.guest_name = e.target.value
-          //             props.handleEvent.setTimetableRow(index, newRow)
-          //           }}
-          //         />
-          //         <textarea
-          //           className="block mt-2 h-32 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-2 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-          //           id="message"
-          //           value={row.guest_text ?? ''}
-          //           onChange={(e) => {
-          //             let newRow = row
-          //             newRow.guest_text = e.target.value
-          //             props.handleEvent.setTimetableRow(index, newRow)
-          //           }}
-          //         />
-          //       </div>
-          //     </div>
-          //   )
-          // }
+            )
+          } else {
+            return (
+              <div
+                className="w-full grid grid-cols-3 gap-8 m-8"
+                key={row.user_id}
+              >
+                <input
+                  hidden
+                  type="file"
+                  accept="image/*"
+                  ref={inputRef}
+                  onChange={uploadImage}
+                />
+                <img
+                  alt="icon"
+                  src="/user.png"
+                  className="rounded-full col-span-1"
+                  onClick={() => inputRef.current?.click()}
+                />
+                <div className="col-span-2">
+                  <input
+                    type="text"
+                    className="block mt-2 h-8 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-2 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+                    // value={row.guest_name ?? ''}
+                    onChange={(e) => {
+                      // let newRow = row
+                      // newRow.guest_name = e.target.value
+                      // props.handleEvent.setTimetableRow(index, newRow)
+                    }}
+                  />
+                  <textarea
+                    className="block mt-2 h-32 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-2 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+                    id="message"
+                    // value={row.guest_text ?? ''}
+                    onChange={(e) => {
+                      // let newRow = row
+                      // newRow.guest_text = e.target.value
+                      // props.handleEvent.setTimetableRow(index, newRow)
+                    }}
+                  />
+                </div>
+              </div>
+            )
+          }
         })}
       </div>
     </>

@@ -16,6 +16,7 @@ const init = async () => {
     await InsertEventOrganizer();
     await InsertEventDJ();
     await InsertEventVJ();
+    await InsertEventGuestDJ();
     await InsertTicket();
   } catch (error) {
     console.error(error);
@@ -138,6 +139,14 @@ const InsertEventVJ = async () => {
   const { error } = await supabase.from("event_vj").insert(input);
   if (error) throw error;
   console.log("Successfully inserted event_vj data!");
+};
+
+const InsertEventGuestDJ = async () => {
+  const json = await fs.promises.readFile("./data/event_guestdj.json", "utf8");
+  const input = JSON.parse(json);
+  const { error } = await supabase.from("event_guestdj").insert(input);
+  if (error) throw error;
+  console.log("Successfully inserted event_guestdj data!");
 };
 
 init();

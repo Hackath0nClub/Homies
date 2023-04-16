@@ -58,7 +58,7 @@ create table event_dj (
 
 create table event_guestdj (
   id serial not null,
-  user_id text not null references profile(id),
+  user_id text not null references guest(id),
   event_id serial not null references event(id),
   row_number int not null,
   start_time timestamp with time zone,
@@ -78,7 +78,7 @@ create table event_vj (
 
 create table event_guestvj (
   id serial not null,
-  user_id text not null references profile(id),
+  user_id text not null references guest(id),
   event_id serial not null references event(id),
   row_number int not null,
   start_time timestamp with time zone,

@@ -9,17 +9,27 @@ import {
 } from '../store/eventState'
 import { selectEventDjByEventId } from '../infrastructure/eventDjDatabase'
 import { selectEventVjByEventId } from '../infrastructure/eventVjDatabase'
+import { selectEventGuestDjByEventId } from '../infrastructure/eventGuestDjDatabase'
+
+const sortByTimetable = (data: any[]) => {
+  return data.sort((a, b) => a.row_number - b.row_number)
+}
 
 export const useTimetable = () => {
   const [timetable, setTimeTable] = useRecoilState(timeTableState)
   const [vjtable, setVjTable] = useRecoilState(vjTableState)
 
   const loadTimetable = async (id: number) => {
-    const timetable_data = await selectEventDjByEventId(id)
-    const vjtable_data = await selectEventVjByEventId(id)
-    if (!timetable_data || !vjtable_data) return
-    setTimeTable(timetable_data)
-    setVjTable(vjtable_data)
+    const timetableData = await selectEventDjByEventId(id)
+    const vjtableData = await selectEventVjByEventId(id)
+    const guestdjtableData = await selectEventGuestDjByEventId(id)
+    if (!timetableData || !vjtableData || !guestdjtableData) return
+
+    let mergedTimetable = [...timetableData, ...guestdjtableData]
+    mergedTimetable = sortByTimetable(mergedTimetable)
+
+    setTimeTable(mergedTimetable)
+    setVjTable(vjtableData)
   }
 
   const addEmptyTableRow = (timetable: TimeTableType) => {

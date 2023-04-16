@@ -30,7 +30,7 @@ export const EditTimeTableRow = ({ dj }: { dj: DjType }) => {
           <CenterArea
             topleft={<StartTimePicker />}
             topright={<EndTimePicker />}
-            bottomleft={<UserSearchInput index={index} />}
+            bottomleft={<UserSearchInput index={index} dj={dj} />}
             bottomright={<UserNameInput />}
           ></CenterArea>
           <SideArea>
@@ -152,7 +152,7 @@ export const EditTimeTableRow = ({ dj }: { dj: DjType }) => {
   return main()
 }
 
-const UserSearchInput = ({ index }: { index: number }) => {
+const UserSearchInput = ({ index, dj }: { index: number; dj: DjType }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [onMouseOver, setOnMouseOver] = useState(false)
   const { handleInputChange, results } = useSearchUser()
@@ -164,6 +164,7 @@ const UserSearchInput = ({ index }: { index: number }) => {
       <input
         type="text"
         className="row-span-1 w-full px-2 block placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+        defaultValue={dj.user_id}
         onFocus={(e) => {
           handleInputChange(e.target.value)
           setIsOpen(true)

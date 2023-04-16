@@ -20,6 +20,27 @@ export const EditTimeTableRow = ({ dj }: { dj: DjType }) => {
       ? 'bg-[rgba(39,39,63,1)]' // 偶数行の背景色
       : 'bg-[rgba(27,28,46,1)]' // 奇数行の背景色
 
+  const main = () => {
+    return (
+      <div className={`${bg} pt-2 pb-4 border-y border-white`}>
+        <div className="grid grid-cols-5">
+          <SideArea>
+            <TimetableRowShiftButtons />
+          </SideArea>
+          <CenterArea
+            topleft={<StartTimePicker />}
+            topright={<EndTimePicker />}
+            bottomleft={<UserSearchInput index={index} />}
+            bottomright={<UserNameInput />}
+          ></CenterArea>
+          <SideArea>
+            <TimetableRowDeleteButton />
+          </SideArea>
+        </div>
+      </div>
+    )
+  }
+
   const StartTimePicker = () => (
     <DatePicker
       selected={dj.start_time}
@@ -128,24 +149,7 @@ export const EditTimeTableRow = ({ dj }: { dj: DjType }) => {
     )
   }
 
-  return (
-    <div className={`${bg} pt-2 pb-4 border-y border-white`}>
-      <div className="grid grid-cols-5">
-        <SideArea>
-          <TimetableRowShiftButtons />
-        </SideArea>
-        <CenterArea
-          topleft={<StartTimePicker />}
-          topright={<EndTimePicker />}
-          bottomleft={<UserSearchInput index={index} />}
-          bottomright={<UserNameInput />}
-        ></CenterArea>
-        <SideArea>
-          <TimetableRowDeleteButton />
-        </SideArea>
-      </div>
-    </div>
-  )
+  return main()
 }
 
 const UserSearchInput = ({ index }: { index: number }) => {

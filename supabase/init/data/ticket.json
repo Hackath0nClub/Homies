@@ -1,7 +1,7 @@
 [
   {
     "id": "ticketid1e",
-    "user_id": "user-e",
+    "user_id": "@user-e",
     "event_id": 1,
     "status": false,
     "create_at": "2023-01-06T17:41:33.621Z",
@@ -9,7 +9,7 @@
   },
   {
     "id": "ticketid2e",
-    "user_id": "user-e",
+    "user_id": "@user-e",
     "event_id": 2,
     "status": false,
     "create_at": "2023-01-06T17:41:33.621Z",
@@ -17,7 +17,7 @@
   },
   {
     "id": "ticketid3e",
-    "user_id": "user-e",
+    "user_id": "@user-e",
     "event_id": 3,
     "status": false,
     "create_at": "2023-01-06T17:41:33.621Z",

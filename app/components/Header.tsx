@@ -1,4 +1,7 @@
-const Header = (props: any) => {
+import Link from 'next/link'
+import Image from 'next/image'
+
+const Header = () => {
   return (
     <>
       <div className="w-full h-full flex flex-col items-start">
@@ -16,11 +19,14 @@ const Header = (props: any) => {
             <span className="text-white text-md m-4">Events</span>
             <span className="text-white text-md m-4">Tickets</span>
           </div>
-          <img
-            alt="pastedImage"
-            src="/playground_assets/user-icon-sample.png"
-            className="h-full"
-          />
+          <Link href="/login">
+            <Image
+              alt="pastedImage"
+              src="/playground_assets/user-icon-sample.png"
+              width={32}
+              height={32}
+            />
+          </Link>
         </header>
       </div>
     </>

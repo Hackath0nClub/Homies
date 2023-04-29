@@ -19,7 +19,7 @@ export const EditGuest = () => {
       </p>
       <div className="guest-row-guest-details">
         {timetable.map((row, index) => {
-          if (row.user_id?.charAt(0) === '@') {
+          if (row.user_id?.charAt(0) != '@') {
             return (
               <div
                 className="w-full grid grid-cols-3 gap-8 m-8"

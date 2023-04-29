@@ -7,7 +7,7 @@ const LoginForm = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault()
     // ログイン処理を行う関数を呼び出す
-    console.log('login')
+    console.log(email, password)
   }
 
   return (

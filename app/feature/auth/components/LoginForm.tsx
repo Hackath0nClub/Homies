@@ -1,17 +1,48 @@
 import React, { useState } from 'react'
+import { supabase } from '../../../utils/supabaseClient'
+import router from 'next/router'
+
+async function handleLogin(email: string, password: string) {
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    })
+    console.log(data)
+    router.push('/')
+  } catch (error) {
+    if (error instanceof Error) alert(error.message)
+  }
+}
+
+async function handleSignUp(email: string, password: string) {
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+    })
+    console.log(data)
+    router.push('/')
+  } catch (error) {
+    if (error instanceof Error) alert(error.message)
+  }
+}
 
 const LoginForm = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any, isLogin: boolean) => {
     e.preventDefault()
-    // ログイン処理を行う関数を呼び出す
-    console.log(email, password)
+    if (isLogin) {
+      await handleLogin(email, password)
+    } else {
+      await handleSignUp(email, password)
+    }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-sm">
+    <form className="w-full max-w-sm">
       <div className="mb-4">
         <label
           className="block text-gray-700 text-sm font-bold mb-2"
@@ -42,12 +73,20 @@ const LoginForm = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center gap-4">
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           type="submit"
+          onClick={(e) => handleSubmit(e, true)}
         >
           Sign In
+        </button>
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          type="submit"
+          onClick={(e) => handleSubmit(e, false)}
+        >
+          Sign Up
         </button>
       </div>
     </form>

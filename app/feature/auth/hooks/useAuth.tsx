@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../../utils/supabaseClient'
 import router from 'next/router'
+import { getCurrentDateTime } from '../../../lib/getCurrentDateTime'
 
 export const useAuth = () => {
   const [email, setEmail] = useState('')
@@ -34,7 +35,27 @@ export const useAuth = () => {
         password: password,
       })
       if (error) throw error
+      console.log('data', data)
       // router.push('/')
+
+      if (!data) return
+      // Sign up時にprofileを作成する
+      const { data: profileData, error: profileError } = await supabase
+        .from('profile')
+        .insert({
+          uuid: data.user?.id,
+          id: data.user?.email?.split('@')[0] + getCurrentDateTime(),
+          name: data.user?.email?.split('@')[0],
+          icon_url: '',
+          text: '',
+          twitter_url: '',
+          soundcloud_url: '',
+          mixcloud_url: '',
+          create_at: data.user?.created_at,
+          updated_at: data.user?.created_at,
+        })
+      if (profileError) throw profileError
+      console.log('profileData', profileData)
     } catch (error) {
       console.error(error)
       if (error instanceof Error) alert(error.message)

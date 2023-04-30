@@ -5,19 +5,12 @@ import router from 'next/router'
 export const useAuth = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  // const [user, setUser] = useState()
 
   useEffect(() => {
-    const user = supabase.auth.onAuthStateChange((event, session) => {
-      console.log('event', event)
-      console.log('session', session)
-      // setUser(session.user)
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (session) console.log('session.user', session.user.email)
+      if (!session) console.log("session doesn't exist")
     })
-    console.log('user', user)
-    // setUser(supabase.auth.user())
-    // supabase.auth.onAuthStateChange(() => {
-    //   setUser(supabase.auth.user())
-    // })
   }, [])
 
   const handleLogin = async () => {

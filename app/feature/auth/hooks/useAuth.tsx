@@ -1,10 +1,24 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { supabase } from '../../../utils/supabaseClient'
 import router from 'next/router'
 
 export const useAuth = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  // const [user, setUser] = useState()
+
+  useEffect(() => {
+    const user = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('event', event)
+      console.log('session', session)
+      // setUser(session.user)
+    })
+    console.log('user', user)
+    // setUser(supabase.auth.user())
+    // supabase.auth.onAuthStateChange(() => {
+    //   setUser(supabase.auth.user())
+    // })
+  }, [])
 
   const handleLogin = async () => {
     try {
@@ -13,7 +27,7 @@ export const useAuth = () => {
         password: password,
       })
       if (error) throw error
-      router.push('/')
+      // router.push('/')
     } catch (error) {
       console.error(error)
       if (error instanceof Error) alert(error.message)
@@ -27,7 +41,18 @@ export const useAuth = () => {
         password: password,
       })
       if (error) throw error
-      router.push('/')
+      // router.push('/')
+    } catch (error) {
+      console.error(error)
+      if (error instanceof Error) alert(error.message)
+    }
+  }
+
+  const handleSignout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut()
+      if (error) throw error
+      // router.push('/')
     } catch (error) {
       console.error(error)
       if (error instanceof Error) alert(error.message)
@@ -41,5 +66,6 @@ export const useAuth = () => {
     setPassword,
     handleLogin,
     handleSignUp,
+    handleSignout,
   }
 }

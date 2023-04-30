@@ -8,9 +8,10 @@ async function handleLogin(email: string, password: string) {
       email: email,
       password: password,
     })
-    console.log(data)
+    if (error) throw error
     router.push('/')
   } catch (error) {
+    console.error(error)
     if (error instanceof Error) alert(error.message)
   }
 }
@@ -21,9 +22,10 @@ async function handleSignUp(email: string, password: string) {
       email: email,
       password: password,
     })
-    console.log(data)
+    if (error) throw error
     router.push('/')
   } catch (error) {
+    console.error(error)
     if (error instanceof Error) alert(error.message)
   }
 }

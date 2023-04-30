@@ -12,7 +12,6 @@ export const useAuth = () => {
         email: email,
         password: password,
       })
-      console.log(email, password)
       if (error) throw error
       router.push('/')
     } catch (error) {

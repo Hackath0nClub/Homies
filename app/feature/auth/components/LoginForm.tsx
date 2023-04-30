@@ -75,14 +75,14 @@ const LoginForm = () => {
       </div>
       <div className="flex items-center gap-4">
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="px-4 py-2 text-white transition-colors duration-300 border border-gray-200 bg-[rgba(28,32,37,1)] rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
           type="submit"
           onClick={(e) => handleSubmit(e, true)}
         >
           Sign In
         </button>
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="px-4 py-2 text-gray-800 transition-colors duration-300 border border-gray-200 bg-gray-200 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80 hover:text-white"
           type="submit"
           onClick={(e) => handleSubmit(e, false)}
         >

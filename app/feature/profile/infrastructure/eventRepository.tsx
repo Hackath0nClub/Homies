@@ -1,7 +1,7 @@
 import { supabase } from '../../../utils/supabaseClient'
 import { Event, Events } from '../../event/hooks/useEvent'
 
-export const selectEventByUserId = async(user_id: string) => {
+export const selectPerformanceEventByUserId = async(user_id: string) => {
   try {
     const { data, error } = await supabase
       .from('event_dj')

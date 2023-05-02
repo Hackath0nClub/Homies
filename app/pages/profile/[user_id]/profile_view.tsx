@@ -20,7 +20,7 @@ const ProfilePage = () => {
   useEffect(() => {
     if (typeof user_id != 'string') return
     handleProfile.getProfile(user_id)
-    handleProfile.getEventByUserId(user_id)
+    handleProfile.getPerformanceEventByUserId(user_id)
   }, [isReady])
 
   return (

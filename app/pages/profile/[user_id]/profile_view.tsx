@@ -50,17 +50,10 @@ const ProfilePage = () => {
                   </div>
                 </div>
 
-                <div>
-                  <UserName id={profileData.profile.id} name={profileData.profile.name}></UserName>
-                  <UserText text={profileData.profile.text} id={profileData.profile.id} setProfileText={handleProfile.setProfileText} isEdit={isEdit}></UserText>
-                </div>
-                <div>
-                  <UserCount></UserCount>
-                </div>
-
-                <div>
-                  <UserEvent></UserEvent>
-                </div>
+                <UserName id={profileData.profile.id} name={profileData.profile.name}></UserName>
+                <UserText text={profileData.profile.text} id={profileData.profile.id} setProfileText={handleProfile.setProfileText} isEdit={isEdit}></UserText>
+                <UserCount></UserCount>
+                <UserEvent></UserEvent>
 
               </div>
               <div className="md:col-span-4">

@@ -17,7 +17,7 @@ export default function Home() {
         <Link href="/event/3">Eventページ3</Link>
       </p>
       <p>
-        <Link href="/profile/user-a">user-aのprofile</Link>
+        <Link href="/profile/user-a/profile_view">user-aのprofile</Link>
       </p>
     </>
   )

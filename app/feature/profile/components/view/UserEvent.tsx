@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { UserEventCell } from "./UserEvent/UserEventCell"
+import { UserEventCell } from "./../UserEvent/UserEventCell"
 
 export const UserEvent = (props: any) => {
   const [openTab, setOpenTab] = useState(1)

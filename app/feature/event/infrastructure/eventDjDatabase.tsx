@@ -8,6 +8,7 @@ export const selectEventDjByEventId = async (id: number) => {
       .from('event_dj')
       .select(
         `
+        id,
         row_number,
         start_time,
         end_time,

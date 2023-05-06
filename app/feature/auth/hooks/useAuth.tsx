@@ -1,75 +1,34 @@
-import { useEffect, useState } from 'react'
-import { supabase } from '../../../utils/supabaseClient'
-import router from 'next/router'
-import { getCurrentDateTime } from '../../../lib/getCurrentDateTime'
+import { useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { sessionState } from '../store/authState'
+import {
+  emailSignIn,
+  emailSignUp,
+  signOut,
+  getSession,
+} from '../infrastructure/Authentication'
 
 export const useAuth = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [session, setSession] = useRecoilState(sessionState)
 
-  useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => setSession(session))
-  }, [])
-
   const handleLogin = async () => {
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password,
-      })
-      if (error) throw error
-      // router.push('/')
-    } catch (error) {
-      console.error(error)
-      if (error instanceof Error) alert(error.message)
-    }
+    await emailSignIn(email, password)
+    const currentSession = await getSession()
+    setSession(currentSession)
   }
 
   const handleSignUp = async () => {
-    try {
-      const { data, error } = await supabase.auth.signUp({
-        email: email,
-        password: password,
-      })
-      if (error) throw error
-      console.log('data', data)
-      // router.push('/')
-
-      if (!data.user) return
-      // Sign up時にprofileを作成する
-      const { data: profileData, error: profileError } = await supabase
-        .from('profile')
-        .insert({
-          uuid: data.user.id,
-          id: data.user.email?.split('@')[0] + getCurrentDateTime(),
-          name: data.user.email?.split('@')[0],
-          icon_url: '',
-          text: '',
-          twitter_url: '',
-          soundcloud_url: '',
-          mixcloud_url: '',
-          create_at: data.user.created_at,
-          updated_at: data.user.created_at,
-        })
-      if (profileError) throw profileError
-    } catch (error) {
-      console.error(error)
-      if (error instanceof Error) alert(error.message)
-    }
+    await emailSignUp(email, password)
+    const currentSession = await getSession()
+    setSession(currentSession)
   }
 
   const handleSignout = async () => {
-    try {
-      const { error } = await supabase.auth.signOut()
-      if (error) throw error
-      // router.push('/')
-    } catch (error) {
-      console.error(error)
-      if (error instanceof Error) alert(error.message)
-    }
+    await signOut()
+    const currentSession = await getSession()
+    setSession(currentSession)
   }
 
   return {

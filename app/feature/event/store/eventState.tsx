@@ -37,6 +37,7 @@ export const organizersState = atom<OrganizersType>({
 })
 
 export const djInitial = {
+  id: 0,
   row_number: 0,
   user_id: '',
   name: '',

@@ -7,23 +7,38 @@ import {
   UserType,
   TimeTableType,
 } from '../store/eventState'
-import { selectEventDjByEventId } from '../infrastructure/eventDjDatabase'
+import {
+  selectEventDjByEventId,
+  upsertEventDjData,
+} from '../infrastructure/eventDjDatabase'
 import { selectEventVjByEventId } from '../infrastructure/eventVjDatabase'
 import { selectEventGuestDjByEventId } from '../infrastructure/eventGuestDjDatabase'
 import { getCurrentDateTime } from '../../../lib/getCurrentDateTime'
-import { useState } from 'react'
+import { useEvent } from './useEvent'
 
 const sortByTimetable = (data: any[]) => {
   return data.sort((a, b) => a.row_number - b.row_number)
 }
 
+const convertTimeTable = (timetable: TimeTableType, eventId: number) => {
+  return timetable.map((item) => {
+    return {
+      id: item.id,
+      row_number: item.row_number,
+      user_id: item.user_id,
+      event_id: eventId,
+      start_time: item.start_time,
+      end_time: item.end_time,
+    }
+  })
+}
+
 export const useTimetable = () => {
-  const [eventId, setEventId] = useState(0)
   const [timetable, setTimeTable] = useRecoilState(timeTableState)
   const [vjtable, setVjTable] = useRecoilState(vjTableState)
+  const { base } = useEvent()
 
   const loadTimetable = async (id: number) => {
-    setEventId(id)
     const timetableData = await selectEventDjByEventId(id)
     const vjtableData = await selectEventVjByEventId(id)
     const guestdjtableData = await selectEventGuestDjByEventId(id)
@@ -36,7 +51,14 @@ export const useTimetable = () => {
     setVjTable(vjtableData)
   }
 
-  const updateTimetable = async () => {}
+  const updateTimetable = async () => {
+    if (!base.id) return
+    const newTimetable = convertTimeTable(timetable, base.id)
+    console.log(newTimetable)
+    for (const dj of newTimetable) {
+      await upsertEventDjData(dj)
+    }
+  }
 
   const addEmptyTableRow = (timetable: TimeTableType) => {
     const randomId =

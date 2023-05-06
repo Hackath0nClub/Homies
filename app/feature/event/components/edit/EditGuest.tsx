@@ -53,7 +53,7 @@ export const EditGuest = () => {
                 <img
                   alt="icon"
                   src={row.icon_url}
-                  className="rounded-full col-span-1"
+                  className="rounded-full col-span-1 cursor-pointer hover:opacity-50 bg-gray-500"
                   onClick={() => inputRef.current?.click()}
                 />
                 <div className="col-span-2">

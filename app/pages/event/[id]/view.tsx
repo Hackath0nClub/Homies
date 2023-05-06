@@ -1,3 +1,6 @@
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+
 // components
 import { Title } from '../../../feature/event/components/view/Title'
 import { Image } from '../../../feature/event/components/view/Image'
@@ -11,12 +14,10 @@ import { EventItems } from '../../../feature/event/components/view/EventItems'
 import { Organizers } from '../../../feature/event/components/view/Organizers'
 
 // hooks
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
 import { useEvent } from '../../../feature/event/hooks/useEvent'
 import { useTimetable } from '../../../feature/event/hooks/useTimetable'
 
-const EventDetails = () => {
+const EventDetailsView = () => {
   const { query, isReady } = useRouter()
   const { loadEvent } = useEvent()
   const { loadTimetable } = useTimetable()
@@ -52,4 +53,4 @@ const EventDetails = () => {
   )
 }
 
-export default EventDetails
+export default EventDetailsView

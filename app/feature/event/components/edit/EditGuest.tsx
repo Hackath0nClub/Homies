@@ -1,12 +1,11 @@
 import { useRef } from 'react'
-import { HandleEvent, TimeTable } from '../../hooks/useEvent'
+import { useEvent } from '../../hooks/useEvent'
+import { useTimetable } from '../../hooks/useTimetable'
 
-type propsType = {
-  timetable: TimeTable
-  handleEvent: HandleEvent
-}
+export const EditGuest = () => {
+  const {} = useEvent()
+  const { timetable } = useTimetable()
 
-const Guest = (props: propsType) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const local_file = e.target.files?.[0]
@@ -19,15 +18,15 @@ const Guest = (props: propsType) => {
         ゲストDJ/VJ
       </p>
       <div className="guest-row-guest-details">
-        {props.timetable.map((row, index) => {
-          if (row.user_id) {
+        {timetable.map((row, index) => {
+          if (row.user_id?.charAt(0) != '@') {
             return (
               <div
                 className="w-full grid grid-cols-3 gap-8 m-8"
                 key={row.user_id}
               >
                 <img
-                  alt={row.name!}
+                  alt={row.name}
                   src={row.icon_url!}
                   className="rounded-full col-span-1"
                 />
@@ -60,21 +59,21 @@ const Guest = (props: propsType) => {
                   <input
                     type="text"
                     className="block mt-2 h-8 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-2 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-                    value={row.guest_name ?? ''}
+                    // value={row.guest_name ?? ''}
                     onChange={(e) => {
-                      let newRow = row
-                      newRow.guest_name = e.target.value
-                      props.handleEvent.setTimetableRow(index, newRow)
+                      // let newRow = row
+                      // newRow.guest_name = e.target.value
+                      // props.handleEvent.setTimetableRow(index, newRow)
                     }}
                   />
                   <textarea
                     className="block mt-2 h-32 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-2 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
                     id="message"
-                    value={row.guest_text ?? ''}
+                    // value={row.guest_text ?? ''}
                     onChange={(e) => {
-                      let newRow = row
-                      newRow.guest_text = e.target.value
-                      props.handleEvent.setTimetableRow(index, newRow)
+                      // let newRow = row
+                      // newRow.guest_text = e.target.value
+                      // props.handleEvent.setTimetableRow(index, newRow)
                     }}
                   />
                 </div>
@@ -86,5 +85,3 @@ const Guest = (props: propsType) => {
     </>
   )
 }
-
-export default Guest

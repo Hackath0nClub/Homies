@@ -5,24 +5,34 @@ import {
   timeTableState,
   vjTableState,
   UserType,
+  TimeTableType,
 } from '../store/eventState'
 import { selectEventDjByEventId } from '../infrastructure/eventDjDatabase'
 import { selectEventVjByEventId } from '../infrastructure/eventVjDatabase'
+import { selectEventGuestDjByEventId } from '../infrastructure/eventGuestDjDatabase'
+
+const sortByTimetable = (data: any[]) => {
+  return data.sort((a, b) => a.row_number - b.row_number)
+}
 
 export const useTimetable = () => {
   const [timetable, setTimeTable] = useRecoilState(timeTableState)
   const [vjtable, setVjTable] = useRecoilState(vjTableState)
 
   const loadTimetable = async (id: number) => {
-    const timetable_data = await selectEventDjByEventId(id)
-    const vjtable_data = await selectEventVjByEventId(id)
-    if (!timetable_data || !vjtable_data) return
-    setTimeTable(timetable_data)
-    setVjTable(vjtable_data)
+    const timetableData = await selectEventDjByEventId(id)
+    const vjtableData = await selectEventVjByEventId(id)
+    const guestdjtableData = await selectEventGuestDjByEventId(id)
+    if (!timetableData || !vjtableData || !guestdjtableData) return
+
+    let mergedTimetable = [...timetableData, ...guestdjtableData]
+    mergedTimetable = sortByTimetable(mergedTimetable)
+
+    setTimeTable(mergedTimetable)
+    setVjTable(vjtableData)
   }
 
-  const addEmptyTimetableRow = () => {
-    if (!timetable) return
+  const addEmptyTableRow = (timetable: TimeTableType) => {
     const newTimetable = [
       ...timetable,
       {
@@ -30,25 +40,34 @@ export const useTimetable = () => {
         row_number: timetable.length + 1,
       },
     ]
-    setTimeTable(newTimetable)
+    return newTimetable
   }
 
-  const updateTimetableRowStartTime = (index: number, start_time: Date) => {
-    if (!timetable) return
+  const updateTableRowStartTime = (
+    timetable: TimeTableType,
+    index: number,
+    start_time: Date
+  ) => {
     const newTimetable = [...timetable]
     newTimetable[index] = { ...newTimetable[index], start_time: start_time }
-    setTimeTable(newTimetable)
+    return newTimetable
   }
 
-  const updateTimetableRowEndTime = (index: number, end_time: Date) => {
-    if (!timetable) return
+  const updateTableRowEndTime = (
+    timetable: TimeTableType,
+    index: number,
+    end_time: Date
+  ) => {
     const newTimetable = [...timetable]
     newTimetable[index] = { ...newTimetable[index], end_time: end_time }
-    setTimeTable(newTimetable)
+    return newTimetable
   }
 
-  const updateTimetableRowUser = (index: number, user: UserType) => {
-    if (!timetable) return
+  const updateTableRowUser = (
+    timetable: TimeTableType,
+    index: number,
+    user: UserType
+  ) => {
     const newTimetable = [...timetable]
     newTimetable[index] = {
       ...newTimetable[index],
@@ -57,11 +76,11 @@ export const useTimetable = () => {
       icon_url: user.icon_url,
       text: user.text,
     }
-    setTimeTable(newTimetable)
+    return newTimetable
   }
 
-  const shiftUpTimetableRow = (index: number) => {
-    if (!timetable || index === 0) return
+  const shiftUpTableRow = (timetable: TimeTableType, index: number) => {
+    if (index === 0) return
     let newTimetable = [...timetable]
     const target = newTimetable[index]
     newTimetable[index] = newTimetable[index - 1]
@@ -69,10 +88,10 @@ export const useTimetable = () => {
     newTimetable = newTimetable.map((row, idx) => {
       return { ...row, row_number: idx + 1 }
     })
-    setTimeTable(newTimetable)
+    return newTimetable
   }
 
-  const clearTimetableRow = (index: number) => {
+  const clearTableRow = (timetable: TimeTableType, index: number) => {
     if (!timetable) return
     const newTimetable = [...timetable]
     const updatedTimetable = {
@@ -85,94 +104,87 @@ export const useTimetable = () => {
       end_time: utcToZonedTime(new Date(), 'Asia/Tokyo'),
     }
     newTimetable[index] = updatedTimetable
-    setTimeTable(newTimetable)
+    return newTimetable
   }
 
-  const deleteTimetableRow = (index: number) => {
+  const deleteTableRow = (timetable: TimeTableType, index: number) => {
     if (!timetable) return
     let newTimetable = [...timetable]
     newTimetable.splice(index, 1)
     newTimetable = newTimetable.map((row, index) => {
       return { ...row, row_number: index + 1 }
     })
-    setTimeTable(newTimetable)
+    return newTimetable
+  }
+
+  const addEmptyTimetableRow = () => {
+    const newTimetable = addEmptyTableRow(timetable)
+    if (newTimetable) setTimeTable(newTimetable)
   }
 
   const addEmptyVjtableRow = () => {
-    if (!vjtable) return
-    const newTimetable = [
-      ...vjtable,
-      {
-        ...djInitial,
-        row_number: vjtable.length + 1,
-      },
-    ]
-    setVjTable(newTimetable)
+    const newVjtable = addEmptyTableRow(vjtable)
+    if (newVjtable) setVjTable(newVjtable)
+  }
+
+  const updateTimetableRowStartTime = (index: number, start_time: Date) => {
+    const newTimetable = updateTableRowStartTime(timetable, index, start_time)
+    if (newTimetable) setTimeTable(newTimetable)
   }
 
   const updateVjtableRowStartTime = (index: number, start_time: Date) => {
-    if (!vjtable) return
-    const newVjtable = [...vjtable]
-    newVjtable[index] = { ...newVjtable[index], start_time: start_time }
-    setVjTable(newVjtable)
+    const newVjtable = updateTableRowStartTime(vjtable, index, start_time)
+    if (newVjtable) setVjTable(newVjtable)
+  }
+
+  const updateTimetableRowEndTime = (index: number, end_time: Date) => {
+    const newTimetable = updateTableRowEndTime(timetable, index, end_time)
+    setTimeTable(newTimetable)
   }
 
   const updateVjtableRowEndTime = (index: number, end_time: Date) => {
-    if (!vjtable) return
-    const newVjtable = [...vjtable]
-    newVjtable[index] = { ...newVjtable[index], end_time: end_time }
+    const newVjtable = updateTableRowEndTime(vjtable, index, end_time)
     setVjTable(newVjtable)
+  }
+
+  const updateTimetableRowUser = (index: number, user: UserType) => {
+    const newTimetable = updateTableRowUser(timetable, index, user)
+    if (newTimetable) setTimeTable(newTimetable)
   }
 
   const updateVjtableRowUser = (index: number, user: UserType) => {
-    if (!vjtable) return
-    const newVjtable = [...vjtable]
-    newVjtable[index] = {
-      ...newVjtable[index],
-      user_id: user.id,
-      name: user.name,
-      icon_url: user.icon_url,
-      text: user.text,
-    }
-    setVjTable(newVjtable)
+    const newVjtable = updateTableRowUser(vjtable, index, user)
+    if (newVjtable) setVjTable(newVjtable)
+  }
+
+  const shiftUpTimetableRow = (index: number) => {
+    const newTimetable = shiftUpTableRow(timetable, index)
+    if (newTimetable) setTimeTable(newTimetable)
   }
 
   const shiftUpVjtableRow = (index: number) => {
-    if (!vjtable || index === 0) return
-    let newVjtable = [...vjtable]
-    const target = newVjtable[index]
-    newVjtable[index] = newVjtable[index - 1]
-    newVjtable[index - 1] = target
-    newVjtable = newVjtable.map((row, idx) => {
-      return { ...row, row_number: idx + 1 }
-    })
-    setVjTable(newVjtable)
+    const newVjtable = shiftUpTableRow(vjtable, index)
+    if (newVjtable) setVjTable(newVjtable)
+  }
+
+  const clearTimetableRow = (index: number) => {
+    const newTimetable = clearTableRow(timetable, index)
+    if (newTimetable) setTimeTable(newTimetable)
   }
 
   const clearVjtableRow = (index: number) => {
-    if (!vjtable) return
-    const newVjtable = [...vjtable]
-    const updatedVjtable = {
-      ...newVjtable[index],
-      user_id: '',
-      name: '',
-      text: '',
-      icon_url: '',
-      start_time: utcToZonedTime(new Date(), 'Asia/Tokyo'),
-      end_time: utcToZonedTime(new Date(), 'Asia/Tokyo'),
-    }
-    newVjtable[index] = updatedVjtable
-    setVjTable(newVjtable)
+    const newVjtable = clearTableRow(vjtable, index)
+    if (newVjtable) setVjTable(newVjtable)
+  }
+
+  const deleteTimetableRow = (index: number) => {
+    const newTimetable = deleteTableRow(timetable, index)
+    if (newTimetable) setTimeTable(newTimetable)
   }
 
   const deleteVjtableRow = (index: number) => {
-    if (!vjtable) return
-    let newVjtable = [...vjtable]
-    newVjtable.splice(index, 1)
-    newVjtable = newVjtable.map((row, index) => {
-      return { ...row, row_number: index + 1 }
-    })
-    setVjTable(newVjtable)
+    const newVjtable = deleteTableRow(vjtable, index)
+    if (newVjtable) setVjTable(newVjtable)
   }
 
   return {

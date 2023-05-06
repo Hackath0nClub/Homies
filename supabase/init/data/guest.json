@@ -1,24 +1,24 @@
 [
   {
-    "id": "guest-a",
+    "id": "@guest-a",
     "name": "guestA",
-    "icon_url": "http://localhost:54321/storage/v1/object/public/guest/guest-a.png",
+    "icon_url": "http://localhost:54321/storage/v1/object/public/guest/@guest-a.png",
     "text": "guestA sample text",
     "create_at": "2023-01-06T17:41:33.621Z",
     "updated_at": "2023-01-06T17:41:33.621Z"
   },
   {
-    "id": "guest-b",
+    "id": "@guest-b",
     "name": "guestB",
-    "icon_url": "http://localhost:54321/storage/v1/object/public/guest/guest-b.png",
+    "icon_url": "http://localhost:54321/storage/v1/object/public/guest/@guest-b.png",
     "text": "guestB sample text",
     "create_at": "2023-01-06T17:41:33.621Z",
     "updated_at": "2023-01-06T17:41:33.621Z"
   },
   {
-    "id": "guest-c",
+    "id": "@guest-c",
     "name": "guestC",
-    "icon_url": "http://localhost:54321/storage/v1/object/public/guest/guest-c.png",
+    "icon_url": "http://localhost:54321/storage/v1/object/public/guest/@guest-c.png",
     "text": "guestC sample text",
     "create_at": "2023-01-06T17:41:33.621Z",
     "updated_at": "2023-01-06T17:41:33.621Z"

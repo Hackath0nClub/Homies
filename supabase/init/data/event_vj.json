@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "user_id": "@user-d",
+    "user_id": "user-d",
     "event_id": 1,
     "row_number": 1,
     "start_time": "2023-01-06T18:00:33.621Z",
@@ -9,7 +9,7 @@
   },
   {
     "id": 2,
-    "user_id": "@user-d",
+    "user_id": "user-d",
     "event_id": 2,
     "row_number": 1,
     "start_time": "2023-01-06T18:00:33.621Z",
@@ -17,7 +17,7 @@
   },
   {
     "id": 3,
-    "user_id": "@user-d",
+    "user_id": "user-d",
     "event_id": 3,
     "row_number": 1,
     "start_time": "2023-01-06T18:00:33.621Z",

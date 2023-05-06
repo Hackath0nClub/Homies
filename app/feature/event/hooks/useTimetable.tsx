@@ -53,6 +53,16 @@ export const useTimetable = () => {
     return newTimetable
   }
 
+  const updateTableRowText = (
+    timetable: TimeTableType,
+    index: number,
+    text: string
+  ) => {
+    const newTimetable = [...timetable]
+    newTimetable[index] = { ...newTimetable[index], text: text }
+    return newTimetable
+  }
+
   const updateTableRowStartTime = (
     timetable: TimeTableType,
     index: number,
@@ -147,6 +157,16 @@ export const useTimetable = () => {
     if (newVjtable) setVjTable(newVjtable)
   }
 
+  const updateTimetableRowText = (index: number, text: string) => {
+    const newTimetable = updateTableRowText(timetable, index, text)
+    if (newTimetable) setTimeTable(newTimetable)
+  }
+
+  const updateVjtableRowText = (index: number, text: string) => {
+    const newVjtable = updateTableRowText(vjtable, index, text)
+    if (newVjtable) setVjTable(newVjtable)
+  }
+
   const updateTimetableRowStartTime = (index: number, start_time: Date) => {
     const newTimetable = updateTableRowStartTime(timetable, index, start_time)
     if (newTimetable) setTimeTable(newTimetable)
@@ -214,6 +234,7 @@ export const useTimetable = () => {
     loadTimetable,
     addEmptyTimetableRow,
     updateTimetableRowName,
+    updateTimetableRowText,
     updateTimetableRowStartTime,
     updateTimetableRowEndTime,
     updateTimetableRowUser,
@@ -222,6 +243,7 @@ export const useTimetable = () => {
     deleteTimetableRow,
     addEmptyVjtableRow,
     updateVjtableRowName,
+    updateVjtableRowText,
     updateVjtableRowStartTime,
     updateVjtableRowEndTime,
     updateVjtableRowUser,

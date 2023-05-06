@@ -10,6 +10,7 @@ import {
 import { selectEventDjByEventId } from '../infrastructure/eventDjDatabase'
 import { selectEventVjByEventId } from '../infrastructure/eventVjDatabase'
 import { selectEventGuestDjByEventId } from '../infrastructure/eventGuestDjDatabase'
+import { getCurrentDateTime } from '../../../lib/getCurrentDateTime'
 
 const sortByTimetable = (data: any[]) => {
   return data.sort((a, b) => a.row_number - b.row_number)
@@ -33,11 +34,15 @@ export const useTimetable = () => {
   }
 
   const addEmptyTableRow = (timetable: TimeTableType) => {
+    const randomId =
+      '@' + Math.random().toString(32).substring(2) + getCurrentDateTime()
     const newTimetable = [
       ...timetable,
       {
         ...djInitial,
         row_number: timetable.length + 1,
+        user_id: randomId,
+        icon_url: '/user.png',
       },
     ]
     return newTimetable
@@ -126,13 +131,15 @@ export const useTimetable = () => {
 
   const clearTableRow = (timetable: TimeTableType, index: number) => {
     if (!timetable) return
+    const randomId =
+      '@' + Math.random().toString(32).substring(2) + getCurrentDateTime()
     const newTimetable = [...timetable]
     const updatedTimetable = {
       ...newTimetable[index],
-      user_id: '',
+      user_id: randomId,
       name: '',
       text: '',
-      icon_url: '',
+      icon_url: '/user.png',
       start_time: utcToZonedTime(new Date(), 'Asia/Tokyo'),
       end_time: utcToZonedTime(new Date(), 'Asia/Tokyo'),
     }

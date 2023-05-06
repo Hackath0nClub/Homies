@@ -4,7 +4,7 @@ import { useTimetable } from '../../hooks/useTimetable'
 
 export const EditGuest = () => {
   const {} = useEvent()
-  const { timetable, updateTimetableRowUserName } = useTimetable()
+  const { timetable, updateTimetableRowName } = useTimetable()
 
   const inputRef = useRef<HTMLInputElement>(null)
   const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,7 +61,7 @@ export const EditGuest = () => {
                     className="block mt-2 h-8 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-2 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
                     value={row.name}
                     onChange={(e) => {
-                      updateTimetableRowUserName(index, e.target.value)
+                      updateTimetableRowName(index, e.target.value)
                       // let newRow = row
                       // newRow.guest_name = e.target.value
                       // props.handleEvent.setTimetableRow(index, newRow)

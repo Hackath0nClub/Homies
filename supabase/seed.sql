@@ -43,7 +43,7 @@ create table event_organizer (
   id serial not null,
   user_id text not null references profile(id),
   event_id serial not null references event(id),
-  primary key (user_id, event_id)
+  primary key (id)
 );
 
 create table event_dj (
@@ -53,7 +53,7 @@ create table event_dj (
   row_number int not null,
   start_time timestamp with time zone,
   end_time timestamp with time zone,
-  primary key (user_id, event_id)
+  primary key (id)
 );
 
 create table event_guestdj (
@@ -63,7 +63,7 @@ create table event_guestdj (
   row_number int not null,
   start_time timestamp with time zone,
   end_time timestamp with time zone,
-  primary key (user_id, event_id)
+  primary key (id)
 );
 
 create table event_vj (
@@ -73,7 +73,7 @@ create table event_vj (
   row_number int not null,
   start_time timestamp with time zone,
   end_time timestamp with time zone,
-  primary key (user_id, event_id)
+  primary key (id)
 );
 
 create table event_guestvj (
@@ -83,7 +83,7 @@ create table event_guestvj (
   row_number int not null,
   start_time timestamp with time zone,
   end_time timestamp with time zone,
-  primary key (user_id, event_id)
+  primary key (id)
 );
 
 create table ticket (
@@ -91,7 +91,7 @@ create table ticket (
   user_id text not null references profile(id),
   event_id serial not null references event(id),
   status bool,
-  primary key (user_id, event_id),
+  primary key (id),
   create_at timestamp with time zone,
   updated_at timestamp with time zone
 );

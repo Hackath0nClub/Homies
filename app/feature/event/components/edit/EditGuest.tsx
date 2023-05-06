@@ -28,7 +28,7 @@ export const EditGuest = () => {
               >
                 <img
                   alt={row.name}
-                  src={row.icon_url!}
+                  src={row.icon_url}
                   className="rounded-full col-span-1"
                 />
                 <div className="col-span-2">
@@ -52,7 +52,7 @@ export const EditGuest = () => {
                 />
                 <img
                   alt="icon"
-                  src="/user.png"
+                  src={row.icon_url}
                   className="rounded-full col-span-1"
                   onClick={() => inputRef.current?.click()}
                 />
@@ -63,9 +63,6 @@ export const EditGuest = () => {
                     value={row.name}
                     onChange={(e) => {
                       updateTimetableRowName(index, e.target.value)
-                      // let newRow = row
-                      // newRow.guest_name = e.target.value
-                      // props.handleEvent.setTimetableRow(index, newRow)
                     }}
                   />
                   <textarea
@@ -74,9 +71,6 @@ export const EditGuest = () => {
                     value={row.text}
                     onChange={(e) => {
                       updateTimetableRowText(index, e.target.value)
-                      // let newRow = row
-                      // newRow.guest_text = e.target.value
-                      // props.handleEvent.setTimetableRow(index, newRow)
                     }}
                   />
                 </div>

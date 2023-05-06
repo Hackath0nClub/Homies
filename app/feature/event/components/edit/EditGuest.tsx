@@ -12,9 +12,9 @@ export const EditGuest = () => {
       <div className="guest-row-guest-details">
         {timetable.map((row, index) => {
           if (row.user_id?.charAt(0) == '@') {
-            return <GuestRow row={row} index={index} />
+            return <GuestRow row={row} index={index} key={index} />
           } else {
-            return <DjRow row={row} index={index} />
+            return <DjRow row={row} index={index} key={index} />
           }
         })}
       </div>
@@ -24,7 +24,7 @@ export const EditGuest = () => {
 
 const DjRow = ({ row, index }: { row: any; index: number }) => {
   return (
-    <div className="w-full grid grid-cols-3 gap-8 m-8" key={row.user_id}>
+    <div className="w-full grid grid-cols-3 gap-8 m-8">
       <img
         alt={row.name}
         src={row.icon_url}
@@ -43,7 +43,7 @@ const GuestRow = ({ row, index }: { row: any; index: number }) => {
   const { setTimetableRowName, setTimetableRowText, setTimetableRowIconUrl } =
     useTimetable()
   return (
-    <div className="w-full grid grid-cols-3 gap-8 m-8" key={row.user_id}>
+    <div className="w-full grid grid-cols-3 gap-8 m-8">
       <input
         hidden
         type="file"

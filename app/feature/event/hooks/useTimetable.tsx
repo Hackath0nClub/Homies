@@ -11,16 +11,19 @@ import { selectEventDjByEventId } from '../infrastructure/eventDjDatabase'
 import { selectEventVjByEventId } from '../infrastructure/eventVjDatabase'
 import { selectEventGuestDjByEventId } from '../infrastructure/eventGuestDjDatabase'
 import { getCurrentDateTime } from '../../../lib/getCurrentDateTime'
+import { useState } from 'react'
 
 const sortByTimetable = (data: any[]) => {
   return data.sort((a, b) => a.row_number - b.row_number)
 }
 
 export const useTimetable = () => {
+  const [eventId, setEventId] = useState(0)
   const [timetable, setTimeTable] = useRecoilState(timeTableState)
   const [vjtable, setVjTable] = useRecoilState(vjTableState)
 
   const loadTimetable = async (id: number) => {
+    setEventId(id)
     const timetableData = await selectEventDjByEventId(id)
     const vjtableData = await selectEventVjByEventId(id)
     const guestdjtableData = await selectEventGuestDjByEventId(id)

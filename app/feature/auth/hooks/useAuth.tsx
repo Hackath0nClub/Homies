@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import router from 'next/router'
 import { useRecoilState } from 'recoil'
 import { sessionState } from '../store/authState'
 import {
@@ -17,18 +18,21 @@ export const useAuth = () => {
     await emailSignIn(email, password)
     const currentSession = await getSession()
     setSession(currentSession)
+    router.push('/')
   }
 
   const handleSignUp = async () => {
     await emailSignUp(email, password)
     const currentSession = await getSession()
     setSession(currentSession)
+    router.push('/')
   }
 
   const handleSignout = async () => {
     await signOut()
     const currentSession = await getSession()
     setSession(currentSession)
+    router.push('/')
   }
 
   return {

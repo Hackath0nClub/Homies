@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { useAuth } from '../feature/auth/hooks/useAuth'
 
 const Header = () => {
+  const { session } = useAuth()
   return (
     <>
       <div className="w-full h-full flex flex-col items-start">
@@ -19,14 +21,21 @@ const Header = () => {
             <span className="text-white text-md m-4">Events</span>
             <span className="text-white text-md m-4">Tickets</span>
           </div>
-          <Link href="/login">
-            <Image
-              alt="pastedImage"
-              src="/playground_assets/user-icon-sample.png"
-              width={32}
-              height={32}
-            />
-          </Link>
+          {session && (
+            <Link href="/login">
+              <Image
+                alt="pastedImage"
+                src="/playground_assets/user-icon-sample.png"
+                width={32}
+                height={32}
+              />
+            </Link>
+          )}
+          {!session && (
+            <Link href="/login">
+              <Image alt="pastedImage" src="/user.png" width={32} height={32} />
+            </Link>
+          )}
         </header>
       </div>
     </>

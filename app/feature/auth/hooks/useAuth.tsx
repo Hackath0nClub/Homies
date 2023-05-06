@@ -2,15 +2,20 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../../../utils/supabaseClient'
 import router from 'next/router'
 import { getCurrentDateTime } from '../../../lib/getCurrentDateTime'
+import { useRecoilState } from 'recoil'
+import { sessionState } from '../store/authState'
 
 export const useAuth = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [session, setSession] = useRecoilState(sessionState)
+
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
       if (session) console.log('session.user', session.user.email)
       if (!session) console.log("session doesn't exist")
+      if (session) setSession(session)
     })
   }, [])
 
@@ -76,6 +81,7 @@ export const useAuth = () => {
   return {
     email,
     password,
+    session,
     setEmail,
     setPassword,
     handleLogin,

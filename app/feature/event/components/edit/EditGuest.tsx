@@ -40,11 +40,8 @@ const DjRow = ({ row, index }: { row: any; index: number }) => {
 
 const GuestRow = ({ row, index }: { row: any; index: number }) => {
   const inputRef = useRef<HTMLInputElement>(null)
-  const {
-    updateTimetableRowName,
-    updateTimetableRowText,
-    updateTimetableRowIconUrl,
-  } = useTimetable()
+  const { setTimetableRowName, setTimetableRowText, setTimetableRowIconUrl } =
+    useTimetable()
   return (
     <div className="w-full grid grid-cols-3 gap-8 m-8" key={row.user_id}>
       <input
@@ -56,7 +53,7 @@ const GuestRow = ({ row, index }: { row: any; index: number }) => {
           const local_file = e.target.files?.[0]
           if (!local_file) return
           const iconUrl = URL.createObjectURL(local_file)
-          updateTimetableRowIconUrl(index, iconUrl)
+          setTimetableRowIconUrl(index, iconUrl)
         }}
       />
       <img
@@ -72,7 +69,7 @@ const GuestRow = ({ row, index }: { row: any; index: number }) => {
           value={row.name}
           placeholder="名前"
           onChange={(e) => {
-            updateTimetableRowName(index, e.target.value)
+            setTimetableRowName(index, e.target.value)
           }}
         />
         <textarea
@@ -81,7 +78,7 @@ const GuestRow = ({ row, index }: { row: any; index: number }) => {
           value={row.text}
           placeholder="紹介文"
           onChange={(e) => {
-            updateTimetableRowText(index, e.target.value)
+            setTimetableRowText(index, e.target.value)
           }}
         />
       </div>

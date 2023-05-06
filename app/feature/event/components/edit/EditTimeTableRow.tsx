@@ -7,8 +7,8 @@ import { useState } from 'react'
 
 export const EditTimeTableRow = ({ dj }: { dj: DjType }) => {
   const {
-    updateTimetableRowStartTime,
-    updateTimetableRowEndTime,
+    setTimetableRowStartTime,
+    setTimetableRowEndTime,
     shiftUpTimetableRow,
     clearTimetableRow,
     deleteTimetableRow,
@@ -45,7 +45,7 @@ export const EditTimeTableRow = ({ dj }: { dj: DjType }) => {
     <DatePicker
       selected={dj.start_time}
       onChange={(date) => {
-        if (date) updateTimetableRowStartTime(index, date)
+        if (date) setTimetableRowStartTime(index, date)
       }}
       showTimeSelect
       showTimeSelectOnly
@@ -60,7 +60,7 @@ export const EditTimeTableRow = ({ dj }: { dj: DjType }) => {
     <DatePicker
       selected={dj.end_time}
       onChange={(date) => {
-        if (date) updateTimetableRowEndTime(index, date)
+        if (date) setTimetableRowEndTime(index, date)
       }}
       showTimeSelect
       showTimeSelectOnly
@@ -156,7 +156,7 @@ const UserSearchInput = ({ index, dj }: { index: number; dj: DjType }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [onMouseOver, setOnMouseOver] = useState(false)
   const { handleInputChange, results } = useSearchUser()
-  const { updateTimetableRowUser } = useTimetable()
+  const { setTimetableRowUser } = useTimetable()
 
   return (
     <>
@@ -187,7 +187,7 @@ const UserSearchInput = ({ index, dj }: { index: number; dj: DjType }) => {
               key={user.id}
               className="flex align-items-center py-2 px-4 hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
               onClick={() => {
-                updateTimetableRowUser(index, user)
+                setTimetableRowUser(index, user)
                 handleInputChange('')
                 setIsOpen(false)
               }}

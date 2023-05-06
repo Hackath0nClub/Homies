@@ -33,6 +33,8 @@ export const useTimetable = () => {
     setVjTable(vjtableData)
   }
 
+  const updateTimetable = async () => {}
+
   const addEmptyTableRow = (timetable: TimeTableType) => {
     const randomId =
       '@' + Math.random().toString(32).substring(2) + getCurrentDateTime()
@@ -48,7 +50,7 @@ export const useTimetable = () => {
     return newTimetable
   }
 
-  const updateTimatebleRowName = (
+  const setTableRowName = (
     timetable: TimeTableType,
     index: number,
     name: string
@@ -58,7 +60,7 @@ export const useTimetable = () => {
     return newTimetable
   }
 
-  const updateTableRowText = (
+  const setTableRowText = (
     timetable: TimeTableType,
     index: number,
     text: string
@@ -68,7 +70,7 @@ export const useTimetable = () => {
     return newTimetable
   }
 
-  const updateTableRowStartTime = (
+  const setTableRowStartTime = (
     timetable: TimeTableType,
     index: number,
     start_time: Date
@@ -78,7 +80,7 @@ export const useTimetable = () => {
     return newTimetable
   }
 
-  const updateTableRowEndTime = (
+  const setTableRowEndTime = (
     timetable: TimeTableType,
     index: number,
     end_time: Date
@@ -88,7 +90,7 @@ export const useTimetable = () => {
     return newTimetable
   }
 
-  const updateTableRowIconUrl = (
+  const setTableRowIconUrl = (
     timetable: TimeTableType,
     index: number,
     icon_url: string
@@ -101,7 +103,7 @@ export const useTimetable = () => {
     return newTimetable
   }
 
-  const updateTableRowUser = (
+  const setTableRowUser = (
     timetable: TimeTableType,
     index: number,
     user: UserType
@@ -167,63 +169,63 @@ export const useTimetable = () => {
     if (newVjtable) setVjTable(newVjtable)
   }
 
-  const updateTimetableRowName = (index: number, name: string) => {
-    const newTimetable = updateTimatebleRowName(timetable, index, name)
+  const setTimetableRowName = (index: number, name: string) => {
+    const newTimetable = setTableRowName(timetable, index, name)
     if (newTimetable) setTimeTable(newTimetable)
   }
 
-  const updateVjtableRowName = (index: number, name: string) => {
-    const newVjtable = updateTimatebleRowName(vjtable, index, name)
+  const setVjtableRowName = (index: number, name: string) => {
+    const newVjtable = setTableRowName(vjtable, index, name)
     if (newVjtable) setVjTable(newVjtable)
   }
 
-  const updateTimetableRowText = (index: number, text: string) => {
-    const newTimetable = updateTableRowText(timetable, index, text)
+  const setTimetableRowText = (index: number, text: string) => {
+    const newTimetable = setTableRowText(timetable, index, text)
     if (newTimetable) setTimeTable(newTimetable)
   }
 
-  const updateVjtableRowText = (index: number, text: string) => {
-    const newVjtable = updateTableRowText(vjtable, index, text)
+  const setVjtableRowText = (index: number, text: string) => {
+    const newVjtable = setTableRowText(vjtable, index, text)
     if (newVjtable) setVjTable(newVjtable)
   }
 
-  const updateTimetableRowStartTime = (index: number, start_time: Date) => {
-    const newTimetable = updateTableRowStartTime(timetable, index, start_time)
+  const setTimetableRowStartTime = (index: number, start_time: Date) => {
+    const newTimetable = setTableRowStartTime(timetable, index, start_time)
     if (newTimetable) setTimeTable(newTimetable)
   }
 
-  const updateVjtableRowStartTime = (index: number, start_time: Date) => {
-    const newVjtable = updateTableRowStartTime(vjtable, index, start_time)
+  const setVjtableRowStartTime = (index: number, start_time: Date) => {
+    const newVjtable = setTableRowStartTime(vjtable, index, start_time)
     if (newVjtable) setVjTable(newVjtable)
   }
 
-  const updateTimetableRowEndTime = (index: number, end_time: Date) => {
-    const newTimetable = updateTableRowEndTime(timetable, index, end_time)
+  const setTimetableRowEndTime = (index: number, end_time: Date) => {
+    const newTimetable = setTableRowEndTime(timetable, index, end_time)
     setTimeTable(newTimetable)
   }
 
-  const updateVjtableRowEndTime = (index: number, end_time: Date) => {
-    const newVjtable = updateTableRowEndTime(vjtable, index, end_time)
+  const setVjtableRowEndTime = (index: number, end_time: Date) => {
+    const newVjtable = setTableRowEndTime(vjtable, index, end_time)
     setVjTable(newVjtable)
   }
 
-  const updateTimetableRowIconUrl = (index: number, icon_url: string) => {
-    const newTimetable = updateTableRowIconUrl(timetable, index, icon_url)
+  const setTimetableRowIconUrl = (index: number, icon_url: string) => {
+    const newTimetable = setTableRowIconUrl(timetable, index, icon_url)
     if (newTimetable) setTimeTable(newTimetable)
   }
 
-  const updateVjtableRowIconUrl = (index: number, icon_url: string) => {
-    const newVjtable = updateTableRowIconUrl(vjtable, index, icon_url)
+  const setVjtableRowIconUrl = (index: number, icon_url: string) => {
+    const newVjtable = setTableRowIconUrl(vjtable, index, icon_url)
     if (newVjtable) setVjTable(newVjtable)
   }
 
-  const updateTimetableRowUser = (index: number, user: UserType) => {
-    const newTimetable = updateTableRowUser(timetable, index, user)
+  const setTimetableRowUser = (index: number, user: UserType) => {
+    const newTimetable = setTableRowUser(timetable, index, user)
     if (newTimetable) setTimeTable(newTimetable)
   }
 
-  const updateVjtableRowUser = (index: number, user: UserType) => {
-    const newVjtable = updateTableRowUser(vjtable, index, user)
+  const setVjtableRowUser = (index: number, user: UserType) => {
+    const newVjtable = setTableRowUser(vjtable, index, user)
     if (newVjtable) setVjTable(newVjtable)
   }
 
@@ -262,23 +264,24 @@ export const useTimetable = () => {
     vjtable,
     setTimeTable,
     loadTimetable,
+    updateTimetable,
     addEmptyTimetableRow,
-    updateTimetableRowName,
-    updateTimetableRowText,
-    updateTimetableRowStartTime,
-    updateTimetableRowEndTime,
-    updateTimetableRowIconUrl,
-    updateTimetableRowUser,
+    setTimetableRowName,
+    setTimetableRowText,
+    setTimetableRowStartTime,
+    setTimetableRowEndTime,
+    setTimetableRowIconUrl,
+    setTimetableRowUser,
     shiftUpTimetableRow,
     clearTimetableRow,
     deleteTimetableRow,
     addEmptyVjtableRow,
-    updateVjtableRowName,
-    updateVjtableRowText,
-    updateVjtableRowStartTime,
-    updateVjtableRowEndTime,
-    updateVjtableRowIconUrl,
-    updateVjtableRowUser,
+    setVjtableRowName,
+    setVjtableRowText,
+    setVjtableRowStartTime,
+    setVjtableRowEndTime,
+    setVjtableRowIconUrl,
+    setVjtableRowUser,
     shiftUpVjtableRow,
     clearVjtableRow,
     deleteVjtableRow,

@@ -1,17 +1,14 @@
 import { useRef } from 'react'
-import { useEvent } from '../../hooks/useEvent'
 import { useTimetable } from '../../hooks/useTimetable'
 
 export const EditGuest = () => {
-  const {} = useEvent()
-  const { timetable, updateTimetableRowName, updateTimetableRowText } =
-    useTimetable()
-
   const inputRef = useRef<HTMLInputElement>(null)
-  const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const local_file = e.target.files?.[0]
-    // if (local_file) props.setFile(local_file)
-  }
+  const {
+    timetable,
+    updateTimetableRowName,
+    updateTimetableRowText,
+    updateTimetableRowIconUrl,
+  } = useTimetable()
 
   return (
     <>
@@ -48,7 +45,12 @@ export const EditGuest = () => {
                   type="file"
                   accept="image/*"
                   ref={inputRef}
-                  onChange={uploadImage}
+                  onChange={(e) => {
+                    const local_file = e.target.files?.[0]
+                    if (!local_file) return
+                    const iconUrl = URL.createObjectURL(local_file)
+                    updateTimetableRowIconUrl(index, iconUrl)
+                  }}
                 />
                 <img
                   alt="icon"

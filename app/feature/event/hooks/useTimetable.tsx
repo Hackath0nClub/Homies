@@ -83,6 +83,19 @@ export const useTimetable = () => {
     return newTimetable
   }
 
+  const updateTableRowIconUrl = (
+    timetable: TimeTableType,
+    index: number,
+    icon_url: string
+  ) => {
+    const newTimetable = [...timetable]
+    newTimetable[index] = {
+      ...newTimetable[index],
+      icon_url: icon_url,
+    }
+    return newTimetable
+  }
+
   const updateTableRowUser = (
     timetable: TimeTableType,
     index: number,
@@ -187,6 +200,16 @@ export const useTimetable = () => {
     setVjTable(newVjtable)
   }
 
+  const updateTimetableRowIconUrl = (index: number, icon_url: string) => {
+    const newTimetable = updateTableRowIconUrl(timetable, index, icon_url)
+    if (newTimetable) setTimeTable(newTimetable)
+  }
+
+  const updateVjtableRowIconUrl = (index: number, icon_url: string) => {
+    const newVjtable = updateTableRowIconUrl(vjtable, index, icon_url)
+    if (newVjtable) setVjTable(newVjtable)
+  }
+
   const updateTimetableRowUser = (index: number, user: UserType) => {
     const newTimetable = updateTableRowUser(timetable, index, user)
     if (newTimetable) setTimeTable(newTimetable)
@@ -237,6 +260,7 @@ export const useTimetable = () => {
     updateTimetableRowText,
     updateTimetableRowStartTime,
     updateTimetableRowEndTime,
+    updateTimetableRowIconUrl,
     updateTimetableRowUser,
     shiftUpTimetableRow,
     clearTimetableRow,
@@ -246,6 +270,7 @@ export const useTimetable = () => {
     updateVjtableRowText,
     updateVjtableRowStartTime,
     updateVjtableRowEndTime,
+    updateVjtableRowIconUrl,
     updateVjtableRowUser,
     shiftUpVjtableRow,
     clearVjtableRow,

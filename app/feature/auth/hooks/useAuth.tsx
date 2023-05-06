@@ -11,11 +11,7 @@ export const useAuth = () => {
   const [session, setSession] = useRecoilState(sessionState)
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (session) console.log('session.user', session.user.email)
-      if (!session) console.log("session doesn't exist")
-      setSession(session)
-    })
+    supabase.auth.onAuthStateChange((event, session) => setSession(session))
   }, [])
 
   const handleLogin = async () => {
@@ -42,24 +38,23 @@ export const useAuth = () => {
       console.log('data', data)
       // router.push('/')
 
-      if (!data) return
+      if (!data.user) return
       // Sign up時にprofileを作成する
       const { data: profileData, error: profileError } = await supabase
         .from('profile')
         .insert({
-          uuid: data.user?.id,
-          id: data.user?.email?.split('@')[0] + getCurrentDateTime(),
-          name: data.user?.email?.split('@')[0],
+          uuid: data.user.id,
+          id: data.user.email?.split('@')[0] + getCurrentDateTime(),
+          name: data.user.email?.split('@')[0],
           icon_url: '',
           text: '',
           twitter_url: '',
           soundcloud_url: '',
           mixcloud_url: '',
-          create_at: data.user?.created_at,
-          updated_at: data.user?.created_at,
+          create_at: data.user.created_at,
+          updated_at: data.user.created_at,
         })
       if (profileError) throw profileError
-      console.log('profileData', profileData)
     } catch (error) {
       console.error(error)
       if (error instanceof Error) alert(error.message)

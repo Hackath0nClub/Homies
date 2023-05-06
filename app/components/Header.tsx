@@ -27,21 +27,32 @@ const Header = () => {
               src="/playground_assets/user-icon-sample.png"
               width={32}
               height={32}
+              className="h-full"
             />
-            <Link href="/login">
-              <span
-                className="w-full mx-2 text-white text-sm"
-                onClick={handleSignout}
-              >
-                Sign Out
-              </span>
-            </Link>
+            <button className="text-white text-sm m-2" onClick={handleSignout}>
+              Sign Out
+            </button>
           </>
         )}
         {!session && (
-          <Link href="/login">
-            <Image alt="pastedImage" src="/user.png" width={32} height={32} />
-          </Link>
+          <>
+            <Link href="/auth/login">
+              <button
+                className="py-1 px-2 mx-1 text-white text-sm transition-colors duration-300 border border-gray-200 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+                type="submit"
+              >
+                Log In
+              </button>
+            </Link>
+            <Link href="/auth/signup">
+              <button
+                className="py-1 px-2 mx-1 text-gray-800 text-sm transition-colors duration-300 border border-gray-200 bg-gray-200 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80 hover:text-white"
+                type="submit"
+              >
+                Sign Up
+              </button>
+            </Link>
+          </>
         )}
       </div>
     </header>

@@ -10,12 +10,11 @@ export const useAuth = () => {
   const [password, setPassword] = useState('')
   const [session, setSession] = useRecoilState(sessionState)
 
-
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
       if (session) console.log('session.user', session.user.email)
       if (!session) console.log("session doesn't exist")
-      if (session) setSession(session)
+      setSession(session)
     })
   }, [])
 

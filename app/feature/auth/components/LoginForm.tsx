@@ -1,15 +1,7 @@
 import { useAuth } from '../hooks/useAuth'
 
 const LoginForm = () => {
-  const {
-    email,
-    password,
-    setEmail,
-    setPassword,
-    handleLogin,
-    handleSignUp,
-    handleSignout,
-  } = useAuth()
+  const { email, password, setEmail, setPassword, handleLogin } = useAuth()
 
   return (
     <div className="w-full max-w-sm">
@@ -43,29 +35,13 @@ const LoginForm = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-      <div className="flex items-center gap-4">
-        <button
-          className="px-4 py-2 text-white transition-colors duration-300 border border-gray-200 bg-[rgba(28,32,37,1)] rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
-          type="submit"
-          onClick={handleLogin}
-        >
-          Log In
-        </button>
-        <button
-          className="px-4 py-2 text-gray-800 transition-colors duration-300 border border-gray-200 bg-gray-200 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80 hover:text-white"
-          type="submit"
-          onClick={handleSignUp}
-        >
-          Sign Up
-        </button>
-        <button
-          className="px-4 py-2 text-white transition-colors duration-300 border border-gray-200 bg-[rgba(28,32,37,1)] rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
-          type="submit"
-          onClick={handleSignout}
-        >
-          Sign Out
-        </button>
-      </div>
+      <button
+        className="px-4 py-2 text-white transition-colors duration-300 border border-gray-200 bg-[rgba(28,32,37,1)] rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+        type="submit"
+        onClick={handleLogin}
+      >
+        Log In
+      </button>
     </div>
   )
 }

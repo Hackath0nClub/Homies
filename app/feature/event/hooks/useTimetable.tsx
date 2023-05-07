@@ -22,38 +22,6 @@ import { useEvent } from './useEvent'
 import { getImageUrl, uploadGuestImage } from '../infrastructure/guestStrage'
 import { upsertGuestData } from '../infrastructure/guestDatabase'
 
-const sortByTimetable = (data: any[]) => {
-  return data.sort((a, b) => a.row_number - b.row_number)
-}
-
-const pickDjData = (dj: DjType, eventId: number) => {
-  return {
-    id: dj.id,
-    row_number: dj.row_number,
-    user_id: dj.user_id,
-    event_id: eventId,
-    start_time: dj.start_time,
-    end_time: dj.end_time,
-  }
-}
-
-const fetchFileFromURL = async (url: string, fileName: string) => {
-  const response = await fetch(url)
-  const blob = await response.blob()
-  const file = new File([blob], fileName + '.png', { type: 'image/png' })
-  return file
-}
-
-const convertGuest = (dj: DjType, icon_url: string) => {
-  const guest: UserType = {
-    id: dj.user_id,
-    name: dj.name,
-    icon_url: icon_url,
-    text: dj.text,
-  }
-  return guest
-}
-
 export const useTimetable = () => {
   const [timetable, setTimeTable] = useRecoilState(timeTableState)
   const [vjtable, setVjTable] = useRecoilState(vjTableState)
@@ -347,4 +315,36 @@ export const useTimetable = () => {
     clearVjtableRow,
     deleteVjtableRow,
   } as const
+}
+
+const sortByTimetable = (data: any[]) => {
+  return data.sort((a, b) => a.row_number - b.row_number)
+}
+
+const pickDjData = (dj: DjType, eventId: number) => {
+  return {
+    id: dj.id,
+    row_number: dj.row_number,
+    user_id: dj.user_id,
+    event_id: eventId,
+    start_time: dj.start_time,
+    end_time: dj.end_time,
+  }
+}
+
+const fetchFileFromURL = async (url: string, fileName: string) => {
+  const response = await fetch(url)
+  const blob = await response.blob()
+  const file = new File([blob], fileName + '.png', { type: 'image/png' })
+  return file
+}
+
+const convertGuest = (dj: DjType, icon_url: string) => {
+  const guest: UserType = {
+    id: dj.user_id,
+    name: dj.name,
+    icon_url: icon_url,
+    text: dj.text,
+  }
+  return guest
 }

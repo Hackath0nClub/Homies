@@ -14,7 +14,6 @@ export const uploadGuestImage = async ({ filename, file }: UploadFile) => {
         upsert: true,
       })
     if (error) throw error
-    console.log(data)
   } catch (error) {
     alert('Error')
     console.error(error)

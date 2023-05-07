@@ -8,6 +8,7 @@ export const selectEventGuestDjByEventId = async (id: number) => {
       .from('event_guestdj')
       .select(
         `
+        id,
         row_number,
         start_time,
         end_time,

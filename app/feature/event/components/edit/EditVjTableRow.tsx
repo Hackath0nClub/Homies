@@ -7,8 +7,8 @@ import { useState } from 'react'
 
 export const EditVjTableRow = ({ vj }: { vj: DjType }) => {
   const {
-    updateVjtableRowStartTime,
-    updateVjtableRowEndTime,
+    setVjtableRowStartTime,
+    setVjtableRowEndTime,
     shiftUpVjtableRow,
     clearVjtableRow,
     deleteVjtableRow,
@@ -24,7 +24,7 @@ export const EditVjTableRow = ({ vj }: { vj: DjType }) => {
     <DatePicker
       selected={vj.start_time}
       onChange={(date) => {
-        if (date) updateVjtableRowStartTime(index, date)
+        if (date) setVjtableRowStartTime(index, date)
       }}
       showTimeSelect
       showTimeSelectOnly
@@ -39,7 +39,7 @@ export const EditVjTableRow = ({ vj }: { vj: DjType }) => {
     <DatePicker
       selected={vj.end_time}
       onChange={(date) => {
-        if (date) updateVjtableRowEndTime(index, date)
+        if (date) setVjtableRowEndTime(index, date)
       }}
       showTimeSelect
       showTimeSelectOnly
@@ -152,7 +152,7 @@ const UserSearchInput = ({ index }: { index: number }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [onMouseOver, setOnMouseOver] = useState(false)
   const { handleInputChange, results } = useSearchUser()
-  const { updateVjtableRowUser } = useTimetable()
+  const { setVjtableRowUser } = useTimetable()
 
   return (
     <>
@@ -182,7 +182,7 @@ const UserSearchInput = ({ index }: { index: number }) => {
               key={user.id}
               className="flex align-items-center py-2 px-4 hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
               onClick={() => {
-                updateVjtableRowUser(index, user)
+                setVjtableRowUser(index, user)
                 handleInputChange('')
                 setIsOpen(false)
               }}

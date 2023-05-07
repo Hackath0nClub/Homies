@@ -149,24 +149,6 @@ export const EditVjTableRow = ({ vj }: { vj: DjType }) => {
     )
   }
 
-  // return (
-  //   <div className={`${bg} pt-2 pb-4 border-y border-white`}>
-  //     <div className="grid grid-cols-5">
-  //       <SideArea>
-  //         <TimetableRowShiftButtons />
-  //       </SideArea>
-  //       <CenterArea
-  //         topleft={<StartTimePicker />}
-  //         topright={<EndTimePicker />}
-  //         bottomleft={<UserSearchInput index={index} />}
-  //         bottomright={<UserNameInput />}
-  //       ></CenterArea>
-  //       <SideArea>
-  //         <TimetableRowDeleteButton />
-  //       </SideArea>
-  //     </div>
-  //   </div>
-  // )
   return main()
 }
 

@@ -29,6 +29,16 @@ export const selectEventGuestDjByEventId = async (id: number) => {
   }
 }
 
+export const upsertEventGuestDjData = async (dj: any) => {
+  try {
+    const { error } = await supabase.from('event_guestdj').upsert(dj)
+    if (error) throw error
+  } catch (error) {
+    alert('Error')
+    console.error(error)
+  }
+}
+
 const sortByTimetable = (data: any[]) => {
   return data.sort((a, b) => a.row_number - b.row_number)
 }

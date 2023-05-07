@@ -30,7 +30,7 @@ export const selectEventDjByEventId = async (id: number) => {
   }
 }
 
-export const upsertEventDjData = async (dj: DjType) => {
+export const upsertEventDjData = async (dj: any) => {
   try {
     const { error } = await supabase.from('event_dj').upsert(dj)
     if (error) throw error

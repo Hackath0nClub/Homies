@@ -12,7 +12,10 @@ import {
   upsertEventDjData,
 } from '../infrastructure/eventDjDatabase'
 import { selectEventVjByEventId } from '../infrastructure/eventVjDatabase'
-import { selectEventGuestDjByEventId } from '../infrastructure/eventGuestDjDatabase'
+import {
+  selectEventGuestDjByEventId,
+  upsertEventGuestDjData,
+} from '../infrastructure/eventGuestDjDatabase'
 import { getCurrentDateTime } from '../../../lib/getCurrentDateTime'
 import { useEvent } from './useEvent'
 
@@ -20,17 +23,34 @@ const sortByTimetable = (data: any[]) => {
   return data.sort((a, b) => a.row_number - b.row_number)
 }
 
-const convertTimeTable = (timetable: TimeTableType, eventId: number) => {
-  return timetable.map((item) => {
-    return {
-      id: item.id,
-      row_number: item.row_number,
-      user_id: item.user_id,
-      event_id: eventId,
-      start_time: item.start_time,
-      end_time: item.end_time,
-    }
-  })
+const pickTimetable = (timetable: TimeTableType, eventId: number) => {
+  return timetable
+    .filter((item) => item.user_id && !item.user_id.startsWith('@'))
+    .map((item) => {
+      return {
+        id: item.id,
+        row_number: item.row_number,
+        user_id: item.user_id,
+        event_id: eventId,
+        start_time: item.start_time,
+        end_time: item.end_time,
+      }
+    })
+}
+
+const pickGuestTimetable = (timetable: TimeTableType, eventId: number) => {
+  return timetable
+    .filter((item) => item.user_id && item.user_id.startsWith('@'))
+    .map((item) => {
+      return {
+        id: item.id,
+        row_number: item.row_number,
+        user_id: item.user_id,
+        event_id: eventId,
+        start_time: item.start_time,
+        end_time: item.end_time,
+      }
+    })
 }
 
 export const useTimetable = () => {
@@ -53,10 +73,15 @@ export const useTimetable = () => {
 
   const updateTimetable = async () => {
     if (!base.id) return
-    const newTimetable = convertTimeTable(timetable, base.id)
-    console.log(newTimetable)
+
+    const newTimetable = pickTimetable(timetable, base.id)
     for (const dj of newTimetable) {
       await upsertEventDjData(dj)
+    }
+
+    const newGuestTimeTable = pickGuestTimetable(timetable, base.id)
+    for (const dj of newGuestTimeTable) {
+      await upsertEventGuestDjData(dj)
     }
   }
 

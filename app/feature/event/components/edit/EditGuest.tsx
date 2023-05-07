@@ -12,7 +12,7 @@ export const EditGuest = () => {
       <div className="guest-row-guest-details">
         {timetable.map((row, index) => {
           if (row.user_id?.charAt(0) == '@') {
-            return <GuestRow row={row} index={index} key={index} />
+            return <GuestDjRow row={row} index={index} key={index} />
           } else {
             return <DjRow row={row} index={index} key={index} />
           }
@@ -38,7 +38,7 @@ const DjRow = ({ row, index }: { row: any; index: number }) => {
   )
 }
 
-const GuestRow = ({ row, index }: { row: any; index: number }) => {
+const GuestDjRow = ({ row, index }: { row: any; index: number }) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const { setTimetableRowName, setTimetableRowText, setTimetableRowIconUrl } =
     useTimetable()

@@ -75,14 +75,10 @@ export const useTimetable = () => {
     if (!base.id) return
 
     const newTimetable = pickTimetable(timetable, base.id)
-    for (const dj of newTimetable) {
-      await upsertEventDjData(dj)
-    }
+    for (const dj of newTimetable) await upsertEventDjData(dj)
 
     const newGuestTimeTable = pickGuestTimetable(timetable, base.id)
-    for (const dj of newGuestTimeTable) {
-      await upsertEventGuestDjData(dj)
-    }
+    for (const dj of newGuestTimeTable) await upsertEventGuestDjData(dj)
   }
 
   const addEmptyTableRow = (timetable: TimeTableType) => {

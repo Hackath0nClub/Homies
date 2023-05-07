@@ -26,36 +26,6 @@ const sortByTimetable = (data: any[]) => {
   return data.sort((a, b) => a.row_number - b.row_number)
 }
 
-const pickTimetable = (timetable: TimeTableType, eventId: number) => {
-  return timetable
-    .filter((item) => item.user_id && !item.user_id.startsWith('@'))
-    .map((item) => {
-      return {
-        id: item.id,
-        row_number: item.row_number,
-        user_id: item.user_id,
-        event_id: eventId,
-        start_time: item.start_time,
-        end_time: item.end_time,
-      }
-    })
-}
-
-const pickGuestTimetable = (timetable: TimeTableType, eventId: number) => {
-  return timetable
-    .filter((item) => item.user_id && item.user_id.startsWith('@'))
-    .map((item) => {
-      return {
-        id: item.id,
-        row_number: item.row_number,
-        user_id: item.user_id,
-        event_id: eventId,
-        start_time: item.start_time,
-        end_time: item.end_time,
-      }
-    })
-}
-
 const pickDjData = (dj: DjType, eventId: number) => {
   return {
     id: dj.id,
@@ -103,13 +73,15 @@ export const useTimetable = () => {
   }
 
   const updateTimetable = async () => {
-    if (!base.id) return
-
-    // const newTimetable = pickTimetable(timetable, base.id)
-    // for (const dj of newTimetable) await upsertEventDjData(dj)
-
     for (const row of timetable) {
-      if (row.user_id && row.user_id.startsWith('@')) {
+      if (!row.user_id || !base.id) return
+
+      if (!row.user_id.startsWith('@')) {
+        // 通常 DJ の場合
+        const djData = pickDjData(row, base.id)
+        upsertEventDjData(djData)
+      } else {
+        // Guest DJ の場合
         const djData = pickDjData(row, base.id)
         await upsertEventGuestDjData(djData)
 
@@ -119,30 +91,8 @@ export const useTimetable = () => {
 
         const guestData = convertGuest(row, iconUrl ?? '/user.png')
         upsertGuestData(guestData)
-
-        // const response = await fetch(row.icon_url!)
-        // const blob = await response.blob()
-        // const file = new File([blob], row.icon_url!, { type: 'image/jpeg' })
       }
     }
-    // const newGuestTimeTable = pickGuestTimetable(timetable, base.id)
-    // for (const dj of newGuestTimeTable) {
-
-    //   if (!dj.icon_url) {
-    //     // URLからBlobを取得
-    //     const response = await fetch(dj.icon_url)
-    //     const blob = await response.blob()
-
-    //     // BlobをFileオブジェクトに変換
-    //     const file = new File([blob], fileName, { type: mimeType })
-    //   }
-
-    //   await upsertEventGuestDjData(dj)
-    //   await uploadGuestImage({
-    //     file_name: dj.user_id + '.png',
-    //     file: dj.icon_url,
-    //   })
-    // }
   }
 
   const addEmptyTableRow = (timetable: TimeTableType) => {

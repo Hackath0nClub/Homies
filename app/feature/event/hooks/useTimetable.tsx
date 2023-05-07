@@ -6,6 +6,7 @@ import {
   vjTableState,
   UserType,
   TimeTableType,
+  DjType,
 } from '../store/eventState'
 import {
   selectEventDjByEventId,
@@ -18,6 +19,8 @@ import {
 } from '../infrastructure/eventGuestDjDatabase'
 import { getCurrentDateTime } from '../../../lib/getCurrentDateTime'
 import { useEvent } from './useEvent'
+import { getImageUrl, uploadGuestImage } from '../infrastructure/guestStrage'
+import { upsertGuestData } from '../infrastructure/guestDatabase'
 
 const sortByTimetable = (data: any[]) => {
   return data.sort((a, b) => a.row_number - b.row_number)
@@ -53,6 +56,34 @@ const pickGuestTimetable = (timetable: TimeTableType, eventId: number) => {
     })
 }
 
+const pickDjData = (dj: DjType, eventId: number) => {
+  return {
+    id: dj.id,
+    row_number: dj.row_number,
+    user_id: dj.user_id,
+    event_id: eventId,
+    start_time: dj.start_time,
+    end_time: dj.end_time,
+  }
+}
+
+const fetchFileFromURL = async (url: string, fileName: string) => {
+  const response = await fetch(url)
+  const blob = await response.blob()
+  const file = new File([blob], fileName + '.png', { type: 'image/png' })
+  return file
+}
+
+const convertGuest = (dj: DjType, icon_url: string) => {
+  const guest: UserType = {
+    id: dj.user_id,
+    name: dj.name,
+    icon_url: icon_url,
+    text: dj.text,
+  }
+  return guest
+}
+
 export const useTimetable = () => {
   const [timetable, setTimeTable] = useRecoilState(timeTableState)
   const [vjtable, setVjTable] = useRecoilState(vjTableState)
@@ -74,13 +105,44 @@ export const useTimetable = () => {
   const updateTimetable = async () => {
     if (!base.id) return
 
-    const newTimetable = pickTimetable(timetable, base.id)
-    console.log(newTimetable)
-    for (const dj of newTimetable) await upsertEventDjData(dj)
+    // const newTimetable = pickTimetable(timetable, base.id)
+    // for (const dj of newTimetable) await upsertEventDjData(dj)
 
-    const newGuestTimeTable = pickGuestTimetable(timetable, base.id)
-    console.log(newGuestTimeTable)
-    for (const dj of newGuestTimeTable) await upsertEventGuestDjData(dj)
+    for (const row of timetable) {
+      if (row.user_id && row.user_id.startsWith('@')) {
+        const djData = pickDjData(row, base.id)
+        await upsertEventGuestDjData(djData)
+
+        const file = await fetchFileFromURL(row.icon_url!, row.user_id)
+        await uploadGuestImage({ filename: row.user_id + '.png', file: file })
+        const iconUrl = await getImageUrl(row.user_id + '.png')
+
+        const guestData = convertGuest(row, iconUrl ?? '/user.png')
+        upsertGuestData(guestData)
+
+        // const response = await fetch(row.icon_url!)
+        // const blob = await response.blob()
+        // const file = new File([blob], row.icon_url!, { type: 'image/jpeg' })
+      }
+    }
+    // const newGuestTimeTable = pickGuestTimetable(timetable, base.id)
+    // for (const dj of newGuestTimeTable) {
+
+    //   if (!dj.icon_url) {
+    //     // URLからBlobを取得
+    //     const response = await fetch(dj.icon_url)
+    //     const blob = await response.blob()
+
+    //     // BlobをFileオブジェクトに変換
+    //     const file = new File([blob], fileName, { type: mimeType })
+    //   }
+
+    //   await upsertEventGuestDjData(dj)
+    //   await uploadGuestImage({
+    //     file_name: dj.user_id + '.png',
+    //     file: dj.icon_url,
+    //   })
+    // }
   }
 
   const addEmptyTableRow = (timetable: TimeTableType) => {

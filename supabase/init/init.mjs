@@ -93,16 +93,12 @@ const InsertEvent = async () => {
 };
 
 const UploadEventImage = async () => {
-  const eventjson = await fs.promises.readFile("./data/event.json", "utf8");
-  let eventdata = JSON.parse(eventjson);
   const event_image = await fs.readFileSync("./data/event.png");
 
-  for (let i = 0; i < 3; i++) {
-    const { data, error } = await supabase.storage
-      .from("event")
-      .upload(eventdata[i].id + ".png", event_image, {
-        contentType: "image/png",
-      });
+  for (let i = 1; i <= 3; i++) {
+    const { data, error } = await supabase.storage.from("event").upload(i + ".png", event_image, {
+      contentType: "image/png",
+    });
     if (error) throw error;
   }
 

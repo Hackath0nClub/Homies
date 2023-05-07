@@ -6,18 +6,26 @@ import {
   vjTableState,
   UserType,
   TimeTableType,
+  DjType,
 } from '../store/eventState'
-import { selectEventDjByEventId } from '../infrastructure/eventDjDatabase'
+import {
+  selectEventDjByEventId,
+  upsertEventDjData,
+} from '../infrastructure/eventDjDatabase'
 import { selectEventVjByEventId } from '../infrastructure/eventVjDatabase'
-import { selectEventGuestDjByEventId } from '../infrastructure/eventGuestDjDatabase'
-
-const sortByTimetable = (data: any[]) => {
-  return data.sort((a, b) => a.row_number - b.row_number)
-}
+import {
+  selectEventGuestDjByEventId,
+  upsertEventGuestDjData,
+} from '../infrastructure/eventGuestDjDatabase'
+import { getCurrentDateTime } from '../../../lib/getCurrentDateTime'
+import { useEvent } from './useEvent'
+import { getImageUrl, uploadGuestImage } from '../infrastructure/guestStrage'
+import { upsertGuestData } from '../infrastructure/guestDatabase'
 
 export const useTimetable = () => {
   const [timetable, setTimeTable] = useRecoilState(timeTableState)
   const [vjtable, setVjTable] = useRecoilState(vjTableState)
+  const { base } = useEvent()
 
   const loadTimetable = async (id: number) => {
     const timetableData = await selectEventDjByEventId(id)
@@ -32,18 +40,65 @@ export const useTimetable = () => {
     setVjTable(vjtableData)
   }
 
+  const updateTimetable = async () => {
+    for (const row of timetable) {
+      if (!row.user_id || !base.id) return
+
+      if (!row.user_id.startsWith('@')) {
+        // 通常 DJ の場合
+        const djData = pickDjData(row, base.id)
+        upsertEventDjData(djData)
+      } else {
+        // Guest DJ の場合
+        const file = await fetchFileFromURL(row.icon_url!, row.user_id)
+        await uploadGuestImage({ filename: row.user_id + '.png', file: file })
+        const iconUrl = await getImageUrl(row.user_id + '.png')
+
+        const guestData = convertGuest(row, iconUrl ?? '/user.png')
+        await upsertGuestData(guestData)
+
+        const djData = pickDjData(row, base.id)
+        await upsertEventGuestDjData(djData)
+      }
+    }
+  }
+
   const addEmptyTableRow = (timetable: TimeTableType) => {
+    const randomId =
+      '@' + Math.random().toString(32).substring(2) + getCurrentDateTime()
     const newTimetable = [
       ...timetable,
       {
         ...djInitial,
         row_number: timetable.length + 1,
+        user_id: randomId,
+        icon_url: '/user.png',
       },
     ]
     return newTimetable
   }
 
-  const updateTableRowStartTime = (
+  const setTableRowName = (
+    timetable: TimeTableType,
+    index: number,
+    name: string
+  ) => {
+    const newTimetable = [...timetable]
+    newTimetable[index] = { ...newTimetable[index], name: name }
+    return newTimetable
+  }
+
+  const setTableRowText = (
+    timetable: TimeTableType,
+    index: number,
+    text: string
+  ) => {
+    const newTimetable = [...timetable]
+    newTimetable[index] = { ...newTimetable[index], text: text }
+    return newTimetable
+  }
+
+  const setTableRowStartTime = (
     timetable: TimeTableType,
     index: number,
     start_time: Date
@@ -53,7 +108,7 @@ export const useTimetable = () => {
     return newTimetable
   }
 
-  const updateTableRowEndTime = (
+  const setTableRowEndTime = (
     timetable: TimeTableType,
     index: number,
     end_time: Date
@@ -63,7 +118,20 @@ export const useTimetable = () => {
     return newTimetable
   }
 
-  const updateTableRowUser = (
+  const setTableRowIconUrl = (
+    timetable: TimeTableType,
+    index: number,
+    icon_url: string
+  ) => {
+    const newTimetable = [...timetable]
+    newTimetable[index] = {
+      ...newTimetable[index],
+      icon_url: icon_url,
+    }
+    return newTimetable
+  }
+
+  const setTableRowUser = (
     timetable: TimeTableType,
     index: number,
     user: UserType
@@ -93,13 +161,15 @@ export const useTimetable = () => {
 
   const clearTableRow = (timetable: TimeTableType, index: number) => {
     if (!timetable) return
+    const randomId =
+      '@' + Math.random().toString(32).substring(2) + getCurrentDateTime()
     const newTimetable = [...timetable]
     const updatedTimetable = {
       ...newTimetable[index],
-      user_id: '',
+      user_id: randomId,
       name: '',
       text: '',
-      icon_url: '',
+      icon_url: '/user.png',
       start_time: utcToZonedTime(new Date(), 'Asia/Tokyo'),
       end_time: utcToZonedTime(new Date(), 'Asia/Tokyo'),
     }
@@ -127,33 +197,63 @@ export const useTimetable = () => {
     if (newVjtable) setVjTable(newVjtable)
   }
 
-  const updateTimetableRowStartTime = (index: number, start_time: Date) => {
-    const newTimetable = updateTableRowStartTime(timetable, index, start_time)
+  const setTimetableRowName = (index: number, name: string) => {
+    const newTimetable = setTableRowName(timetable, index, name)
     if (newTimetable) setTimeTable(newTimetable)
   }
 
-  const updateVjtableRowStartTime = (index: number, start_time: Date) => {
-    const newVjtable = updateTableRowStartTime(vjtable, index, start_time)
+  const setVjtableRowName = (index: number, name: string) => {
+    const newVjtable = setTableRowName(vjtable, index, name)
     if (newVjtable) setVjTable(newVjtable)
   }
 
-  const updateTimetableRowEndTime = (index: number, end_time: Date) => {
-    const newTimetable = updateTableRowEndTime(timetable, index, end_time)
-    setTimeTable(newTimetable)
-  }
-
-  const updateVjtableRowEndTime = (index: number, end_time: Date) => {
-    const newVjtable = updateTableRowEndTime(vjtable, index, end_time)
-    setVjTable(newVjtable)
-  }
-
-  const updateTimetableRowUser = (index: number, user: UserType) => {
-    const newTimetable = updateTableRowUser(timetable, index, user)
+  const setTimetableRowText = (index: number, text: string) => {
+    const newTimetable = setTableRowText(timetable, index, text)
     if (newTimetable) setTimeTable(newTimetable)
   }
 
-  const updateVjtableRowUser = (index: number, user: UserType) => {
-    const newVjtable = updateTableRowUser(vjtable, index, user)
+  const setVjtableRowText = (index: number, text: string) => {
+    const newVjtable = setTableRowText(vjtable, index, text)
+    if (newVjtable) setVjTable(newVjtable)
+  }
+
+  const setTimetableRowStartTime = (index: number, start_time: Date) => {
+    const newTimetable = setTableRowStartTime(timetable, index, start_time)
+    if (newTimetable) setTimeTable(newTimetable)
+  }
+
+  const setVjtableRowStartTime = (index: number, start_time: Date) => {
+    const newVjtable = setTableRowStartTime(vjtable, index, start_time)
+    if (newVjtable) setVjTable(newVjtable)
+  }
+
+  const setTimetableRowEndTime = (index: number, end_time: Date) => {
+    const newTimetable = setTableRowEndTime(timetable, index, end_time)
+    setTimeTable(newTimetable)
+  }
+
+  const setVjtableRowEndTime = (index: number, end_time: Date) => {
+    const newVjtable = setTableRowEndTime(vjtable, index, end_time)
+    setVjTable(newVjtable)
+  }
+
+  const setTimetableRowIconUrl = (index: number, icon_url: string) => {
+    const newTimetable = setTableRowIconUrl(timetable, index, icon_url)
+    if (newTimetable) setTimeTable(newTimetable)
+  }
+
+  const setVjtableRowIconUrl = (index: number, icon_url: string) => {
+    const newVjtable = setTableRowIconUrl(vjtable, index, icon_url)
+    if (newVjtable) setVjTable(newVjtable)
+  }
+
+  const setTimetableRowUser = (index: number, user: UserType) => {
+    const newTimetable = setTableRowUser(timetable, index, user)
+    if (newTimetable) setTimeTable(newTimetable)
+  }
+
+  const setVjtableRowUser = (index: number, user: UserType) => {
+    const newVjtable = setTableRowUser(vjtable, index, user)
     if (newVjtable) setVjTable(newVjtable)
   }
 
@@ -192,19 +292,58 @@ export const useTimetable = () => {
     vjtable,
     setTimeTable,
     loadTimetable,
+    updateTimetable,
     addEmptyTimetableRow,
-    updateTimetableRowStartTime,
-    updateTimetableRowEndTime,
-    updateTimetableRowUser,
+    setTimetableRowName,
+    setTimetableRowText,
+    setTimetableRowStartTime,
+    setTimetableRowEndTime,
+    setTimetableRowIconUrl,
+    setTimetableRowUser,
     shiftUpTimetableRow,
     clearTimetableRow,
     deleteTimetableRow,
     addEmptyVjtableRow,
-    updateVjtableRowStartTime,
-    updateVjtableRowEndTime,
-    updateVjtableRowUser,
+    setVjtableRowName,
+    setVjtableRowText,
+    setVjtableRowStartTime,
+    setVjtableRowEndTime,
+    setVjtableRowIconUrl,
+    setVjtableRowUser,
     shiftUpVjtableRow,
     clearVjtableRow,
     deleteVjtableRow,
   } as const
+}
+
+const sortByTimetable = (data: any[]) => {
+  return data.sort((a, b) => a.row_number - b.row_number)
+}
+
+const pickDjData = (dj: DjType, eventId: number) => {
+  return {
+    id: dj.id,
+    row_number: dj.row_number,
+    user_id: dj.user_id,
+    event_id: eventId,
+    start_time: dj.start_time,
+    end_time: dj.end_time,
+  }
+}
+
+const fetchFileFromURL = async (url: string, fileName: string) => {
+  const response = await fetch(url)
+  const blob = await response.blob()
+  const file = new File([blob], fileName + '.png', { type: 'image/png' })
+  return file
+}
+
+const convertGuest = (dj: DjType, icon_url: string) => {
+  const guest: UserType = {
+    id: dj.user_id,
+    name: dj.name,
+    icon_url: icon_url,
+    text: dj.text,
+  }
+  return guest
 }

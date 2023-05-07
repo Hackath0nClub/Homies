@@ -8,6 +8,7 @@ export const selectEventGuestDjByEventId = async (id: number) => {
       .from('event_guestdj')
       .select(
         `
+        id,
         row_number,
         start_time,
         end_time,
@@ -26,6 +27,16 @@ export const selectEventGuestDjByEventId = async (id: number) => {
   } catch (error) {
     alert('Error loading Getdata!')
     console.log(error)
+  }
+}
+
+export const upsertEventGuestDjData = async (dj: any) => {
+  try {
+    const { error } = await supabase.from('event_guestdj').upsert(dj)
+    if (error) throw error
+  } catch (error) {
+    alert('Error')
+    console.error(error)
   }
 }
 

@@ -7,8 +7,8 @@ import { useState } from 'react'
 
 export const EditTimeTableRow = ({ dj }: { dj: DjType }) => {
   const {
-    updateTimetableRowStartTime,
-    updateTimetableRowEndTime,
+    setTimetableRowStartTime,
+    setTimetableRowEndTime,
     shiftUpTimetableRow,
     clearTimetableRow,
     deleteTimetableRow,
@@ -45,7 +45,7 @@ export const EditTimeTableRow = ({ dj }: { dj: DjType }) => {
     <DatePicker
       selected={dj.start_time}
       onChange={(date) => {
-        if (date) updateTimetableRowStartTime(index, date)
+        if (date) setTimetableRowStartTime(index, date)
       }}
       showTimeSelect
       showTimeSelectOnly
@@ -60,7 +60,7 @@ export const EditTimeTableRow = ({ dj }: { dj: DjType }) => {
     <DatePicker
       selected={dj.end_time}
       onChange={(date) => {
-        if (date) updateTimetableRowEndTime(index, date)
+        if (date) setTimetableRowEndTime(index, date)
       }}
       showTimeSelect
       showTimeSelectOnly
@@ -156,7 +156,7 @@ const UserSearchInput = ({ index, dj }: { index: number; dj: DjType }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [onMouseOver, setOnMouseOver] = useState(false)
   const { handleInputChange, results } = useSearchUser()
-  const { updateTimetableRowUser } = useTimetable()
+  const { setTimetableRowUser } = useTimetable()
 
   return (
     <>
@@ -164,7 +164,7 @@ const UserSearchInput = ({ index, dj }: { index: number; dj: DjType }) => {
       <input
         type="text"
         className="row-span-1 w-full px-2 block placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-        defaultValue={dj.user_id}
+        defaultValue={dj.user_id?.charAt(0) != '@' ? dj.user_id : ''}
         onFocus={(e) => {
           handleInputChange(e.target.value)
           setIsOpen(true)
@@ -187,7 +187,7 @@ const UserSearchInput = ({ index, dj }: { index: number; dj: DjType }) => {
               key={user.id}
               className="flex align-items-center py-2 px-4 hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
               onClick={() => {
-                updateTimetableRowUser(index, user)
+                setTimetableRowUser(index, user)
                 handleInputChange('')
                 setIsOpen(false)
               }}

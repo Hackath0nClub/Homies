@@ -51,7 +51,6 @@ export const useEvent = () => {
   const setNote = (note: string) => setBase({ ...base, note: note })
 
   const updateEvent = async () => {
-    console.log(file)
     if (base && file) {
       const file_name = base.id + '.png'
       await uploadEventImage({ file_name: file_name, file: file })

@@ -1,6 +1,6 @@
 import { convertDateStringToDateObjectInList } from '../../../lib/convertDateStringToDateObject'
 import { supabase } from '../../../utils/supabaseClient'
-import { TimeTableType } from '../store/eventState'
+import { DjType, TimeTableType } from '../store/eventState'
 
 export const selectEventDjByEventId = async (id: number) => {
   try {
@@ -8,6 +8,7 @@ export const selectEventDjByEventId = async (id: number) => {
       .from('event_dj')
       .select(
         `
+        id,
         row_number,
         start_time,
         end_time,
@@ -26,6 +27,16 @@ export const selectEventDjByEventId = async (id: number) => {
   } catch (error) {
     alert('Error loading Getdata!')
     console.log(error)
+  }
+}
+
+export const upsertEventDjData = async (dj: any) => {
+  try {
+    const { error } = await supabase.from('event_dj').upsert(dj)
+    if (error) throw error
+  } catch (error) {
+    alert('Error')
+    console.error(error)
   }
 }
 

@@ -8,13 +8,13 @@ export default function Home() {
         <title>Homies</title>
       </Head>
       <p>
-        <Link href="/event/1">Eventページ1</Link>
+        <Link href="/event/1/view">Eventページ1</Link>
       </p>
       <p>
-        <Link href="/event/2">Eventページ2</Link>
+        <Link href="/event/2/view">Eventページ2</Link>
       </p>
       <p>
-        <Link href="/event/3">Eventページ3</Link>
+        <Link href="/event/3/view">Eventページ3</Link>
       </p>
       <p>
         <Link href="/profile/user-a/profile_view">user-aのprofile</Link>

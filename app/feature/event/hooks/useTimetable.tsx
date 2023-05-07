@@ -85,6 +85,7 @@ export const useTimetable = () => {
         const djData = pickDjData(row, base.id)
         await upsertEventGuestDjData(djData)
 
+        // ゲスト情報を更新
         const file = await fetchFileFromURL(row.icon_url!, row.user_id)
         await uploadGuestImage({ filename: row.user_id + '.png', file: file })
         const iconUrl = await getImageUrl(row.user_id + '.png')

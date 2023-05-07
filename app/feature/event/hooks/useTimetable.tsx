@@ -12,7 +12,10 @@ import {
   selectEventDjByEventId,
   upsertEventDjData,
 } from '../infrastructure/eventDjDatabase'
-import { selectEventVjByEventId } from '../infrastructure/eventVjDatabase'
+import {
+  selectEventVjByEventId,
+  upsertEventVjData,
+} from '../infrastructure/eventVjDatabase'
 import {
   selectEventGuestDjByEventId,
   upsertEventGuestDjData,
@@ -21,6 +24,10 @@ import { getCurrentDateTime } from '../../../lib/getCurrentDateTime'
 import { useEvent } from './useEvent'
 import { getImageUrl, uploadGuestImage } from '../infrastructure/guestStrage'
 import { upsertGuestData } from '../infrastructure/guestDatabase'
+import {
+  selectEventGuestVjByEventId,
+  upsertEventGuestVjData,
+} from '../infrastructure/eventGuestVjDatabase'
 
 export const useTimetable = () => {
   const [timetable, setTimeTable] = useRecoilState(timeTableState)
@@ -29,15 +36,19 @@ export const useTimetable = () => {
 
   const loadTimetable = async (id: number) => {
     const timetableData = await selectEventDjByEventId(id)
-    const vjtableData = await selectEventVjByEventId(id)
     const guestdjtableData = await selectEventGuestDjByEventId(id)
-    if (!timetableData || !vjtableData || !guestdjtableData) return
+    const vjtableData = await selectEventVjByEventId(id)
+    const guestvjtableData = await selectEventGuestVjByEventId(id)
 
+    if (!timetableData || !guestdjtableData) return
     let mergedTimetable = [...timetableData, ...guestdjtableData]
     mergedTimetable = sortByTimetable(mergedTimetable)
-
     setTimeTable(mergedTimetable)
-    setVjTable(vjtableData)
+
+    if (!vjtableData || !guestvjtableData) return
+    let mergedVjtable = [...vjtableData, ...guestvjtableData]
+    mergedVjtable = sortByTimetable(mergedVjtable)
+    setVjTable(mergedVjtable)
   }
 
   const updateTimetable = async () => {
@@ -59,6 +70,26 @@ export const useTimetable = () => {
 
         const djData = pickDjData(row, base.id)
         await upsertEventGuestDjData(djData)
+      }
+    }
+    for (const row of vjtable) {
+      if (!row.user_id || !base.id) return
+
+      if (!row.user_id.startsWith('@')) {
+        // 通常 VJ の場合
+        const vjData = pickDjData(row, base.id)
+        upsertEventVjData(vjData)
+      } else {
+        // Guest VJ の場合
+        const file = await fetchFileFromURL(row.icon_url!, row.user_id)
+        await uploadGuestImage({ filename: row.user_id + '.png', file: file })
+        const iconUrl = await getImageUrl(row.user_id + '.png')
+
+        const guestData = convertGuest(row, iconUrl ?? '/user.png')
+        await upsertGuestData(guestData)
+
+        const vjData = pickDjData(row, base.id)
+        await upsertEventGuestVjData(vjData)
       }
     }
   }

@@ -1,11 +1,11 @@
 import { convertDateStringToDateObjectInList } from '../../../lib/convertDateStringToDateObject'
 import { supabase } from '../../../utils/supabaseClient'
-import { VjTableType } from '../store/eventState'
+import { TimeTableType } from '../store/eventState'
 
-export const selectEventVjByEventId = async (id: number) => {
+export const selectEventGuestVjByEventId = async (id: number) => {
   try {
     const { data, error } = await supabase
-      .from('event_vj')
+      .from('event_guestvj')
       .select(
         `
         id,
@@ -19,20 +19,20 @@ export const selectEventVjByEventId = async (id: number) => {
       .eq('event_id', id)
     if (error) throw error
 
-    let vjtable = flattenObjectList(data)
-    vjtable = convertDateStringToDateObjectInList(vjtable)
-    if (data.length > 1) vjtable = sortByTimetable(vjtable)
+    let timetable = flattenObjectList(data)
+    timetable = convertDateStringToDateObjectInList(timetable)
+    if (data.length > 1) timetable = sortByTimetable(timetable)
 
-    return vjtable as VjTableType
+    return timetable as TimeTableType
   } catch (error) {
     alert('Error loading Getdata!')
     console.log(error)
   }
 }
 
-export const upsertEventVjData = async (vj: any) => {
+export const upsertEventGuestVjData = async (vj: any) => {
   try {
-    const { error } = await supabase.from('event_vj').upsert(vj)
+    const { error } = await supabase.from('event_guestvj').upsert(vj)
     if (error) throw error
   } catch (error) {
     alert('Error')

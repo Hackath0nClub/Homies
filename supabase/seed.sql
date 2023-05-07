@@ -10,7 +10,8 @@ create table profile (
   soundcloud_url text,
   mixcloud_url text,
   create_at timestamp with time zone,
-  updated_at timestamp with time zone
+  updated_at timestamp with time zone,
+  primary key (uuid)
 );
 
 create table guest (
@@ -19,7 +20,8 @@ create table guest (
   icon_url text,
   text text,
   create_at timestamp with time zone,
-  updated_at timestamp with time zone
+  updated_at timestamp with time zone,
+  primary key (id)
 );
 
 create table event (
@@ -36,7 +38,8 @@ create table event (
   note text,
   publicly bool,
   create_at timestamp with time zone,
-  updated_at timestamp with time zone
+  updated_at timestamp with time zone,
+  primary key (id)
 );
 
 create table event_organizer (

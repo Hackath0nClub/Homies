@@ -9,7 +9,7 @@ export const EventItems = () => {
       <div className="border border-gray-500 rounded-xl w-full bg-[rgba(47,51,56,1)] my-4">
         <TopText />
         <div className="border-t-2 border-gray-500"></div>
-        <BuyTicketButton />
+        {/* <BuyTicketButton /> */}
         <Price />
         <Capacity />
         <Date />

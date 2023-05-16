@@ -4,6 +4,7 @@ import { useAuth } from '../feature/auth/hooks/useAuth'
 
 const Header = () => {
   const { session, handleSignout } = useAuth()
+  console.log(session)
   return (
     <header
       data-role="Header"

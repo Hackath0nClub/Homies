@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import router from 'next/router'
 import { useRecoilState } from 'recoil'
 import { sessionState } from '../store/authState'
@@ -13,6 +13,14 @@ export const useAuth = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [session, setSession] = useRecoilState(sessionState)
+
+  useEffect(() => {
+    const getInitSession = async () => {
+      const currentSession = await getSession()
+      setSession(currentSession)
+    }
+    getInitSession()
+  }, [])
 
   const handleLogin = async () => {
     await emailSignIn(email, password)

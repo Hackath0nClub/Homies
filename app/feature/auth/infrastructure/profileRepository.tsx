@@ -1,4 +1,5 @@
 import { supabase } from '../../../utils/supabaseClient'
+import { AuthType } from '../store/authState'
 
 export const selectProfileByUuid = async (uuid: string) => {
   try {
@@ -8,14 +9,14 @@ export const selectProfileByUuid = async (uuid: string) => {
         `
       id,
       name,
-      icon_url,
+      icon_url
       `
       )
       .eq('uuid', uuid)
       .single()
     if (error) throw error
 
-    return data
+    return data as AuthType
   } catch (error) {
     alert('Error loading Getdata!')
     console.log(error)

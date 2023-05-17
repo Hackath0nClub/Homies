@@ -29,7 +29,7 @@ export const emailSignUp = async (email: string, password: string) => {
         uuid: data.user.id,
         id: data.user.email?.split('@')[0] + getCurrentDateTime(),
         name: data.user.email?.split('@')[0],
-        icon_url: '',
+        icon_url: null,
         text: '',
         twitter_url: '',
         soundcloud_url: '',

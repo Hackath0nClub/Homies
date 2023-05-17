@@ -1,23 +1,30 @@
 import { useEffect, useState } from 'react'
 import router from 'next/router'
 import { useRecoilState } from 'recoil'
-import { sessionState } from '../store/authState'
+import { authState, sessionState } from '../store/authState'
 import {
   emailSignIn,
   emailSignUp,
   signOut,
   getSession,
 } from '../infrastructure/Authentication'
+import { selectProfileByUuid } from '../infrastructure/profileRepository'
 
 export const useAuth = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [session, setSession] = useRecoilState(sessionState)
+  const [auth, setAuth] = useRecoilState(authState)
 
   useEffect(() => {
     const getInitSession = async () => {
       const currentSession = await getSession()
       setSession(currentSession)
+      if (!currentSession) return
+      const uuid = currentSession.user.id
+      const currentAuth = await selectProfileByUuid(uuid)
+      if (!currentAuth) return
+      setAuth(currentAuth)
     }
     getInitSession()
   }, [])
@@ -47,6 +54,7 @@ export const useAuth = () => {
     email,
     password,
     session,
+    auth,
     setEmail,
     setPassword,
     handleLogin,

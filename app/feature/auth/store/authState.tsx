@@ -5,3 +5,14 @@ export const sessionState = atom<Session | null | undefined>({
   key: 'session',
   default: undefined,
 })
+
+const authInitial = {
+  id: '',
+  name: '',
+  icon_url: null,
+}
+export type AuthType = Partial<typeof authInitial>
+export const authState = atom<AuthType>({
+  key: 'auth',
+  default: authInitial,
+})

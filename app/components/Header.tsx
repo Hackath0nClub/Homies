@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { useAuth } from '../feature/auth/hooks/useAuth'
 
 const Header = () => {
-  const { session, handleSignout } = useAuth()
+  const { session, auth, handleSignout } = useAuth()
   return (
     <header
       data-role="Header"
@@ -24,7 +24,7 @@ const Header = () => {
           <>
             <Image
               alt="pastedImage"
-              src="/playground_assets/user-icon-sample.png"
+              src={auth.icon_url ?? '/user.png'}
               width={32}
               height={32}
               className="h-full"

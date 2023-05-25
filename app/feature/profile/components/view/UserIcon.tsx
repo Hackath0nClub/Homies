@@ -1,16 +1,15 @@
-type PropsType = {
-  icon_url: string | null
-}
+import { useProfile } from "../../hooks/useProfile"
 
-export const UserIcon = (props: PropsType) => {
+export const UserIcon = () => {
+  const { profileBase } = useProfile()
   return (
     <>
-      {props.icon_url && (
+      {profileBase.icon_url && (
         <>
           <img
             className="rounded-full w-[72px] h-[72px] bg-[rgba(238,238,238,1)]"
-            alt={props.icon_url}
-            src={props.icon_url}
+            alt={profileBase.icon_url}
+            src={profileBase.icon_url}
           />
         </>
       )}

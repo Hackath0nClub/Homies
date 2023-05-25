@@ -1,6 +1,5 @@
 import { atom } from "recoil";
 import { utcToZonedTime } from 'date-fns-tz'
-import { type } from "os";
 
 const profileDataInitial = {
   uuid: '',

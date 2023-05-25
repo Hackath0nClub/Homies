@@ -19,3 +19,11 @@ export const profileState = atom<ProfileType>({
   key: 'profileBase',
   default: profileDataInitial
 })
+
+const isEditUserText = false
+
+// export type isEditUserTextType = Partial<typeof a>
+export const editTextState = atom<boolean>({
+  key: 'isEditText',
+  default: isEditUserText
+})

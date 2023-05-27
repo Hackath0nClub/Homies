@@ -1,23 +1,27 @@
 import { useEvent } from '../../../../feature/event/hooks/useEvent'
 import { getFullDate, getTime } from '../../../../lib/splitDateTime'
+import Link from 'next/link'
 
 export const EventItems = () => {
   const { base, listener } = useEvent()
 
   const main = () => {
     return (
-      <div className="border border-gray-500 rounded-xl w-full bg-[rgba(47,51,56,1)] my-4">
-        <TopText />
-        <div className="border-t-2 border-gray-500"></div>
-        <BuyTicketButton />
-        <Price />
-        <Capacity />
-        <Date />
-        <Time />
-        <Location />
-        <Map />
-        <Note />
-      </div>
+      <>
+        <EditEventButton />
+        <div className="border border-gray-500 rounded-xl w-full bg-[rgba(47,51,56,1)] my-4">
+          <TopText />
+          <div className="border-t-2 border-gray-500"></div>
+          {/* <BuyTicketButton /> */}
+          <Price />
+          <Capacity />
+          <Date />
+          <Time />
+          <Location />
+          <Map />
+          <Note />
+        </div>
+      </>
     )
   }
 
@@ -26,6 +30,18 @@ export const EventItems = () => {
       <p className="p-4 w-full flex items-start self-stretch text-xl text-white text-left">
         チケット購入
       </p>
+    )
+  }
+
+  const EditEventButton = () => {
+    return (
+      <div className="w-full text-center my-4">
+        <Link href={'/event/' + base.id + '/edit'}>
+          <button className="border border-white px-16 py-3 text-white font-bold bg-gradient-to-r from-[rgba(232,112,39,1)] to-[rgba(232,189,39,1)] rounded-3xl">
+            イベント編集へ
+          </button>
+        </Link>
+      </div>
     )
   }
 

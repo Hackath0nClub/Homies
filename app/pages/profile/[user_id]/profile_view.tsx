@@ -8,7 +8,7 @@ import Footer from '../../../components/Footer'
 
 // hooks
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useProfile } from '../../../feature/profile/hooks/useProfile'
 
 const ProfilePage = () => {

@@ -40,7 +40,15 @@ const ProfilePage = () => {
                   onClick={() => editUserText(!isEditText)}
                 >
                   <span className="text-lg px-8 m-0 tracking-[-0.64px]">
-                    プロフィールを編集する
+                    {!isEditText ?
+                      <span>
+                        プロフィールを編集する
+                      </span>
+                      :
+                      <span>
+                        編集を終了する
+                      </span>
+                    }
                   </span>
                 </button>
               </div>

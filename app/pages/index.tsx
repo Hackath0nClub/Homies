@@ -1,8 +1,9 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import { useAuth } from '../feature/auth/hooks/useAuth'
 
 export default function Home() {
-  const user_id = "user-a"
+  const { auth } = useAuth()
   return (
     <>
       <Head>
@@ -18,7 +19,9 @@ export default function Home() {
         <Link href="/event/3/view">Eventページ3</Link>
       </p>
       <p>
-        <Link href={"/profile/" + user_id + "/profile_view"}>user-aのprofile</Link>
+        { auth.id != "" &&
+          <Link href={"/profile/" + auth.id + "/profile_view"}>profile</Link>
+        }
       </p>
     </>
   )

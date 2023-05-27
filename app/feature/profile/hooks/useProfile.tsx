@@ -1,51 +1,36 @@
-import { useState } from 'react'
+import { useRecoilState } from 'recoil'
+import { profileState, editTextState } from '../store/profileState'
 import { selectProfileById, upsertProfileById } from '../infrastructure/profileRepository'
-import { selectEventByUserId } from '../infrastructure//eventRepository'
-import { Event, Events } from '../../event/hooks/useEvent'
-
-export type Profile =
-  | {
-      uuid: string
-      id: string
-      name: string | null
-      icon_url: string | null
-      text: string | null
-      twitter_url: string | null
-      soundcloud_url: string | null
-      mixcloud_url: string | null
-      create_at: Date | null
-      updated_at: Date | null
-    }
-  | undefined
+import { selectEventByUserId } from '../infrastructure/eventRepository'
 
 export const useProfile = () => {
-  const [profile, setProfile] = useState<Profile>()
-  const [events, setEvents] = useState<Events>()
+  const [profileBase, setProfileBase] = useRecoilState(profileState)
+  const [isEditText, setUserText] = useRecoilState(editTextState)
 
   async function getProfile(id: string) {
     const data = await selectProfileById(id)
-    if (data) setProfile(data)
+    if (data) setProfileBase(data)
   }
 
   async function setProfileText(text: string | null, id: string) {
     const data = await upsertProfileById(text, id) // Supabaseを更新する
-    if (data) setProfile(data)
+    if (data) setProfileBase(data)
   }
 
-  async function getEventByUserId(user_id: string) {
+  async function editUserText(isEdit: boolean) {
+    setUserText(isEdit)
+  }
+
+  async function getPerformanceEventByUserId(user_id: string) {
     const events = await selectEventByUserId(user_id)
-    if (events) setEvents(events)
   }
 
   return {
-    profileData: {
-      profile,
-      events
-    },
-    handleProfile: {
-      getProfile,
-      setProfileText,
-      getEventByUserId
-    }
+    profileBase,
+    isEditText,
+    getProfile,
+    setProfileText,
+    editUserText,
+    getPerformanceEventByUserId
   } as const
 }

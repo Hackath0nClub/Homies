@@ -9,7 +9,7 @@ export const sessionState = atom<Session | null | undefined>({
 const authInitial = {
   id: '',
   name: '',
-  icon_url: null,
+  icon_url: '',
 }
 export type AuthType = Partial<typeof authInitial>
 export const authState = atom<AuthType>({

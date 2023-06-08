@@ -15,8 +15,8 @@ import { useProfile } from '../../../feature/profile/hooks/useProfile'
 const ProfilePage = () => {
   const { query, isReady } = useRouter()
   const user_id = query.user_id
-  const { isEditText, getProfile, getPerformanceEventByUserId, editUserText } = useProfile()
-
+  const { getProfile, getPerformanceEventByUserId } = useProfile()
+ 
   useEffect(() => {
     if (typeof user_id != 'string') return
     getProfile(user_id)

@@ -24,7 +24,10 @@ const Header = () => {
           <>
             <Image
               alt="pastedImage"
-              src={auth.icon_url ?? '/user.png'}
+              src={auth.icon_url ?
+                String(auth.icon_url)
+                :
+                '/user.png'}
               width={32}
               height={32}
               className="h-full"

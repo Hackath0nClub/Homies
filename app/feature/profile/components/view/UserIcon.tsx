@@ -8,7 +8,7 @@ export const UserIcon = () => {
         <>
           <img
             className="rounded-full w-[72px] h-[72px] bg-[rgba(238,238,238,1)]"
-            alt={profileBase.icon_url}
+            alt="ユーザーアイコン"
             src={profileBase.icon_url}
           />
         </>

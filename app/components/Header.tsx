@@ -4,6 +4,31 @@ import { useAuth } from '../feature/auth/hooks/useAuth'
 
 const Header = () => {
   const { session, auth, handleSignout } = useAuth()
+
+  const IconImage = () => {
+    if (auth.icon_url) {
+      return (
+        <img
+          alt="iconImage"
+          src={auth.icon_url}
+          width={32}
+          height={32}
+          className="h-full"
+        />
+      )
+    } else {
+      return (
+        <Image
+          alt="iconImage"
+          src="/user.png"
+          width={32}
+          height={32}
+          className="h-full"
+        />
+      )
+    }
+  }
+
   return (
     <header
       data-role="Header"
@@ -22,13 +47,7 @@ const Header = () => {
       <div className="flex">
         {session && (
           <>
-            <Image
-              alt="pastedImage"
-              src={auth.icon_url ?? '/user.png'}
-              width={32}
-              height={32}
-              className="h-full"
-            />
+            <IconImage />
             <button className="text-white text-sm m-2" onClick={handleSignout}>
               Sign Out
             </button>

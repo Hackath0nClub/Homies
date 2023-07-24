@@ -12,6 +12,7 @@ import { DjButton } from '../../../feature/event/components/view/DjButton'
 import { Guest } from '../../../feature/event/components/view/Guest'
 import { EventItems } from '../../../feature/event/components/view/EventItems'
 import { Organizers } from '../../../feature/event/components/view/Organizers'
+import { EditEventButton } from '../../../feature/event/components/view/EditEventButton'
 
 // hooks
 import { useEvent } from '../../../feature/event/hooks/useEvent'
@@ -45,6 +46,7 @@ const EventDetailsView = () => {
           <Guest />
         </div>
         <div className="md:col-span-4">
+          <EditEventButton />
           <EventItems />
           <Organizers />
         </div>

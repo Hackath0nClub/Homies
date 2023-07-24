@@ -1,6 +1,18 @@
 import { supabase } from '../../../utils/supabaseClient'
 import { getCurrentDateTime } from '../../../lib/getCurrentDateTime'
 
+export const googleSignIn = async () => {
+  try {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+    })
+    if (error) throw error
+  } catch (error) {
+    console.error(error)
+    if (error instanceof Error) alert(error.message)
+  }
+}
+
 export const emailSignIn = async (email: string, password: string) => {
   try {
     const { data, error } = await supabase.auth.signInWithPassword({

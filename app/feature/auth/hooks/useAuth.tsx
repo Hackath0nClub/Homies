@@ -5,6 +5,7 @@ import { authState, sessionState } from '../store/authState'
 import {
   emailSignIn,
   emailSignUp,
+  googleSignIn,
   signOut,
   getSession,
 } from '../infrastructure/Authentication'
@@ -36,6 +37,13 @@ export const useAuth = () => {
     router.push('/')
   }
 
+  const handleGoogleLogin = async () => {
+    await googleSignIn()
+    const currentSession = await getSession()
+    setSession(currentSession)
+    router.push('/')
+  }
+
   const handleSignUp = async () => {
     await emailSignUp(email, password)
     const currentSession = await getSession()
@@ -58,6 +66,7 @@ export const useAuth = () => {
     setEmail,
     setPassword,
     handleLogin,
+    handleGoogleLogin,
     handleSignUp,
     handleSignout,
   }

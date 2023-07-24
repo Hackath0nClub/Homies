@@ -5,7 +5,8 @@ const AutoRedirectPage = () => {
   const router = useRouter()
   const { query, isReady } = useRouter()
   useEffect(() => {
-    if (isReady) router.push('/event/' + query.id + '/view')
+    if (!isReady) return
+    router.push('/event/' + query.id + '/view')
   }, [isReady])
 
   return null

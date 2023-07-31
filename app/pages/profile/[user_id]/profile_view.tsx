@@ -4,7 +4,7 @@ import { UserIcon } from '../../../feature/profile/components/view/UserIcon'
 import { UserText } from '../../../feature/profile/components/view/UserText'
 import { UserCount } from '../../../feature/profile/components/view/UserCount'
 import { UserEvent } from '../../../feature/profile/components/view/UserEvent'
-import { ProfileButtons } from '../../../feature/profile/components/view/ProfileButtons '
+import { ProfileButtons } from '../../../feature/profile/components/view/ProfileButtons'
 import Footer from '../../../components/Footer'
 
 // hooks

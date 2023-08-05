@@ -29,7 +29,7 @@ const EventDetailsEdit = () => {
     const organizers = await getOrganizers(id)
     if (!organizers) return
     if (auth.id !== organizers[0].user_id)
-      router.push('/event/' + query.id + '/view')
+      router.push('/event/' + query.id + '/denied')
   }
 
   useEffect(() => {

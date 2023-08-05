@@ -16,14 +16,25 @@ import { EditVjTimeTable } from '../../../feature/event/components/edit/EditVjTi
 // hooks
 import { useEvent } from '../../../feature/event/hooks/useEvent'
 import { useTimetable } from '../../../feature/event/hooks/useTimetable'
+import { useAuth } from '../../../feature/auth/hooks/useAuth'
 
 const EventDetailsEdit = () => {
+  const router = useRouter()
   const { query, isReady } = useRouter()
-  const { loadEvent } = useEvent()
+  const { loadEvent, getOrganizers } = useEvent()
   const { loadTimetable } = useTimetable()
+  const { auth } = useAuth()
+
+  const checkOrganizer = async (id: number) => {
+    const organizers = await getOrganizers(id)
+    if (!organizers) return
+    if (auth.id !== organizers[0].user_id)
+      router.push('/event/' + query.id + '/view')
+  }
 
   useEffect(() => {
     if (!isReady) return
+    checkOrganizer(Number(query.id))
     loadEvent(Number(query.id))
     loadTimetable(Number(query.id))
   }, [isReady])

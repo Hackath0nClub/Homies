@@ -12,6 +12,7 @@ import {
 import { selectOrganizersByEventId } from '../infrastructure/eventOrganizerDatabase'
 import { selectListenerByEventId } from '../infrastructure/ticketDatabase'
 import { uploadEventImage } from '../infrastructure/eventStrage'
+import { getOriginalNode } from 'typescript'
 
 export const useEvent = () => {
   const [base, setBase] = useRecoilState(eventBaseState)
@@ -58,6 +59,11 @@ export const useEvent = () => {
     if (base) await updateEventData(base)
   }
 
+  const getOrganizers = async (id: number) => {
+    const organizers_data = await selectOrganizersByEventId(id)
+    return organizers_data
+  }
+
   return {
     base,
     organizers,
@@ -75,5 +81,6 @@ export const useEvent = () => {
     setLocationName,
     setLocationUrl,
     setNote,
+    getOrganizers,
   } as const
 }

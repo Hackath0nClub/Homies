@@ -8,6 +8,7 @@ import {
 import {
   selectEventById,
   updateEventData,
+  deleteEventById,
 } from '../infrastructure/eventDatabase'
 import { selectOrganizersByEventId } from '../infrastructure/eventOrganizerDatabase'
 import { selectListenerByEventId } from '../infrastructure/ticketDatabase'
@@ -59,6 +60,10 @@ export const useEvent = () => {
     if (base) await updateEventData(base)
   }
 
+  const deleteEvent = async (id: number) => {
+    await deleteEventById(id)
+  }
+
   const getOrganizers = async (id: number) => {
     const organizers_data = await selectOrganizersByEventId(id)
     return organizers_data
@@ -71,6 +76,7 @@ export const useEvent = () => {
     file,
     loadEvent,
     updateEvent,
+    deleteEvent,
     setTitle,
     setText,
     setFile,

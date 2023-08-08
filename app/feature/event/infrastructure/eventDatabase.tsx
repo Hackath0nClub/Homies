@@ -47,3 +47,13 @@ export const updateEventData = async (event: EventType) => {
     console.error(error)
   }
 }
+
+export const deleteEventById = async (id: number) => {
+  try {
+    const { error } = await supabase.from('event').delete().eq('id', id)
+    if (error) throw error
+  } catch (error) {
+    alert('Error')
+    console.error(error)
+  }
+}

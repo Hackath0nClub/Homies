@@ -12,6 +12,7 @@ import { EditDescription } from '../../../feature/event/components/edit/EditDesc
 import { EditEventItemsRow } from '../../../feature/event/components/edit/EditEventItems'
 import { EditDjTimeTable } from '../../../feature/event/components/edit/EditDjTimeTable'
 import { EditVjTimeTable } from '../../../feature/event/components/edit/EditVjTimeTable'
+import { DeleteButton } from '../../../feature/event/components/edit/DeleteButton'
 
 // hooks
 import { useEvent } from '../../../feature/event/hooks/useEvent'
@@ -61,9 +62,7 @@ const EventDetailsEdit = () => {
           <EditEventItemsRow />
         </div>
         <div className="md:col-span-10 flex justify-center">
-          <button className="w-1/2 h-12 border border-red-500 text-red-500 rounded-md hover:bg-zinc-800 active:bg-[rgba(28,32,37,1)]">
-            イベントを削除する
-          </button>
+          <DeleteButton />
         </div>
       </div>
     </div>

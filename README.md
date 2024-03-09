@@ -69,6 +69,8 @@ docker-compose up -d # バックグラウンド起動
 
 - [docker-compose](/docker-compose.yml)
 
+url: <http://localhost:3000>
+
 ### 停止
 
 ```sh

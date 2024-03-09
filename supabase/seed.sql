@@ -1,7 +1,7 @@
 -- Create database table
 
 create table profile (
-  uuid uuid references auth.users not null primary key,
+  uuid uuid references auth.users not null,
   id text unique not null,
   name text not null,
   icon_url text,
@@ -25,7 +25,7 @@ create table guest (
 );
 
 create table event (
-  id serial not null primary key,
+  id serial not null,
   title text,
   image_url text,
   text text,
